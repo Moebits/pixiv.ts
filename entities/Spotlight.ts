@@ -1,5 +1,5 @@
 import api from "../API"
-import {PixivParams} from "../types"
+import {PixivArticleSearch, PixivParams} from "../types"
 
 export class Spotlight {
     constructor(private readonly api: api) {}
@@ -8,6 +8,6 @@ export class Spotlight {
         if (!params) params = {}
         if (!params.category) params.category = "all"
         const response = await this.api.get(`/v1/spotlight/articles`, params)
-        return response
+        return response as Promise<PixivArticleSearch>
     }
 }

@@ -9,7 +9,7 @@ recommendedNoLogin
 myPixiv
 */
 
-describe.only("Novel", async function() {
+describe("Novel", async function() {
     this.beforeAll(async function() {
         await login()
     })

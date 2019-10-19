@@ -1,7 +1,6 @@
 import api from "../API"
-import {PixivBookmarkDetail, PixivCommentSearch, PixivCommentSearchV2, PixivNovelDetail,
-PixivNovelSearch, PixivNovelText, PixivParams, PixivTrendTags} from "../types"
-import {PixivBookmarkRanges} from "./../dist/types/BookmarkTypes.d"
+import {PixivBookmarkDetail, PixivBookmarkRanges, PixivCommentSearch, PixivCommentSearchV2,
+PixivNovelDetail, PixivNovelSearch, PixivNovelText, PixivParams, PixivTrendTags} from "../types"
 
 export class Novel {
     constructor(private readonly api: api) {}
