@@ -48,6 +48,7 @@ export interface PixivClientUser {
 }
 
 export interface PixivParams {
+    access_token?: string
     user_id?: number
     type?: string
     filter?: string

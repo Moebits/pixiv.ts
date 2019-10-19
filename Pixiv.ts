@@ -2,9 +2,11 @@ import axios, {AxiosRequestConfig} from "axios"
 import * as crypto from "crypto"
 import {ParsedUrlQueryInput, stringify} from "querystring"
 import api from "./API"
-import {Illust} from "./entities/index"
-import {PixivAPIResponse} from "./types/ApiTypes"
-import {PixivAuthData, PixivAuthHeaders} from "./types/index"
+import {Illust, Manga, Novel, Search, Ugoira, User, Util} from "./entities/index"
+import {PixivAPIResponse, PixivAuthData, PixivAuthHeaders, PixivAutoComplete, PixivBookmarkDetail, PixivBookmarkSearch,
+PixivClientUser, PixivComment, PixivCommentSearch, PixivIllust, PixivIllustDetail, PixivIllustSearch, PixivManga,
+PixivMangaSearch, PixivMetaPage, PixivMultiCall, PixivNovel, PixivNovelSearch, PixivParams, PixivTag, PixivTrendTags,
+PixivUser, PixivUserDetail, PixivUserSearch} from "./types/index"
 
 const oauthURL = "https://oauth.secure.pixiv.net/auth/token"
 
@@ -38,6 +40,12 @@ export default class Pixiv {
     public static refreshToken: string
     public api = new api(data, headers, Pixiv.refreshToken, Pixiv.accessToken, this.loginTime, this.expirationTime)
     public illust = new Illust(this.api)
+    public manga = new Manga(this.api)
+    public novel = new Novel(this.api)
+    public search = new Search(this.api)
+    public user = new User(this.api)
+    public ugoira = new Ugoira(this.api)
+    public util = new Util(this.api)
 
     private constructor(private readonly loginTime: number, private readonly expirationTime: number) {}
 
@@ -47,6 +55,13 @@ export default class Pixiv {
         Pixiv.refreshToken = await this.api.refreshAccessToken(refreshToken)
         this.api = new api(data, headers, Pixiv.refreshToken, Pixiv.accessToken, this.loginTime, this.expirationTime)
         this.illust = new Illust(this.api)
+        this.illust = new Illust(this.api)
+        this.manga = new Manga(this.api)
+        this.novel = new Novel(this.api)
+        this.search = new Search(this.api)
+        this.user = new User(this.api)
+        this.ugoira = new Ugoira(this.api)
+        this.util = new Util(this.api)
         return Pixiv.refreshToken
     }
 
@@ -71,3 +86,8 @@ export default class Pixiv {
 }
 
 module.exports.default = Pixiv
+export {Illust, Manga, Novel, Search, Ugoira, User, Util} from "./entities/index"
+export {PixivAPIResponse, PixivAuthData, PixivAuthHeaders, PixivAutoComplete, PixivBookmarkDetail, PixivBookmarkSearch,
+PixivClientUser, PixivComment, PixivCommentSearch, PixivIllust, PixivIllustDetail, PixivIllustSearch, PixivManga,
+PixivMangaSearch, PixivMetaPage, PixivMultiCall, PixivNovel, PixivNovelSearch, PixivParams, PixivTag, PixivTrendTags,
+PixivUser, PixivUserDetail, PixivUserSearch} from "./types/index"
