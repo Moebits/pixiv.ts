@@ -4,9 +4,9 @@ import {ParsedUrlQueryInput, stringify} from "querystring"
 import api from "./API"
 import {Illust, Manga, Novel, Search, Ugoira, User, Util} from "./entities/index"
 import {PixivAPIResponse, PixivAuthData, PixivAuthHeaders, PixivAutoComplete, PixivBookmarkDetail, PixivBookmarkSearch,
-PixivClientUser, PixivComment, PixivCommentSearch, PixivIllust, PixivIllustDetail, PixivIllustSearch, PixivManga,
-PixivMangaSearch, PixivMetaPage, PixivMultiCall, PixivNovel, PixivNovelSearch, PixivParams, PixivTag, PixivTrendTags,
-PixivUser, PixivUserDetail, PixivUserSearch} from "./types/index"
+PixivClientUser, PixivComment, PixivCommentSearch, PixivFolderMap, PixivIllust, PixivIllustDetail, PixivIllustSearch,
+PixivManga, PixivMangaSearch, PixivMetaPage, PixivMultiCall, PixivNovel, PixivNovelSearch, PixivParams, PixivTag,
+PixivTrendTags, PixivUser, PixivUserDetail, PixivUserSearch} from "./types/index"
 
 const oauthURL = "https://oauth.secure.pixiv.net/auth/token"
 
@@ -112,4 +112,4 @@ export {Illust, Manga, Novel, Search, Ugoira, User, Util} from "./entities/index
 export {PixivAPIResponse, PixivAuthData, PixivAuthHeaders, PixivAutoComplete, PixivBookmarkDetail, PixivBookmarkSearch,
 PixivClientUser, PixivComment, PixivCommentSearch, PixivIllust, PixivIllustDetail, PixivIllustSearch, PixivManga,
 PixivMangaSearch, PixivMetaPage, PixivMultiCall, PixivNovel, PixivNovelSearch, PixivParams, PixivTag, PixivTrendTags,
-PixivUser, PixivUserDetail, PixivUserSearch} from "./types/index"
+PixivUser, PixivUserDetail, PixivUserSearch, PixivFolderMap} from "./types/index"
