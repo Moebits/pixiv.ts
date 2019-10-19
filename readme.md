@@ -1,3 +1,12 @@
+<div align="center">
+  <p>
+    <a href="https://tenpi.github.io/pixiv.ts/"><img src="https://raw.githubusercontent.com/Tenpi/pixiv.ts/master/images/pixiv.tslogo.gif" width="500" /></a>
+  </p>
+  <p>
+    <a href="https://nodei.co/npm/pixiv.ts/"><img src="https://nodei.co/npm/pixiv.ts.png" /></a>
+  </p>
+</div>
+
 ![Pixiv.ts](images/pixiv.tslogo.gif)
 
 [![NPM](https://nodei.co/npm/pixiv.ts.png)](https://nodei.co/npm/pixiv.ts/)
