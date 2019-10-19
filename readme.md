@@ -1,4 +1,4 @@
-<div align="center">
+<div align="left">
   <p>
     <a href="https://tenpi.github.io/pixiv.ts/"><img src="https://raw.githubusercontent.com/Tenpi/pixiv.ts/master/images/pixiv.tslogo.gif" width="500" /></a>
   </p>
