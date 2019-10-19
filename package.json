@@ -1,0 +1,32 @@
+{
+  "name": "pixiv.ts",
+  "version": "1.0.0",
+  "description": "Wrapper for the Pixiv API with typings",
+  "main": "dist/Pixiv.js",
+  "scripts": {
+    "start": "tsc && node dist/index.js"
+  },
+  "keywords": [
+    "pixiv",
+    "typescript",
+    "ts",
+    "api",
+    "anime",
+    "art"
+  ],
+  "author": "Tenpi",
+  "license": "MIT",
+  "devDependencies": {
+    "@tenpi/tslint": "^1.0.5",
+    "@types/chai": "^4.2.3",
+    "@types/mocha": "^5.2.7",
+    "@types/node": "^12.11.1",
+    "chai": "^4.2.0",
+    "dotenv": "^8.2.0",
+    "mocha": "^6.2.2",
+    "typescript": "^3.6.4"
+  },
+  "dependencies": {
+    "axios": "^0.19.0"
+  }
+}
