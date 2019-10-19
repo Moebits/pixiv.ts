@@ -89,6 +89,8 @@ export interface PixivParams {
       | "title_and_caption"
     sort?: "date_desc" | "date_asc" | "popular_desc"
     start_date?: string
+    duration?: "within_last_day" | "within_last_week" | "within_last_month"
     end_date?: string
     offset?: string
+    category?: string
 }

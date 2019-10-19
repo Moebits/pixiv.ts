@@ -2,7 +2,7 @@ import axios, {AxiosRequestConfig} from "axios"
 import * as crypto from "crypto"
 import {ParsedUrlQueryInput, stringify} from "querystring"
 import api from "./API"
-import {Illust, Manga, Novel, Search, Ugoira, User, Util} from "./entities/index"
+import {Illust, Manga, Novel, Search, Spotlight, Ugoira, User, Util} from "./entities/index"
 import {PixivAPIResponse, PixivAuthData, PixivAuthHeaders} from "./types/index"
 
 const oauthURL = "https://oauth.secure.pixiv.net/auth/token"
@@ -43,6 +43,7 @@ export default class Pixiv {
     public user = new User(this.api)
     public ugoira = new Ugoira(this.api)
     public util = new Util(this.api)
+    public spotlight = new Spotlight(this.api)
 
     private constructor(private readonly loginTime: number, private readonly expirationTime: number) {}
 

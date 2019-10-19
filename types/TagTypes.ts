@@ -23,3 +23,10 @@ export interface PixivTrendTags {
 export interface PixivAutoComplete {
     search_auto_complete_keywords: string[]
 }
+
+export interface PixivAutoCompleteV2 {
+  tags: {
+    name: string,
+    translated_name: string | null
+  }
+}

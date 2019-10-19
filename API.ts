@@ -1,7 +1,6 @@
 import axios, {AxiosRequestConfig} from "axios"
 import {ParsedUrlQueryInput, stringify} from "querystring"
 import {URLSearchParams} from "url"
-import replace from "./Replace"
 import {PixivAPIResponse} from "./types/ApiTypes"
 import {PixivAuthData, PixivAuthHeaders, PixivParams} from "./types/index"
 
@@ -35,7 +34,6 @@ export default class API {
     public get = async (endpoint: string, params?: PixivParams) => {
         await this.refreshAccessToken()
         if (!params) params = {}
-        if (params.word) params.word = replace.replaceTag(params.word)
         params.filter = "for_ios"
         params.access_token = this.accessToken
         if (endpoint.startsWith("/")) endpoint = endpoint.slice(1)

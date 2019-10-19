@@ -1,5 +1,15 @@
 import {PixivTag, PixivUser} from "./index"
 
+export interface PixivNovelDetail {
+  novel: PixivNovel
+}
+
+export interface PixivNovelText {
+  novel_marker: {}
+  novel_text: string
+  series_prev: PixivNovel
+  series_next: PixivNovel
+}
 export interface PixivNovelSearch {
   novels: PixivNovel[]
   next_url: string | null
@@ -26,7 +36,7 @@ export interface PixivNovel {
     series: {
       id: number
       title: string
-    }
+    } | null
     is_bookmarked: boolean
     total_bookmarks: number
     total_view: number

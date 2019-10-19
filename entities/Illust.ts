@@ -14,6 +14,7 @@ export class Illust {
 
     public detail = async (params: PixivParams & {illust_id: number}) => {
         const response = await this.api.get(`/v1/illust/detail`, params)
+        if (response.illust.type !== "illust" && response.illust.type !== "ugoira") return Promise.reject(`This is not an illust, it is a ${response.illust.type}`)
         return response as Promise<PixivIllustDetail>
     }
 

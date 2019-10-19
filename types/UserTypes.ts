@@ -72,3 +72,10 @@ export interface PixivUserDetail {
       workspace_image_url: string | null
     }
 }
+
+export interface PixivFollowDetail {
+  follow_detail: {
+    is_followed: boolean
+    restrict: string
+  }
+}

@@ -7,6 +7,10 @@ export interface PixivMangaSearch {
   next_url: string | null
 }
 
+export interface PixivMangaDetail {
+  illust: PixivManga
+}
+
 export interface PixivManga {
     id: number
     title: string

@@ -1,5 +1,6 @@
 import api from "../API"
-import {PixivIllustSearch, PixivNovelSearch, PixivParams, PixivUserDetail, PixivUserSearch} from "../types"
+import {PixivBookmarkDetail, PixivBookmarkSearch, PixivFollowDetail, PixivIllustSearch, PixivNovelSearch,
+PixivParams, PixivUserDetail, PixivUserSearch} from "../types"
 
 export class User {
     constructor(private readonly api: api) {}
@@ -26,32 +27,38 @@ export class User {
         return response as Promise<PixivNovelSearch>
     }
 
-    public illustBookmarks = async (params: PixivParams & {user_id: number, restrict: "public"}) => {
+    public bookmarksIllust = async (params: PixivParams & {user_id: number}) => {
+        if (!params.restrict) params.restrict = "public"
         const response = await this.api.get(`/v1/user/bookmarks/illust`, params)
         return response as Promise<PixivIllustSearch>
     }
 
     public bookmarkIllustTags = async (params?: PixivParams) => {
+        if (!params) params = {}
+        params.restrict = "public"
         const response = await this.api.get(`/v1/user/bookmark-tags/illust`, params)
-        return response
+        return response as Promise<PixivBookmarkSearch>
     }
 
     public bookmarkDetail = async (params: PixivParams & {illust_id: number}) => {
         const response = await this.api.get(`/v2/illust/bookmark/detail`, params)
-        return response
+        return response as Promise<PixivBookmarkDetail>
     }
 
-    public novelBookmarks = async (params: PixivParams & {user_id: number}) => {
+    public bookmarksNovel = async (params: PixivParams & {user_id: number}) => {
+        if (!params.restrict) params.restrict = "public"
         const response = await this.api.get(`/v1/user/bookmarks/novel`, params)
-        return response
+        return response as Promise<PixivNovelSearch>
     }
 
-    public bookmarkNovelTags = async (params?: PixivParams) => {
+    public bookmarkNovelTags = async (params: PixivParams & {user_id: number}) => {
+        if (!params.restrict) params.restrict = "public"
         const response = await this.api.get(`/v1/user/bookmark-tags/novel`, params)
-        return response
+        return response as Promise<PixivBookmarkSearch>
     }
 
-    public following = async (params: PixivParams & {user_id: number, restrict: "public"}) => {
+    public following = async (params: PixivParams & {user_id: number}) => {
+        if (!params.restrict) params.restrict = "public"
         const response = await this.api.get(`/v1/user/following`, params)
         return response as Promise<PixivUserSearch>
     }
@@ -73,6 +80,6 @@ export class User {
 
     public followDetail = async (params: PixivParams & {user_id: number}) => {
         const response = await this.api.get(`/v1/user/follow/detail`, params)
-        return response
+        return response as Promise<PixivFollowDetail>
     }
 }

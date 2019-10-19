@@ -1,5 +1,7 @@
 import api from "../API"
-import {PixivBookmarkSearch, PixivCommentSearch, PixivNovelSearch, PixivParams, PixivTrendTags} from "../types"
+import {PixivBookmarkDetail, PixivCommentSearch, PixivCommentSearchV2, PixivNovelDetail,
+PixivNovelSearch, PixivNovelText, PixivParams, PixivTrendTags} from "../types"
+import {PixivBookmarkRanges} from "./../dist/types/BookmarkTypes.d"
 
 export class Novel {
     constructor(private readonly api: api) {}
@@ -13,12 +15,12 @@ export class Novel {
 
     public detail = async (params: PixivParams & {novel_id: number}) => {
         const response = await this.api.get(`/v2/novel/detail`, params)
-        return response
+        return response as Promise<PixivNovelDetail>
     }
 
     public text = async (params: PixivParams & {novel_id: number}) => {
         const response = await this.api.get(`/v1/novel/text`, params)
-        return response
+        return response as Promise<PixivNovelText>
     }
 
     public new = async (params?: PixivParams) => {
@@ -26,25 +28,15 @@ export class Novel {
         return response as Promise<PixivNovelSearch>
     }
 
-    public myPixiv = async (params?: PixivParams) => {
-        const response = await this.api.get(`/v1/novel/mypixiv'`, params)
-        return response as Promise<PixivNovelSearch>
-    }
-
     public follow = async (params?: PixivParams) => {
+        if (!params) params = {}
+        if (!params.restrict) params.restrict = "all"
         const response = await this.api.get(`/v1/novel/follow`, params)
-        return response
+        return response as Promise<PixivNovelSearch>
     }
 
     public recommended = async (params?: PixivParams) => {
         const response = await this.api.get(`/v1/novel/recommended`, params)
-        return response as Promise<PixivNovelSearch>
-    }
-
-    public recommendedNoLogin = async (params?: PixivParams) => {
-        if (!params) params = {}
-        if (!params.include_ranking_novels) params.include_ranking_novels = true
-        const response = await this.api.get(`/v1/novel/recommended-nologin`, params)
         return response as Promise<PixivNovelSearch>
     }
 
@@ -55,7 +47,7 @@ export class Novel {
 
     public bookmarkRanges = async (params: PixivParams & {word: string}) => {
         const response = await this.api.get(`/v1/search/bookmark-ranges/novel`, params)
-        return response as Promise<PixivBookmarkSearch>
+        return response as Promise<PixivBookmarkRanges>
     }
 
     public trendingTags = async (params?: PixivParams) => {
@@ -70,17 +62,12 @@ export class Novel {
 
     public commentsV2 = async (params: PixivParams & {novel_id: number}) => {
         const response = await this.api.get(`/v2/novel/comments`, params)
-        return response as Promise<PixivCommentSearch>
-    }
-
-    public commentReplies = async (params: PixivParams & {comment_id: number}) => {
-        const response = await this.api.get(`/v1/novel/series`, params)
-        return response
+        return response as Promise<PixivCommentSearchV2>
     }
 
     public series = async (params: PixivParams & {series_id: number}) => {
         const response = await this.api.get(`/v1/novel/series`, params)
-        return response
+        return response as Promise<PixivNovelSearch>
     }
 
     public ranking = async (params?: PixivParams) => {
@@ -90,6 +77,6 @@ export class Novel {
 
     public bookmarkDetail = async (params: PixivParams & {novel_id: number}) => {
         const response = await this.api.get(`/v2/novel/bookmark/detail`, params)
-        return response
+        return response as Promise<PixivBookmarkDetail>
     }
 }
