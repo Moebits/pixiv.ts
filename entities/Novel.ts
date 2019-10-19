@@ -42,7 +42,8 @@ export class Novel {
     }
 
     public recommendedNoLogin = async (params?: PixivParams) => {
-        params.include_ranking_novels = true
+        if (!params) params = {}
+        if (!params.include_ranking_novels) params.include_ranking_novels = true
         const response = await this.api.get(`/v1/novel/recommended-nologin`, params)
         return response as Promise<PixivNovelSearch>
     }

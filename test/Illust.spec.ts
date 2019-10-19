@@ -2,6 +2,13 @@ import {assert} from "chai"
 import "mocha"
 import login, {pixiv} from "./login"
 
+/*
+Removed:
+recommendedNoLogin
+commentReplies
+related
+*/
+
 describe("Illust", async function() {
     this.beforeAll(async function() {
         await login()
@@ -29,24 +36,16 @@ describe("Illust", async function() {
 
     it("should get bookmark tags", async function() {
         const response = await pixiv.illust.bookmarkTags({illust_id: 70728512})
-        console.log(response)
         assert(response.hasOwnProperty("bookmark_tags"))
     })
 
-    it.only("should get comments", async function() {
+    it("should get comments", async function() {
         const response = await pixiv.illust.comments({illust_id: 70728512})
-        console.log(response)
         assert(response.hasOwnProperty("comments"))
     })
 
-    it.only("should get comments V2", async function() {
+    it("should get comments V2", async function() {
         const response = await pixiv.illust.commentsV2({illust_id: 70728512})
-        console.log(response)
-        assert(response.hasOwnProperty("comments"))
-    })
-
-    it("should get comment replies", async function() {
-        const response = await pixiv.illust.commentReplies({comment_id: 70728512})
         assert(response.hasOwnProperty("comments"))
     })
 
@@ -72,16 +71,6 @@ describe("Illust", async function() {
 
     it("should get recommended illusts", async function() {
         const response = await pixiv.illust.recommended()
-        assert(response.hasOwnProperty("illusts"))
-    })
-
-    it("should get recommended no login illusts", async function() {
-        const response = await pixiv.illust.recommendedNoLogin()
-        assert(response.hasOwnProperty("illusts"))
-    })
-
-    it("should get recommended illusts", async function() {
-        const response = await pixiv.illust.related({illust_id: 2912676})
         assert(response.hasOwnProperty("illusts"))
     })
 

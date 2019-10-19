@@ -1,3 +1,15 @@
+import {PixivIllust, PixivNovel} from "./index"
+
+export interface PixivUserSearch {
+  user_previews: Array<{
+    user: PixivUser
+    illusts: PixivIllust[]
+    novels: PixivNovel[]
+    is_muted: boolean
+  }>
+  next_url: string | null
+}
+
 export interface PixivUser {
     id: number
     name: string

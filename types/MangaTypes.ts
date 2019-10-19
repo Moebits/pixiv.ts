@@ -1,5 +1,11 @@
-import {PixivMetaPage, PixivTag} from "./IllustTypes"
-import {PixivUser} from "./UserTypes"
+import {PixivMetaPage, PixivTag, PixivUser} from "./index"
+
+export interface PixivMangaSearch {
+  illusts: PixivManga[]
+  ranking_illusts: PixivManga[] | []
+  privacy_policy: {}
+  next_url: string | null
+}
 
 export interface PixivManga {
     id: number

@@ -54,7 +54,7 @@ export interface PixivParams {
     user_id?: number
     type?: string
     filter?: string
-    restrict?: "public" | "private"
+    restrict?: "public" | "private" | "all"
     illust_id?: number
     parent_comment_id?: number
     content_type?: string

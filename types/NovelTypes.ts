@@ -1,5 +1,11 @@
-import {PixivTag} from "./IllustTypes"
-import {PixivUser} from "./UserTypes"
+import {PixivTag, PixivUser} from "./index"
+
+export interface PixivNovelSearch {
+  novels: PixivNovel[]
+  next_url: string | null
+  privacy_policy?: {}
+  search_span_limit?: number
+}
 
 export interface PixivNovel {
     id: number

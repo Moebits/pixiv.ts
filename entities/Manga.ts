@@ -10,7 +10,8 @@ export class Manga {
     }
 
     public recommended = async (params?: PixivParams) => {
-        params.include_ranking_label = true
+        if (!params) params = {}
+        if (!params.include_ranking_label) params.include_ranking_label = true
         const response = await this.api.get(`v1/manga/recommended`, params)
         return response as Promise<PixivMangaSearch>
     }
