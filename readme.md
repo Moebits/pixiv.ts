@@ -11,4 +11,40 @@ functions to make downloading pixiv illusts easier.
 npm install pixiv.ts
 ```
 
-This is a wip package, come back soon. 
+### Getting Started
+In order to receive an access token from pixiv, you must login using your **username** and **password**. All subsequent logins after the first will be done using the **refreshToken**, and it will be regenerated automatically whenever it expires.
+
+#### Searching for illusts and novels
+```ts
+import Pixiv from "pixiv.ts"
+
+async function useAPI() {
+    /*Logging in is an asynchronous function. Don't try to use the constructor, all the properties will be undefined!*/
+    const pixiv = await Pixiv.login(process.env.PIXIV_USERNAME, process.env.PIXIV_PASSWORD)
+
+    /*You can get an illust by url or id with the getIllust() function on the main class.*/
+    const illust = await pixiv.getIllust("https://www.pixiv.net/en/artworks/76833012")
+
+    /*Alternatively, we can search pixiv for multiple.*/
+    const illusts = await pixiv.search.illusts({word: "gabriel dropout"})
+
+    /*You can also search through the rankings.*/
+    const rankings = await pixiv.illust.ranking({mode: "day"})
+
+    /*Getting novels is practically identical to illusts.*/
+    const novel = await pixiv.novel.detail({novel_id: 11826198})
+
+    /*There is also manga, but it doesn't have that many endpoints.*/
+    const manga = await pixiv.manga.recommended()
+}
+useAPI()
+```
+#### Searching for users
+```ts
+    /*Again, there is a getUser() function on the main class.*/
+    const me = await pixiv.getUser("https://www.pixiv.net/member.php?id=35096162")
+
+    /*You can also search for users using a query.*/
+    const users = await pixiv.search.users({word: "kawaii"})
+
+```

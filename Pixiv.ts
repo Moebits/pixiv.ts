@@ -83,6 +83,28 @@ export default class Pixiv {
         headers.authorization = `Bearer ${Pixiv.accessToken}`
         return new Pixiv(Date.now(), result.expires_in)
     }
+
+    public getIllust = async (illustResolvable: string | number) => {
+        const illustId = String(illustResolvable).match(/\d{8,}/)
+        if (!illustId) return Promise.reject("Invalid id or url provided.")
+        const response = await this.illust.detail({illust_id: Number(illustId[0])})
+        return response
+    }
+
+    public getNovel = async (novelResolvable: string | number) => {
+        const novelId = String(novelResolvable).match(/\d{8,}/)
+        if (!novelId) return Promise.reject("Invalid id or url provided.")
+        const response = await this.novel.detail({novel_id: Number(novelId[0])})
+        return response
+    }
+
+    public getUser = async (userResolvable: string | number) => {
+        const userId = String(userResolvable).match(/\d{8,}/)
+        if (!userId) return Promise.reject("Invalid id or url provided.")
+        const response = await this.user.detail({user_id: Number(userId[0])})
+        return response
+    }
+
 }
 
 module.exports.default = Pixiv

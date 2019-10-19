@@ -3,6 +3,6 @@ import Pixiv from "./Pixiv"
 require("dotenv").config();
 (async () => {
     const pixiv = await Pixiv.login(process.env.PIXIV_USERNAME, process.env.PIXIV_PASSWORD)
-    const result = await pixiv.ugoira.metadata({illust_id: 68064543})
+    const result = await pixiv.getIllust("https://www.pixiv.net/en/artworks/77240733")
     console.log(result)
 })()

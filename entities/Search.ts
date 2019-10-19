@@ -12,12 +12,12 @@ export class Search {
         return response as Promise<PixivIllustSearch>
     }
 
-    public novel = async (params: PixivParams & SearchDefaults) => {
+    public novels = async (params: PixivParams & SearchDefaults) => {
         const response = await this.api.get(`/v1/search/novel`, params)
         return response as Promise<PixivNovelSearch>
     }
 
-    public user = async (params: PixivParams & SearchDefaults) => {
+    public users = async (params: PixivParams & SearchDefaults) => {
         const response = await this.api.get(`/v1/search/user`, params)
         return response as Promise<PixivUserSearch>
     }
