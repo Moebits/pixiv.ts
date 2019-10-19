@@ -4,6 +4,13 @@ import {PixivBookmarkSearch, PixivCommentSearch, PixivNovelSearch, PixivParams, 
 export class Novel {
     constructor(private readonly api: api) {}
 
+    public get = async (novelResolvable: string | number) => {
+        const novelId = String(novelResolvable).match(/\d{8,}/)
+        if (!novelId) return Promise.reject("Invalid id or url provided.")
+        const response = await this.detail({novel_id: Number(novelId[0])})
+        return response
+    }
+
     public detail = async (params: PixivParams & {novel_id: number}) => {
         const response = await this.api.get(`/v2/novel/detail`, params)
         return response
@@ -34,7 +41,8 @@ export class Novel {
         return response as Promise<PixivNovelSearch>
     }
 
-    public recommendedNoLogin = async (params?: PixivParams & {include_ranking_novels: true}) => {
+    public recommendedNoLogin = async (params?: PixivParams) => {
+        params.include_ranking_novels = true
         const response = await this.api.get(`/v1/novel/recommended-nologin`, params)
         return response as Promise<PixivNovelSearch>
     }

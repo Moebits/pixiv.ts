@@ -23,6 +23,7 @@ export interface PixivAuthHeaders {
 }
 
 export interface PixivAPIResponse {
+  response: {
     access_token: string
     expires_in: number
     token_type: string
@@ -30,6 +31,7 @@ export interface PixivAPIResponse {
     refresh_token: string
     user: PixivClientUser
     device_token: string
+  }
 }
 
 export interface PixivClientUser {

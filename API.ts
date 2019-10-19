@@ -2,6 +2,7 @@ import axios, {AxiosRequestConfig} from "axios"
 import {ParsedUrlQueryInput, stringify} from "querystring"
 import {URLSearchParams} from "url"
 import replace from "./Replace"
+import {PixivAPIResponse} from "./types/ApiTypes"
 import {PixivAuthData, PixivAuthHeaders, PixivParams} from "./types/index"
 
 const oauthURL = "https://oauth.secure.pixiv.net/auth/token"
@@ -22,7 +23,8 @@ export default class API {
         const expired = (Date.now() - this.loginTime) > (this.expirationTime * 900)
         if (expired) {
             this.data.grant_type = "refresh_token"
-            const result = await axios.post(oauthURL, stringify(this.data as unknown as ParsedUrlQueryInput), {headers: this.headers} as AxiosRequestConfig).then((r) => r.data)
+            const result = await axios.post(oauthURL, stringify(this.data as unknown as ParsedUrlQueryInput),
+            {headers: this.headers} as AxiosRequestConfig).then((r) => r.data) as PixivAPIResponse
             this.accessToken = result.response.access_token
             this.refreshToken = result.response.refresh_token
             this.headers.authorization = `Bearer ${this.accessToken}`
@@ -37,6 +39,8 @@ export default class API {
         params.filter = "for_ios"
         params.access_token = this.accessToken
         if (endpoint.startsWith("/")) endpoint = endpoint.slice(1)
+        console.log(endpoint)
+        console.log(params)
         const response = await axios.get(appURL + endpoint, {json: true, form: true, params} as AxiosRequestConfig).then((r) => r.data)
         return response
     }

@@ -77,32 +77,11 @@ export default class Pixiv {
         } else {
             data.grant_type = "refresh_token"
         }
-        const result = await axios.post(oauthURL, stringify(data as unknown as ParsedUrlQueryInput), {headers} as AxiosRequestConfig).then((r) => r.data.response) as PixivAPIResponse
-        Pixiv.accessToken = result.access_token
-        Pixiv.refreshToken = result.refresh_token
+        const result = await axios.post(oauthURL, stringify(data as unknown as ParsedUrlQueryInput), {headers} as AxiosRequestConfig).then((r) => r.data) as PixivAPIResponse
+        Pixiv.accessToken = result.response.access_token
+        Pixiv.refreshToken = result.response.refresh_token
         headers.authorization = `Bearer ${Pixiv.accessToken}`
-        return new Pixiv(Date.now(), result.expires_in)
-    }
-
-    public getIllust = async (illustResolvable: string | number) => {
-        const illustId = String(illustResolvable).match(/\d{8,}/)
-        if (!illustId) return Promise.reject("Invalid id or url provided.")
-        const response = await this.illust.detail({illust_id: Number(illustId[0])})
-        return response
-    }
-
-    public getNovel = async (novelResolvable: string | number) => {
-        const novelId = String(novelResolvable).match(/\d{8,}/)
-        if (!novelId) return Promise.reject("Invalid id or url provided.")
-        const response = await this.novel.detail({novel_id: Number(novelId[0])})
-        return response
-    }
-
-    public getUser = async (userResolvable: string | number) => {
-        const userId = String(userResolvable).match(/\d{8,}/)
-        if (!userId) return Promise.reject("Invalid id or url provided.")
-        const response = await this.user.detail({user_id: Number(userId[0])})
-        return response
+        return new Pixiv(Date.now(), result.response.expires_in)
     }
 
 }

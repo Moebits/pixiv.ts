@@ -1,9 +1,17 @@
 import api from "../API"
 import {PixivBookmarkDetail, PixivBookmarkSearch, PixivCommentSearch, PixivIllustDetail, PixivIllustSearch,
 PixivParams, PixivTrendTags} from "../types"
+import {PixivBookmarkRanges} from "./../types/IllustTypes"
 
 export class Illust {
     constructor(private readonly api: api) {}
+
+    public get = async (illustResolvable: string | number) => {
+        const illustId = String(illustResolvable).match(/\d{8,}/)
+        if (!illustId) return Promise.reject("Invalid id or url provided.")
+        const response = await this.detail({illust_id: Number(illustId[0])})
+        return response
+    }
 
     public detail = async (params: PixivParams & {illust_id: number}) => {
         const response = await this.api.get(`/v1/illust/detail`, params)
@@ -76,12 +84,13 @@ export class Illust {
     }
 
     public bookmarkTags = async (params?: PixivParams) => {
+        params.restrict = "public"
         const response = await this.api.get(`/v1/user/bookmark-tags/illust`, params)
         return response as Promise<PixivBookmarkSearch>
     }
 
     public bookmarkRanges = async (params: PixivParams & {word: string}) => {
         const response = await this.api.get(`/v1/search/bookmark-ranges/illust`, params)
-        return response as Promise<PixivBookmarkSearch>
+        return response as Promise<PixivBookmarkRanges>
     }
 }

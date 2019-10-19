@@ -4,8 +4,8 @@ import * as path from "path"
 import * as stream from "stream"
 import * as unzip from "unzip"
 import api from "../API"
-import {PixivIllustSearch} from "./../types/SearchTypes"
-import {PixivFolderMap, PixivMultiCall} from "./../types/UtilTypes"
+import {PixivIllustSearch} from "../types/SearchTypes"
+import {PixivFolderMap, PixivMultiCall} from "../types/UtilTypes"
 
 export class Util {
     constructor(private readonly api: api) {}

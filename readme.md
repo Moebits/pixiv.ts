@@ -27,8 +27,8 @@ async function useAPI() {
     /*Logging in is an asynchronous function. Don't try to use the constructor, all the properties will be undefined!*/
     const pixiv = await Pixiv.login(process.env.PIXIV_USERNAME, process.env.PIXIV_PASSWORD)
 
-    /*You can get an illust by url or id with the getIllust() function on the main class.*/
-    const illust = await pixiv.getIllust("https://www.pixiv.net/en/artworks/76833012")
+    /*You can get an illust very easily with it's url or id.*/
+    const illust = await pixiv.illust.get("https://www.pixiv.net/en/artworks/76833012")
 
     /*Alternatively, we can search pixiv for multiple.*/
     const illusts = await pixiv.search.illusts({word: "gabriel dropout"})
@@ -46,8 +46,8 @@ useAPI()
 ```
 #### Searching for users
 ```ts
-    /*Again, there is a getUser() function on the main class.*/
-    const me = await pixiv.getUser("https://www.pixiv.net/member.php?id=35096162")
+    /*Again, you can use get() on the user class.*/
+    const me = await pixiv.user.get("https://www.pixiv.net/member.php?id=35096162")
 
     /*You can also search for users using a query.*/
     const users = await pixiv.search.users({word: "kawaii"})

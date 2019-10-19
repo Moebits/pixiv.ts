@@ -4,6 +4,13 @@ import {PixivIllustSearch, PixivNovelSearch, PixivParams, PixivUserDetail, Pixiv
 export class User {
     constructor(private readonly api: api) {}
 
+    public get = async (userResolvable: string | number) => {
+        const userId = String(userResolvable).match(/\d{8,}/)
+        if (!userId) return Promise.reject("Invalid id or url provided.")
+        const response = await this.detail({user_id: Number(userId[0])})
+        return response
+    }
+
     public detail = async (params: PixivParams & {user_id: number}) => {
         const response = await this.api.get(`/v1/user/detail`, params)
         return response as Promise<PixivUserDetail>
