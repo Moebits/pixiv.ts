@@ -19,6 +19,10 @@ npm install pixiv.ts
 ### Getting Started
 In order to receive an **access token** from pixiv, you must login using your **username** and **password**. All subsequent logins after the first will be done using the **refresh token** you receive on first login, and it will be regenerated automatically whenever it expires.
 
+### Useful Links
+- [**Pixiv.ts Documentation**](https://tenpi.github.io/pixiv.ts/)
+- [**Pixivpy Wiki**](https://github.com/upbit/pixivpy/wiki)
+
 #### Searching for illusts, novels, and manga
 ```ts
 import Pixiv from "pixiv.ts"
