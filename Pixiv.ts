@@ -60,6 +60,7 @@ export default class Pixiv {
         this.user = new User(this.api)
         this.ugoira = new Ugoira(this.api)
         this.util = new Util(this.api)
+        this.spotlight = new Spotlight(this.api)
         return Pixiv.refreshToken
     }
 

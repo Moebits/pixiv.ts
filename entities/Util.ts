@@ -9,8 +9,9 @@ import {PixivFolderMap, PixivIllustSearch, PixivMultiCall} from "../types"
 export class Util {
     constructor(private readonly api: api) {}
 
-    public parseID = (input: string): number | null => {
-        return input.match(/\d{8,}/) ? Number(input.match(/\{8,}/)[0]) : null
+    public parseID = (input: string) => {
+        const parsed = input.match(/\d{8,}/)
+        return parsed ? Number(parsed) : null
     }
 
     public timeout = async (ms: number) => {

@@ -8,8 +8,8 @@
 </div>
 
 ### About
-This is a wrapper for the Pixiv API that covers the mobile and desktop endpoints, includes typings, and offers various utility
-functions to make downloading pixiv illusts easier.
+This is a wrapper for the Pixiv API that includes typings that includes various utility functions
+to make getting content from pixiv a lot easier.
 
 ### Insall
 ```ts
@@ -17,9 +17,9 @@ npm install pixiv.ts
 ```
 
 ### Getting Started
-In order to receive an access token from pixiv, you must login using your **username** and **password**. All subsequent logins after the first will be done using the **refreshToken**, and it will be regenerated automatically whenever it expires.
+In order to receive an **access token** from pixiv, you must login using your **username** and **password**. All subsequent logins after the first will be done using the **refresh token** you receive on first login, and it will be regenerated automatically whenever it expires.
 
-#### Searching for illusts and novels
+#### Searching for illusts, novels, and manga
 ```ts
 import Pixiv from "pixiv.ts"
 
@@ -27,29 +27,213 @@ async function useAPI() {
     /*Logging in is an asynchronous function. Don't try to use the constructor, all the properties will be undefined!*/
     const pixiv = await Pixiv.login(process.env.PIXIV_USERNAME, process.env.PIXIV_PASSWORD)
 
-    /*You can get an illust very easily with it's url or id.*/
+    /*If you wish, you can regenerate and return your refresh token manually if it has expired*/
+    const refreshToken = await pixiv.refreshToken()
+
+    /*You can get an illust very easily with it's url or id. Most endpoints will have a get() method
+    that will parse the id out of the url automatically.*/
     const illust = await pixiv.illust.get("https://www.pixiv.net/en/artworks/76833012")
 
-    /*Alternatively, we can search pixiv for multiple.*/
-    const illusts = await pixiv.search.illusts({word: "gabriel dropout"})
+    /*To parse the id out of any url, you can use util.parseID()*/
+    const id = await pixiv.util.parseID("https://www.pixiv.net/en/artworks/75788934") //75788934
 
-    /*You can also search through the rankings.*/
-    const rankings = await pixiv.illust.ranking({mode: "day"})
+    /*You can search illusts with a query. It returns an object with an additional nextUrl() property, but since 
+    we are only interested in the illusts we can use a .then() chain to get them directly.*/
+    const illusts = await pixiv.search.illusts({word: "gabriel dropout"}).then((s) => s.illusts)
 
-    /*Getting novels is practically identical to illusts.*/
-    const novel = await pixiv.novel.detail({novel_id: 11826198})
+    /*You can also search through the rankings, popular previews, etc.*/
+    const rankings = await pixiv.illust.ranking({mode: "day"}).then((s) => s.illusts)
+    const popularPreviews = await pixiv.illust.popularPreview({word: "sagiri izumi"}).then((s) => s.illusts)
 
-    /*There is also manga, but it doesn't have that many endpoints.*/
-    const manga = await pixiv.manga.recommended()
+    /*And get all the illusts from a user.*/
+    const userIllusts = await pixiv.user.illusts({user_id: 18590546}).then((s) => s.illusts)
+
+    /*Getting novels is practically identical to illusts. The alternative to the get() method is
+    to query the api for the details directly.*/
+    const novel = await pixiv.novel.detail({novel_id: 11826198}).then((n) => n.novel)
+
+    /*Novels obviously have text, and you can retrieve it with the text() method.*/
+    const text = await pixiv.novel.text({novel_id: 11826198}).then((n) => n.novel_text)
+
+    /*There is also manga, which 90% of the time will have multiple pages. You can get the
+    urls of all the pages with the getPages() method.*/
+    const manga = await pixiv.manga.get("https://www.pixiv.net/en/artworks/77333204")
+    const pages = await pixiv.manga.getPages(manga)
 }
 useAPI()
 ```
-#### Searching for users
+#### Searching for users, bookmarks, tags, and articles
 ```ts
+async function useAPI() {
     /*Again, you can use get() on the user class.*/
-    const me = await pixiv.user.get("https://www.pixiv.net/member.php?id=35096162")
+    const user = await pixiv.user.get("https://www.pixiv.net/member.php?id=35096162")
 
     /*You can also search for users using a query.*/
     const users = await pixiv.search.users({word: "kawaii"})
 
+    /*You can retrieve a lot of info on bookmarks with the api, such as 
+    the details, tags, and ranges.*/
+    const bookmarkDetails = await pixiv.illust.bookmarkDetail({illust_id: 75788934}).then((b) => bookmark_detail)
+    const bookmarkTags = await pixiv.illust.bookmarkTags().then((b) => b.bookmark_tags)
+    const bookmarkRanges = await pixiv.illust.bookmarkRanges({word: "cute"}).then((b) => b.bookmark_ranges)
+
+    /*Of course, you can also get all of the bookmarks of a user.*/
+    const bookmarks = await pixiv.user.bookmarksIllust({user_id: 21479436}).then((s) => s.illusts)
+
+    /*To get articles from pixiv vision, you can use the spotlight endpoint.*/
+    const articles = await pixiv.spotlight.articles().then((s) => s.spotlight_articles)
+}
 ```
+
+#### Getting Ugoira Data
+```ts
+async function useAPI() {
+  /*You can retrieve all of the metadata for a ugoira, including all of the image frames, the delay
+  between each frame, and the url for the zip download.*/
+  const metadata = await pixiv.ugoira.metadata({illust_id: 77329939})
+}
+```
+
+### Common Parameters
+
+- `illust_id`: ID of the illust.
+- `user_id`: ID of the user.
+- `novel_id`: ID of the novel.
+- `series_id`: ID of the series.
+- `word`: The search query to search.
+- `type`: The type of content to search: `"illust" | "novel" | "manga" | "ugoira`
+- `restrict`: Restricts the bookmarks you search: `"public" | "private" | "all"`
+- `search_target`: The matching options in the search endpoint: `"partial_match_for_tags" | "exact_match_for_tags" | "title_and_caption"`
+- `mode`: For searching rankings, either: `"day" | "week" | "month" | "day_male" | "day_female" | "week_original" | "week_rookie" | "day_r18" | "day_male_r18" | "day_female_r18" | "week_r18" | "week_r18g" | "day_manga" | "week_manga" | "month_manga" | "week_rookie_manga" | "day_r18_manga" | "week_r18_manga" | "week_r18g_manga"`
+- `duration`: Relative search duration: `"within_last_day" | "within_last_week" | "within_last_month"`
+
+#### Common Types
+
+<details>
+<summary>PixivIllust</summary>
+
+```ts
+export interface PixivIllust {
+    id: number
+    title: string
+    type: string
+    image_urls: {
+      square_medium: string
+      medium: string
+      large?: string
+    }
+    caption: string
+    restrict: number
+    user: PixivUser
+    tags: PixivTag[]
+    tools: string[]
+    create_date: string
+    page_count: number
+    width: number
+    height: number
+    sanity_level: number
+    meta_single_page: {
+      original_image_url?: string
+    }
+    meta_pages: PixivMetaPage[]
+    total_view: number
+    total_bookmarks: number
+    is_bookmarked: boolean
+    visible: boolean
+    x_restrict: number
+    is_muted: boolean
+    total_comments: number
+  }
+
+```
+</details>
+
+<details>
+<summary>PixivUser</summary>
+
+```ts
+export interface PixivUser {
+    id: number
+    name: string
+    account: string
+    profile_image_urls: {
+      medium: string
+    }
+    comment: string
+    is_followed: boolean
+}
+```
+</details>
+
+<details>
+<summary>PixivUserDetail</summary>
+
+```ts
+export interface PixivUserDetail {
+    user: PixivUser
+    profile: {
+      webpage: string
+      gender: string
+      birth: string
+      birth_day: string
+      birth_year: number
+      region: string
+      address_id: number
+      country_code: string
+      job: string
+      job_id: number
+      total_follow_users: number
+      total_mypixiv_users: number
+      total_illusts: number
+      total_manga: number
+      total_novels: number
+      total_illust_bookmarks_public: number
+      total_illust_series: number
+      background_image_url: string
+      twitter_account: string
+      twitter_url: string
+      pawoo_url: string
+      is_premium: boolean
+      is_using_custom_profile_image: boolean
+    }
+    profile_publicity: {
+      gender: string
+      region: string
+      birth_day: string
+      birth_year: string
+      job: string
+      pawoo: boolean
+    }
+    workspace: {
+      pc: string
+      monitor: string
+      tool: string
+      scanner: string
+      tablet: string
+      mouse: string
+      printer: string
+      desktop: string
+      music: string
+      desk: string
+      chair: string
+      comment: string
+      workspace_image_url: string | null
+    }
+}
+
+```
+</details>
+
+<details>
+<summary>PixivComment</summary>
+
+```ts
+export interface PixivComment {
+    id: number
+    comment: string
+    date: string
+    user: PixivUser
+    parent_comment: PixivComment
+}
+```
+</details>

@@ -52,10 +52,13 @@ export interface PixivClientUser {
 export interface PixivParams {
     access_token?: string
     user_id?: number
-    type?: string
+    series_id?: number
+    novel_id?: number
+    type?: "illust" | "novel" | "manga" | "ugoira"
     filter?: string
     restrict?: "public" | "private" | "all"
     illust_id?: number
+    comment_id?: number
     parent_comment_id?: number
     content_type?: string
     include_total_comments?: boolean
@@ -87,7 +90,7 @@ export interface PixivParams {
       | "partial_match_for_tags"
       | "exact_match_for_tags"
       | "title_and_caption"
-    sort?: "date_desc" | "date_asc" | "popular_desc"
+    sort?: "date_desc" | "date_asc" | "popular_desc" | "popular_asc"
     start_date?: string
     duration?: "within_last_day" | "within_last_week" | "within_last_month"
     end_date?: string
