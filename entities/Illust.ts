@@ -1,5 +1,5 @@
 import api from "../API"
-import {PixivBookmarkDetail, PixivBookmarkRanges, PixivBookmarkSearch, PixivCommentSearch, PixivCommentSearchV2,
+import {PixivBookmarkDetail, PixivBookmarkRanges, PixivBookmarkSearch, PixivCommentSearch, PixivCommentSearchV2, PixivIllust,
 PixivIllustDetail, PixivIllustSearch, PixivParams, PixivTrendTags} from "../types"
 
 export class Illust {
@@ -16,6 +16,19 @@ export class Illust {
         const response = await this.api.get(`/v1/illust/detail`, params)
         if (response.illust.type !== "illust" && response.illust.type !== "ugoira") return Promise.reject(`This is not an illust, it is a ${response.illust.type}`)
         return response as Promise<PixivIllustDetail>
+    }
+
+    public getPages = async (illust: PixivIllust, size?: string) => {
+        if (!size) size = "medium"
+        const urls: string[] = []
+        if (!illust.meta_pages[0]) {
+            urls.push(illust.image_urls[size])
+        } else {
+            for (let i = 0; i < illust.meta_pages.length; i++) {
+                urls.push(illust.meta_pages[i].image_urls[size])
+            }
+        }
+        return urls
     }
 
     public new = async (params?: PixivParams) => {

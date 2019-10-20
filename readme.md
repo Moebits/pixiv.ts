@@ -8,7 +8,7 @@
 </div>
 
 ### About
-This is a wrapper for the Pixiv API that includes typings that includes various utility functions
+This is a wrapper for the Pixiv API that includes typings and various utility functions
 to make getting content from pixiv a lot easier.
 
 ### Insall
