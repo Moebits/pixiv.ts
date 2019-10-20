@@ -40,6 +40,9 @@
   },
   "dependencies": {
     "axios": "^0.19.0",
+    "get-pixels": "^3.3.2",
+    "gif-encoder": "^0.7.2",
+    "image-size": "^0.8.3",
     "unzip": "^0.1.11"
   }
 }

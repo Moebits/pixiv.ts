@@ -3,7 +3,7 @@ import {PixivBookmarkDetail, PixivBookmarkRanges, PixivBookmarkSearch, PixivComm
 PixivIllustDetail, PixivIllustSearch, PixivParams, PixivTrendTags} from "../types"
 
 export class Illust {
-    constructor(private readonly api: api) {}
+    constructor(protected readonly api: api) {}
 
     public get = async (illustResolvable: string | number) => {
         const illustId = String(illustResolvable).match(/\d{8,}/)

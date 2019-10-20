@@ -9,7 +9,7 @@
 
 ### About
 This is a wrapper for the Pixiv API that includes typings and various utility functions
-to make getting content from pixiv a lot easier.
+to make getting content from pixiv a lot easier. You can also mass download illusts and download ugoiras as gifs!
 
 ### Insall
 ```ts
@@ -85,12 +85,28 @@ async function useAPI() {
 }
 ```
 
-#### Getting Ugoira Data
+#### Downloading Illusts and Converting Ugoiras to gifs
 ```ts
 async function useAPI() {
+  /*You can download any illust locally with the function downloadIllust().*/
+  await pixiv.util.downloadIllust("https://www.pixiv.net/en/artworks/72668134", "./illust", "large")
+
+  /*One of my personal favorite methods is mass-downloading illusts and mapping them into separate
+  folders based on the tags that they have.*/
+  await pixiv.util.downloadIllusts("black tights", "./illust", "large", [{folder: "stockings", tag: "black tights"}])
+
   /*You can retrieve all of the metadata for a ugoira, including all of the image frames, the delay
   between each frame, and the url for the zip download.*/
   const metadata = await pixiv.ugoira.metadata({illust_id: 77329939})
+
+  /*Using the above endpoint internally, there is an utility to download the zip file and extract
+  it to a local path automatically.*/
+  await pixiv.util.downloadZip("https://www.pixiv.net/en/artworks/77359698", "./ugoira")
+
+  /*A ton of png/jpg files are not that useful... which is why you can also convert and download a 
+  ugoira as a gif! This uses downloadZip() and encodeGif() internally. The third parameter allows you
+  to constrain the gif to a certain number of frames, as the file size can become quite large.*/
+  await pixiv.util.downloadUgoira("https://www.pixiv.net/en/artworks/68064543", "./ugoira", 100)
 }
 ```
 
