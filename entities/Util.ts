@@ -11,7 +11,6 @@ import {Illust, Search, Ugoira} from "./index"
 
 const GifEncoder = require("gif-encoder")
 const getPixels = require("get-pixels")
-const webp = require("webp-converter")
 
 export class Util {
     private readonly illust = new Illust(this.api)
@@ -153,6 +152,7 @@ export class Util {
     /**
      * @ignore
      */
+    /*
     private readonly encodeWebp = async (files: string[], delays: number[], dest?: string) => {
         const pathIndex = files[0].search(/\d{8,}/)
         const pathDir = files[0].slice(0, pathIndex)
@@ -178,9 +178,8 @@ export class Util {
         for (let j = 0; j < webpArray.length; j++) {
             inputArray.push(`${webpArray[j]} +${delays[j]}`)
         }
-        console.log(inputArray)
         webp.webpmux_animate(inputArray, dest, "10", "255,255,255,255", (status, error) => {console.log(status, error)})
-    }
+    }*/
 
     /**
      * Downloads and extracts all of the individual images in a ugoira.

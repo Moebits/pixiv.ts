@@ -17,6 +17,9 @@ export default class API {
                        private readonly loginTime: number,
                        private readonly expirationTime: number) {}
 
+    /**
+     * Gets a new access token if the refresh token expires.
+     */
     public refreshAccessToken = async (refreshToken?: string) => {
         if (refreshToken) this.refreshToken = refreshToken
         const expired = (Date.now() - this.loginTime) > (this.expirationTime * 900)
@@ -31,6 +34,9 @@ export default class API {
         return this.refreshToken
     }
 
+    /**
+     * Fetches an endpoint from the API and returns the response.
+     */
     public get = async (endpoint: string, params?: PixivParams) => {
         await this.refreshAccessToken()
         if (!params) params = {}
@@ -41,6 +47,9 @@ export default class API {
         return response
     }
 
+    /**
+     * Fetches the url in the nextUrl() property of search responses.
+     */
     public next = async (nextUrl: string) => {
         await this.refreshAccessToken()
         const {baseUrl, params} = this.destructureParams(nextUrl)
@@ -49,6 +58,9 @@ export default class API {
         return response
     }
 
+    /**
+     * Destructures a URL to get all of the search parameters and values.
+     */
     public destructureParams = (nextUrl: string) => {
             const paramUrl = nextUrl.split("?")
             const baseUrl = paramUrl[0]

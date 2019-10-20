@@ -32,6 +32,9 @@ const headers: PixivAuthHeaders = {
     "accept-encoding": "gzip"
 }
 
+/**
+ * The main class for interacting with the Pixiv API.
+ */
 export default class Pixiv {
     public static accessToken: string
     public static refreshToken: string
@@ -47,6 +50,9 @@ export default class Pixiv {
 
     private constructor(private readonly loginTime: number, private readonly expirationTime: number) {}
 
+    /**
+     * Refreshes your refresh token and access token if they have expired.
+     */
     public refreshToken = async (refreshToken?: string) => {
         if (!refreshToken) refreshToken = Pixiv.refreshToken
         if (!refreshToken) return Promise.reject("You must login with a username and password first.")
@@ -64,6 +70,9 @@ export default class Pixiv {
         return Pixiv.refreshToken
     }
 
+    /**
+     * Logs into Pixiv with your username and password.
+     */
     public static login = async (username: string, password: string) => {
         if (!username || !password) {
             const missing = username ? "password" : (password ? "username" : "username and password")

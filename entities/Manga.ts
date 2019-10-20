@@ -4,6 +4,9 @@ import {PixivManga, PixivMangaDetail, PixivMangaSearch, PixivParams} from "../ty
 export class Manga {
     constructor(private readonly api: api) {}
 
+    /**
+     * Gets a manga by URL or ID.
+     */
     public get = async (illustResolvable: string | number) => {
         const illustId = String(illustResolvable).match(/\d{8,}/)
         if (!illustId) return Promise.reject("Invalid id or url provided.")
@@ -11,6 +14,9 @@ export class Manga {
         return response
     }
 
+    /**
+     * Gets all of the pages in a manga.
+     */
     public getPages = async (manga: PixivManga, size?: string) => {
         if (!size) size = "medium"
         const urls: string[] = []
@@ -24,17 +30,26 @@ export class Manga {
         return urls
     }
 
+    /**
+     * Gets the details for a manga.
+     */
     public detail = async (params: PixivParams & {illust_id: number}) => {
         const response = await this.api.get(`/v1/illust/detail`, params)
         if (response.illust.type !== "manga") return Promise.reject(`This is not a manga, it is an ${response.illust.type}`)
         return response as Promise<PixivMangaDetail>
     }
 
+    /**
+     * Fetches new manga.
+     */
     public new = async (params?: PixivParams) => {
         const response = await this.api.get(`/v1/illust/new`, params)
         return response as Promise<PixivMangaSearch>
     }
 
+    /**
+     * Fetches recommended manga.
+     */
     public recommended = async (params?: PixivParams) => {
         if (!params) params = {}
         if (!params.include_ranking_label) params.include_ranking_label = true

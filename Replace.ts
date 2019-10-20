@@ -1,3 +1,6 @@
+/**
+ * Replaces common search terms to japanese
+ */
 export default class Replace {
     public static replaceTag = (tag: string) => {
         tag = tag
