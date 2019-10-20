@@ -4,7 +4,7 @@
  * ========================================================================== */
 /**
  * Correct `block` display not defined in IE 6/7/8/9 and Firefox 3. */
-article, aside, details, figcaption, figure, footer, header, hgroup, main, nav, section, summary {
+ article, aside, details, figcaption, figure, footer, header, hgroup, main, nav, section, summary {
   display: block; }
 
 /**
@@ -376,7 +376,7 @@ table {
   color: black; }
 
 .hljs-comment, .hljs-annotation, .hljs-template_comment, .diff .hljs-header, .hljs-chunk, .apache .hljs-cbracket {
-  color: #808080; }
+  color: #ff38c3; }
 
 .hljs-keyword, .hljs-id, .hljs-built_in, .css .smalltalk .hljs-class, .hljs-winutils, .bash .hljs-variable, .tex .hljs-command, .hljs-request, .hljs-status, .nginx .hljs-title {
   color: #ff53c2; }
@@ -387,7 +387,7 @@ table {
     color: #ff53c2; }
 
 .hljs-string, .hljs-title, .hljs-parent, .hljs-tag .hljs-value, .hljs-rules .hljs-value {
-  color: #d88; }
+  color: rgb(61, 226, 255); }
 
 .ruby .hljs-symbol {
   color: #d88; }
@@ -401,13 +401,13 @@ table {
   color: #2b91af; }
 
 .hljs-phpdoc, .hljs-javadoc, .hljs-xmlDocTag {
-  color: #808080; }
+  color: #ff2ea1; }
 
 .vhdl .hljs-typename {
   font-weight: bold; }
 
 .vhdl .hljs-string {
-  color: #666666; }
+  color: #ff3ab3; }
 
 .vhdl .hljs-literal {
   color: #a31515; }
