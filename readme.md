@@ -121,7 +121,7 @@ async function useAPI() {
 - `novel_id`: ID of the novel.
 - `series_id`: ID of the series.
 - `word`: The search query to search.
-- `type`: The type of content to search: `"illust" | "novel" | "manga" | "ugoira`
+- `type`: The type of content to search: `"illust" | "novel" | "manga" | "ugoira"`
 - `restrict`: Restricts the bookmarks you search: `"public" | "private" | "all"`
 - `search_target`: The matching options in the search endpoint: `"partial_match_for_tags" | "exact_match_for_tags" | "title_and_caption"`
 - `mode`: For searching rankings, either: `"day" | "week" | "month" | "day_male" | "day_female" | "week_original" | "week_rookie" | "day_r18" | "day_male_r18" | "day_female_r18" | "week_r18" | "week_r18g" | "day_manga" | "week_manga" | "month_manga" | "week_rookie_manga" | "day_r18_manga" | "week_r18_manga" | "week_r18g_manga"`
