@@ -83,6 +83,7 @@ export default class Pixiv {
             data.password = password
             data.grant_type = "password"
         } else {
+            data.refresh_token = Pixiv.refreshToken
             data.grant_type = "refresh_token"
         }
         const result = await axios.post(oauthURL, stringify(data as unknown as ParsedUrlQueryInput), {headers} as AxiosRequestConfig).then((r) => r.data) as PixivAPIResponse
