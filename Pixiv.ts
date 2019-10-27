@@ -92,6 +92,23 @@ export default class Pixiv {
         return new Pixiv(Date.now(), result.response.expires_in)
     }
 
+    /**
+     * Forces a login with username and password only.
+     */
+    public static forcePasswordLogin = async (username: string, password: string) => {
+        if (!username || !password) {
+            const missing = username ? "password" : (password ? "username" : "username and password")
+            return Promise.reject(`You must provide a ${missing} in order to login!`)
+        }
+        data.username = username
+        data.password = password
+        data.grant_type = "password"
+        const result = await axios.post(oauthURL, stringify(data as unknown as ParsedUrlQueryInput), {headers} as AxiosRequestConfig).then((r) => r.data) as PixivAPIResponse
+        Pixiv.accessToken = result.response.access_token
+        Pixiv.refreshToken = result.response.refresh_token
+        headers.authorization = `Bearer ${Pixiv.accessToken}`
+        return new Pixiv(Date.now(), result.response.expires_in)
+    }
 }
 
 module.exports.default = Pixiv

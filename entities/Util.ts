@@ -6,7 +6,7 @@ import * as stream from "stream"
 import * as unzip from "unzip"
 import api from "../API"
 import replace from "../Translate"
-import {PixivFolderMap, PixivMultiCall} from "../types"
+import {PixivFolderMap, PixivIllust, PixivMultiCall} from "../types"
 import {Illust, Search, Ugoira} from "./index"
 
 export class Util {
@@ -67,6 +67,14 @@ export class Util {
     }
 
     /**
+     * Utility for sorting by bookmarks.
+     */
+    public sort = (illusts: PixivIllust[]) => {
+        Array.prototype.sort.call(illusts, ((a: PixivIllust, b: PixivIllust) => (a.total_bookmarks - b.total_bookmarks) * -1))
+        return illusts
+    }
+
+    /**
      * Downloads an illust locally.
      */
     public downloadIllust = async (url: string, folder: string, size?: string) => {
@@ -80,7 +88,8 @@ export class Util {
         const writeStream = fs.createWriteStream(dest)
         await axios.get(url, {responseType: "stream", headers: {Referer: "https://www.pixiv.net/"}})
         .then((r) => r.data.pipe(writeStream))
-        this.awaitStream(writeStream)
+        await this.awaitStream(writeStream)
+        return dest
     }
 
     /**
@@ -90,6 +99,7 @@ export class Util {
     public downloadIllusts = async (query: string, dest: string, size?: string, folderMap?: PixivFolderMap[]) => {
         if (!size) size = "medium"
         const illusts = await this.search.illusts({word: query}).then((r) => r.illusts)
+        const promiseArray = []
         loop1:
         for (let i = 0; i < illusts.length; i++) {
             const illust = illusts[i]
@@ -99,14 +109,18 @@ export class Util {
                     for (let j = 0; j < folderMap.length; j++) {
                         const tag = await replace.translateTag(folderMap[j].tag)
                         if (tag.includes(illust.tags[k].name)) {
-                            this.downloadIllust(imgUrl, path.join(dest, folderMap[j].folder))
+                            const promise = this.downloadIllust(imgUrl, path.join(dest, folderMap[j].folder))
+                            promiseArray.push(promise)
                             continue loop1
                         }
                     }
                 }
             }
-            this.downloadIllust(imgUrl, dest)
+            const promise = this.downloadIllust(imgUrl, dest)
+            promiseArray.push(promise)
         }
+        const resolved = await Promise.all(promiseArray)
+        return resolved
     }
 
     /**
@@ -144,6 +158,7 @@ export class Util {
             addToGif(files)
             gif.on("end", () => {
                     resolve()
+                    return dest
                 })
             })
     }
@@ -215,6 +230,7 @@ export class Util {
             fileArray.push(`${destPath}/${files[i]}`)
             delayArray.push(metadata.frames[i].delay)
         }
-        this.encodeGif(fileArray)
+        const destination = await this.encodeGif(fileArray)
+        return destination
     }
 }
