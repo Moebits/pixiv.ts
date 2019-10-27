@@ -43,7 +43,8 @@ export default class API {
         params.filter = "for_ios"
         params.access_token = this.accessToken
         if (endpoint.startsWith("/")) endpoint = endpoint.slice(1)
-        const response = await axios.get(appURL + endpoint, {json: true, form: true, params} as AxiosRequestConfig).then((r) => r.data)
+        endpoint = appURL + endpoint
+        const response = await axios.get(endpoint, {json: true, form: true, params} as AxiosRequestConfig).then((r) => r.data)
         return response
     }
 

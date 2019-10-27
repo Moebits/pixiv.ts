@@ -29,6 +29,9 @@ export default class Replace {
         .replace(/azur lane/i, "アズールレーン")
         .replace(/laffey/i, "ラフィー(アズールレーン)")
         .replace(/senko[\s\S]*san|senko/i, "仙狐さん")
+        .replace(/ugoira/i, "うごイラ")
+        .replace(/R18/i, "R-18")
+        .replace(/R18G/i, "R-18G")
         return tag
     }
 }

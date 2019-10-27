@@ -45,8 +45,14 @@ async function useAPI() {
     we are only interested in the illusts we can use a .then() chain to get them directly.*/
     const illusts = await pixiv.search.illusts({word: "gabriel dropout"}).then((s) => s.illusts)
 
+    /*Great tags - Add R-18 get R-18 only, ugoira to get ugoiras only, and 00 to get illusts with over
+    100 bookmarks only. Note that you must have R18 enabled on your account in order to get R18 illusts.
+    To achieve the opposite and exclude tags, add a minus sign in front.*/
+    const r18 = await pixiv.search.illusts({word: "R-18 ugoira 00"})
+    const sfw = await pixiv.search.illusts({word: "-R-18"})
+
     /*You can also search through the rankings, popular previews, etc.*/
-    const rankings = await pixiv.illust.ranking({mode: "day"}).then((s) => s.illusts)
+    const rankings = await pixiv.illust.ranking({mode: "day_r18"}).then((s) => s.illusts)
     const popularPreviews = await pixiv.illust.popularPreview({word: "sagiri izumi"}).then((s) => s.illusts)
 
     /*And get all the illusts from a user.*/
