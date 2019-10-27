@@ -42,4 +42,5 @@ export interface PixivManga {
     is_bookmarked: boolean
     visible: boolean
     is_muted: boolean
+    url?: string
   }

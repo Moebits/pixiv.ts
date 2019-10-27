@@ -5,6 +5,7 @@ export interface PixivAuthData {
     password?: string
     grant_type?: "refresh_token" | "password"
     get_secure_url?: boolean
+    refresh_token?: string
 }
 
 export interface PixivAuthHeaders {
@@ -52,6 +53,8 @@ export interface PixivClientUser {
 export interface PixivParams {
     access_token?: string
     en?: boolean
+    r18?: boolean
+    bookmarks?: "50" | "100" | "300" | "500" | "1000" | "3000" | "5000" | "10000"
     user_id?: number
     series_id?: number
     novel_id?: number

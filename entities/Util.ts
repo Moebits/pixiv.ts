@@ -4,6 +4,7 @@ import {imageSize} from "image-size"
 import * as path from "path"
 import * as stream from "stream"
 import * as unzip from "unzip"
+import {URLSearchParams} from "url"
 import api from "../API"
 import replace from "../Translate"
 import {PixivFolderMap, PixivIllust, PixivMultiCall} from "../types"
@@ -77,14 +78,46 @@ export class Util {
     /**
      * Downloads an illust locally.
      */
-    public downloadIllust = async (url: string, folder: string, size?: string) => {
+    public downloadIllust = async (illustResolvable: string | PixivIllust, folder: string, size?: string) => {
         if (!size) size = "medium"
+        let url: string
+        if (illustResolvable.hasOwnProperty("image_urls")) {
+            url = (illustResolvable as PixivIllust).image_urls[size]
+        } else {
+            url = illustResolvable as string
+        }
         if (!url.startsWith("https://i.pximg.net/")) {
             url = await this.illust.get(url).then((i) => i.illust.image_urls[size] ?
             i.illust.image_urls[size] : i.illust.image_urls.medium)
         }
         if (!fs.existsSync(folder)) fs.mkdirSync(folder)
         const dest = path.join(folder, `${url.match(/\d{8,}/)[0]}.png`)
+        const writeStream = fs.createWriteStream(dest)
+        await axios.get(url, {responseType: "stream", headers: {Referer: "https://www.pixiv.net/"}})
+        .then((r) => r.data.pipe(writeStream))
+        await this.awaitStream(writeStream)
+        return dest
+    }
+
+    public downloadProfilePicture = async (illustResolvable: string | PixivIllust, folder: string, size?: string) => {
+        if (!size) size = "medium"
+        let url: string
+        let username: string
+        if (illustResolvable.hasOwnProperty("image_urls")) {
+            url = (illustResolvable as PixivIllust).user.profile_image_urls[size]
+            username = (illustResolvable as PixivIllust).user.name
+        } else {
+            url = illustResolvable as string
+            username = (illustResolvable as string).match(/\d{8,}/) ? (illustResolvable as string).match(/\d{8,}/)[0] : "profile"
+        }
+        if (!url.startsWith("https://i.pximg.net/")) {
+            const illust = await this.illust.get(url).then((i) => i.illust)
+            url = illust.user.profile_image_urls[size] ?
+            illust.user.profile_image_urls[size] : illust.user.profile_image_urls.medium
+            username = illust.user.name
+        }
+        if (!fs.existsSync(folder)) fs.mkdirSync(folder)
+        const dest = path.join(folder, `${username}.png`)
         const writeStream = fs.createWriteStream(dest)
         await axios.get(url, {responseType: "stream", headers: {Referer: "https://www.pixiv.net/"}})
         .then((r) => r.data.pipe(writeStream))

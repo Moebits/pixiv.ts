@@ -1,17 +1,30 @@
 import api from "../API"
 import {PixivBookmarkDetail, PixivBookmarkRanges, PixivCommentSearch, PixivCommentSearchV2,
-PixivNovelDetail, PixivNovelSearch, PixivNovelText, PixivParams, PixivTrendTags} from "../types"
+PixivNovel, PixivNovelDetail, PixivNovelSearch, PixivNovelText, PixivParams, PixivTrendTags} from "../types"
+import {Search} from "./index"
 
 export class Novel {
+    private readonly search = new Search(this.api)
     constructor(private readonly api: api) {}
 
     /**
      * Gets a novel by URL or ID.
      */
-    public get = async (novelResolvable: string | number) => {
-        const novelId = String(novelResolvable).match(/\d{8,}/)
-        if (!novelId) return Promise.reject("Invalid id or url provided.")
-        const response = await this.detail({novel_id: Number(novelId[0])})
+    public get = async (novelResolvable: string | number, params?: PixivParams) => {
+        let novelId = String(novelResolvable).match(/\d{8,}/) ? String(novelResolvable).match(/\d{8,}/)[0] : null
+        if (!novelId) {
+            if (!params) params = {}
+            params.word = String(novelResolvable)
+            const result = await this.search.illusts(params as PixivParams & {word: string})
+            let illusts = result.illusts
+            Array.prototype.sort.call(illusts, ((a: PixivNovel, b: PixivNovel) => (a.total_bookmarks - b.total_bookmarks) * -1))
+            illusts = illusts.filter((i) => {
+                return (i.type === "novel") ? true : false
+            })
+            novelId = String(illusts[0].id)
+        }
+        const response = await this.detail({novel_id: Number(novelId)})
+        response.novel.url = `https://www.pixiv.net/en/artworks/${response.novel.id}`
         return response
     }
 
@@ -20,6 +33,7 @@ export class Novel {
      */
     public detail = async (params: PixivParams & {novel_id: number}) => {
         const response = await this.api.get(`/v2/novel/detail`, params)
+        response.novel.url = `https://www.pixiv.net/en/artworks/${response.novel.id}`
         return response as Promise<PixivNovelDetail>
     }
 
@@ -36,6 +50,7 @@ export class Novel {
      */
     public new = async (params?: PixivParams) => {
         const response = await this.api.get(`/v1/novel/new`, params)
+        response.novels.forEach((i: PixivNovel) => i.url = `https://www.pixiv.net/en/artworks/${i.id}`)
         return response as Promise<PixivNovelSearch>
     }
 
@@ -46,6 +61,7 @@ export class Novel {
         if (!params) params = {}
         if (!params.restrict) params.restrict = "all"
         const response = await this.api.get(`/v1/novel/follow`, params)
+        response.novels.forEach((i: PixivNovel) => i.url = `https://www.pixiv.net/en/artworks/${i.id}`)
         return response as Promise<PixivNovelSearch>
     }
 
@@ -54,6 +70,7 @@ export class Novel {
      */
     public recommended = async (params?: PixivParams) => {
         const response = await this.api.get(`/v1/novel/recommended`, params)
+        response.novels.forEach((i: PixivNovel) => i.url = `https://www.pixiv.net/en/artworks/${i.id}`)
         return response as Promise<PixivNovelSearch>
     }
 
@@ -62,6 +79,7 @@ export class Novel {
      */
     public popularPreview = async (params: PixivParams & {word: string}) => {
         const response = await this.api.get(`/v1/search/popular-preview/novel`, params)
+        response.novels.forEach((i: PixivNovel) => i.url = `https://www.pixiv.net/en/artworks/${i.id}`)
         return response as Promise<PixivNovelSearch>
     }
 
@@ -102,6 +120,7 @@ export class Novel {
      */
     public series = async (params: PixivParams & {series_id: number}) => {
         const response = await this.api.get(`/v1/novel/series`, params)
+        response.novels.forEach((i: PixivNovel) => i.url = `https://www.pixiv.net/en/artworks/${i.id}`)
         return response as Promise<PixivNovelSearch>
     }
 
@@ -112,6 +131,7 @@ export class Novel {
         if (!params) params = {}
         if (!params.mode) params.mode = "day"
         const response = await this.api.get(`/v1/novel/ranking`, params)
+        response.novels.forEach((i: PixivNovel) => i.url = `https://www.pixiv.net/en/artworks/${i.id}`)
         return response as Promise<PixivNovelSearch>
     }
 

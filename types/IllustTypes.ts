@@ -40,4 +40,5 @@ export interface PixivIllust {
     x_restrict: number
     is_muted: boolean
     total_comments: number
+    url?: string
   }

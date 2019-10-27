@@ -1,16 +1,29 @@
 import api from "../API"
 import {PixivManga, PixivMangaDetail, PixivMangaSearch, PixivParams} from "../types"
+import {Search} from "./index"
 
 export class Manga {
-    constructor(private readonly api: api) {}
+    private readonly search = new Search(this.api)
+    public constructor(private readonly api: api) {}
 
     /**
      * Gets a manga by URL or ID.
      */
-    public get = async (illustResolvable: string | number) => {
-        const illustId = String(illustResolvable).match(/\d{8,}/)
-        if (!illustId) return Promise.reject("Invalid id or url provided.")
-        const response = await this.detail({illust_id: Number(illustId[0])})
+    public get = async (illustResolvable: string | number, params?: PixivParams) => {
+        let illustId = String(illustResolvable).match(/\d{8,}/) ? String(illustResolvable).match(/\d{8,}/)[0] : null
+        if (!illustId) {
+            if (!params) params = {}
+            params.word = String(illustResolvable)
+            const result = await this.search.illusts(params as PixivParams & {word: string})
+            let illusts = result.illusts
+            Array.prototype.sort.call(illusts, ((a: PixivManga, b: PixivManga) => (a.total_bookmarks - b.total_bookmarks) * -1))
+            illusts = illusts.filter((i) => {
+                return (i.type === "manga") ? true : false
+            })
+            illustId = String(illusts[0].id)
+        }
+        const response = await this.detail({illust_id: Number(illustId)})
+        response.illust.url = `https://www.pixiv.net/en/artworks/${response.illust.id}`
         return response
     }
 
@@ -36,6 +49,7 @@ export class Manga {
     public detail = async (params: PixivParams & {illust_id: number}) => {
         const response = await this.api.get(`/v1/illust/detail`, params)
         if (response.illust.type !== "manga") return Promise.reject(`This is not a manga, it is an ${response.illust.type}`)
+        response.illust.url = `https://www.pixiv.net/en/artworks/${response.illust.id}`
         return response as Promise<PixivMangaDetail>
     }
 
@@ -44,6 +58,7 @@ export class Manga {
      */
     public new = async (params?: PixivParams) => {
         const response = await this.api.get(`/v1/illust/new`, params)
+        response.illusts.forEach((i: PixivManga) => i.url = `https://www.pixiv.net/en/artworks/${i.id}`)
         return response as Promise<PixivMangaSearch>
     }
 
@@ -54,6 +69,7 @@ export class Manga {
         if (!params) params = {}
         if (!params.include_ranking_label) params.include_ranking_label = true
         const response = await this.api.get(`v1/manga/recommended`, params)
+        response.illusts.forEach((i: PixivManga) => i.url = `https://www.pixiv.net/en/artworks/${i.id}`)
         return response as Promise<PixivMangaSearch>
     }
 }

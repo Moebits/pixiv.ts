@@ -1,7 +1,7 @@
 import api from "../API"
 import replace from "../Translate"
-import {PixivAutoComplete, PixivAutoCompleteV2, PixivIllustSearch,
-PixivNovelSearch, PixivParams, PixivUserSearch} from "../types"
+import {PixivAutoComplete, PixivAutoCompleteV2, PixivIllust,
+PixivIllustSearch, PixivNovel, PixivNovelSearch, PixivParams, PixivUserSearch} from "../types"
 
 export class Search {
     constructor(private readonly api: api) {}
@@ -15,13 +15,33 @@ export class Search {
         return params
     }
 
+    private readonly processWord = async (params: PixivParams & {word: string}) => {
+        if (!params.en) params.word = await replace.translateTag(params.word)
+        if (params.r18 !== undefined) {
+            switch (params.r18) {
+                case true:
+                    params.word += " R-18"
+                    break
+                case false:
+                    params.word += " -R-18"
+                    break
+                default:
+            }
+        }
+        if (params.bookmarks) {
+            params.word += ` ${params.bookmarks}users入り`
+        }
+        return params
+    }
+
     /**
      * Searches for illusts with a query.
      */
     public illusts = async (params: PixivParams & {word: string}) => {
         params = this.searchDefaults(params)
-        if (!params.en) params.word = await replace.translateTag(params.word)
+        params = await this.processWord(params)
         const response = await this.api.get(`/v1/search/illust`, params)
+        response.illusts.forEach((i: PixivIllust) => i.url = `https://www.pixiv.net/en/artworks/${i.id}`)
         return response as Promise<PixivIllustSearch>
     }
 
@@ -30,8 +50,9 @@ export class Search {
      */
     public novels = async (params: PixivParams & {word: string}) => {
         params = this.searchDefaults(params)
-        if (!params.en) params.word = await replace.translateTag(params.word)
+        params = await this.processWord(params)
         const response = await this.api.get(`/v1/search/novel`, params)
+        response.novels.forEach((i: PixivNovel) => i.url = `https://www.pixiv.net/en/artworks/${i.id}`)
         return response as Promise<PixivNovelSearch>
     }
 
@@ -39,6 +60,7 @@ export class Search {
      * Searches for users with a query.
      */
     public users = async (params: PixivParams & {word: string}) => {
+        params = await this.processWord(params)
         const response = await this.api.get(`/v1/search/user`, params)
         return response as Promise<PixivUserSearch>
     }
@@ -47,6 +69,7 @@ export class Search {
      * Gets autocompleted keywords for the word.
      */
     public autoComplete = async (params: PixivParams & {word: string}) => {
+        params = await this.processWord(params)
         const response = await this.api.get(`/v1/search/autocomplete`, params)
         return response as Promise<PixivAutoComplete>
     }
@@ -55,6 +78,7 @@ export class Search {
      * The V2 endpoint includes translated names.
      */
     public autoCompleteV2 = async (params: PixivParams & {word: string}) => {
+        params = await this.processWord(params)
         const response = await this.api.get(`/v2/search/autocomplete`, params)
         return response as Promise<PixivAutoCompleteV2>
     }

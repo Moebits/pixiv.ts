@@ -38,22 +38,24 @@ async function useAPI() {
     that will parse the id out of the url automatically.*/
     const illust = await pixiv.illust.get("https://www.pixiv.net/en/artworks/76833012")
 
+    /*You could also get the most bookmarked illust from the query. This uses search internally, so you can
+    specify the parameters in the second argument.*/
+    const shortcut = await pixiv.illust.get("gabriel", {r18: true})
+
     /*To parse the id out of any url, you can use util.parseID()*/
     const id = await pixiv.util.parseID("https://www.pixiv.net/en/artworks/75788934") //75788934
 
     /*You can search illusts with a query. It returns an object with an additional nextUrl() property, but since 
     we are only interested in the illusts we can use a .then() chain to get them directly.*/
-    const illusts = await pixiv.search.illusts({word: "gabriel dropout"}).then((s) => s.illusts)
+    let illusts = await pixiv.search.illusts({word: "gabriel dropout"}).then((s) => s.illusts)
+    /*There is also an utility to sort by most bookmarked.*/
+    illusts = pixiv.util.sort(illusts)
 
-    /*Tag translations - By default tags are translated to japanese, but you can remove this behavior by setting the 
-    en parameter to true.*/
-    const englishSearch = await pixiv.search.illusts({word: "hello", en: true}).then((s) => s.illusts)
-
-    /*Great tags - Add R-18 get R-18 only, ugoira to get ugoiras only, and 00 to get illusts with over
-    100 bookmarks only. Note that you must have R18 enabled on your account in order to get R18 illusts.
-    To achieve the opposite and exclude tags, add a minus sign in front.*/
-    const r18 = await pixiv.search.illusts({word: "R-18 ugoira 00"})
-    const sfw = await pixiv.search.illusts({word: "-R-18"})
+    /*Filter parameters: en to search for english tags, type to filter by type, r18 to filter r18 illusts,
+    and bookmarks to filter by minimum bookmarks. By default tags are translated to japanese, but you can change
+    that behavior by changing en to true.*/
+    const filteredSearch = await pixiv.search.illusts({word: "megumin", r18: true, type: "illust", bookmarks: "100"})
+    const englishSearch = await pixiv.search.illusts({word: "cute", en: true})
 
     /*You can also search through the rankings, popular previews, etc.*/
     const rankings = await pixiv.illust.ranking({mode: "day_r18"}).then((s) => s.illusts)
