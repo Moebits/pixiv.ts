@@ -92,12 +92,12 @@ export class Util {
             i.illust.image_urls[size] : i.illust.image_urls.medium)
         }
         if (__dirname.includes("node_modules")) {
-            folder = path.join(__dirname, "../../../", folder)
+            folder = path.join(__dirname, "../../../../", folder)
         } else {
             folder = path.join(__dirname, "../../", folder)
         }
         if (basename.includes(".")) folder = folder.replace(basename, "")
-        if (!fs.existsSync(folder)) fs.mkdirSync(folder)
+        if (!fs.existsSync(folder)) fs.mkdirSync(folder, {recursive: true})
         const dest = basename.includes(".") ? `${folder}${basename}` : path.join(folder, `${url.match(/\d{8,}/)[0]}.png`)
         const writeStream = fs.createWriteStream(dest)
         await axios.get(url, {responseType: "stream", headers: {Referer: "https://www.pixiv.net/"}})
@@ -125,11 +125,11 @@ export class Util {
             username = illust.user.name
         }
         if (__dirname.includes("node_modules")) {
-            folder = path.join(__dirname, "../../../", folder)
+            folder = path.join(__dirname, "../../../../", folder)
         } else {
             folder = path.join(__dirname, "../../", folder)
         }
-        if (!fs.existsSync(folder)) fs.mkdirSync(folder)
+        if (!fs.existsSync(folder)) fs.mkdirSync(folder, {recursive: true})
         const dest = basename.includes(".") ? `${folder}${basename}` : path.join(folder, `${username}.png`)
         const writeStream = fs.createWriteStream(dest)
         await axios.get(url, {responseType: "stream", headers: {Referer: "https://www.pixiv.net/"}})
@@ -252,11 +252,11 @@ export class Util {
             url = await this.ugoira.get(url).then((u) => u.ugoira_metadata.zip_urls.medium)
         }
         if (__dirname.includes("node_modules")) {
-            dest = path.join(__dirname, "../../../", dest, url.match(/\d{8,}/)[0])
+            dest = path.join(__dirname, "../../../../", dest, url.match(/\d{8,}/)[0])
         } else {
             dest = path.join(__dirname, "../../", dest, url.match(/\d{8,}/)[0])
         }
-        if (!fs.existsSync(dest)) fs.mkdirSync(dest)
+        if (!fs.existsSync(dest)) fs.mkdirSync(dest, {recursive: true})
         const writeStream = await axios.get(url, {responseType: "stream", headers: {Referer: "https://www.pixiv.net/"}})
         .then((r) => r.data.pipe(unzip.Extract({path: dest})))
 
