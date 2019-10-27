@@ -10,7 +10,7 @@ const oauthURL = "https://oauth.secure.pixiv.net/auth/token"
 const clientId = "MOBrBDS8blbauoSck0ZfDbtuzpyT"
 const clientSecret = "lsACyCD94FhDUtGTXi3QzcFE2uU1hqtDaKeqrdwj"
 const hashSecret = "28c1fdd170a5204386cb1313c7077b34f83e4aaf4aa829ce78c231e05b0bae2c"
-const clientTime = new Date().toISOString().slice(0, -5) + "+00:00"
+const clientTime = new Date().toISOString().replace(".", "+").replace("Z", "0")
 const clientHash = crypto.createHash("md5").update(String(clientTime + hashSecret)).digest("hex")
 
 const data: PixivAuthData = {
@@ -85,7 +85,6 @@ export default class Pixiv {
         } else {
             data.grant_type = "refresh_token"
         }
-        console.log(headers)
         const result = await axios.post(oauthURL, stringify(data as unknown as ParsedUrlQueryInput), {headers} as AxiosRequestConfig).then((r) => r.data) as PixivAPIResponse
         Pixiv.accessToken = result.response.access_token
         Pixiv.refreshToken = result.response.refresh_token
