@@ -5,12 +5,9 @@ import * as path from "path"
 import * as stream from "stream"
 import * as unzip from "unzip"
 import api from "../API"
-import replace from "../Replace"
-import {PixivFolderMap, PixivIllustSearch, PixivMultiCall} from "../types"
+import replace from "../Translate"
+import {PixivFolderMap, PixivMultiCall} from "../types"
 import {Illust, Search, Ugoira} from "./index"
-
-const GifEncoder = require("gif-encoder")
-const getPixels = require("get-pixels")
 
 export class Util {
     private readonly illust = new Illust(this.api)
@@ -100,7 +97,7 @@ export class Util {
             if (folderMap) {
                 for (let k = 0; k < illust.tags.length; k++) {
                     for (let j = 0; j < folderMap.length; j++) {
-                        const tag = replace.replaceTag(folderMap[j].tag)
+                        const tag = await replace.translateTag(folderMap[j].tag)
                         if (tag.includes(illust.tags[k].name)) {
                             this.downloadIllust(imgUrl, path.join(dest, folderMap[j].folder))
                             continue loop1
@@ -116,6 +113,8 @@ export class Util {
      * Encodes a new gif from an array of file paths.
      */
     public encodeGif = async (files: string[], dest?: string) => {
+        const GifEncoder = require("gif-encoder")
+        const getPixels = require("get-pixels")
         return new Promise((resolve) => {
             const dimensions = imageSize(files[0])
             const gif = new GifEncoder(dimensions.width, dimensions.height)

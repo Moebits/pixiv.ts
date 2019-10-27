@@ -1,9 +1,11 @@
+import * as translate from "@vitalets/google-translate-api"
+
 /**
- * Replaces common search terms to japanese
+ * Translates search terms to japanese
  */
-export default class Replace {
-    public static replaceTag = (tag: string) => {
-        tag = tag
+export default class Translate {
+    public static translateTag = async (tag: string) => {
+        const newTag = tag
         .replace(/gabriel dropout/i, "ガヴリールドロップアウト")
         .replace(/tenma gabriel white|gabriel white|gabriel/i, "天真=ガヴリール=ホワイト")
         .replace(/vignette tsukinose april|vignette tsukinose|vignette/i, "月乃瀬=ヴィネット=エイプリル")
@@ -32,6 +34,8 @@ export default class Replace {
         .replace(/ugoira/i, "うごイラ")
         .replace(/R18/i, "R-18")
         .replace(/R18G/i, "R-18G")
-        return tag
+        if (newTag !== tag) return newTag
+        const translated = await translate(tag, {to: "ja"})
+        return translated.text
     }
 }

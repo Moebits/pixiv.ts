@@ -1,5 +1,5 @@
 import api from "../API"
-import replace from "../Replace"
+import replace from "../Translate"
 import {PixivAutoComplete, PixivAutoCompleteV2, PixivIllustSearch,
 PixivNovelSearch, PixivParams, PixivUserSearch} from "../types"
 
@@ -20,7 +20,7 @@ export class Search {
      */
     public illusts = async (params: PixivParams & {word: string}) => {
         params = this.searchDefaults(params)
-        params.word = replace.replaceTag(params.word)
+        if (!params.en) params.word = await replace.translateTag(params.word)
         const response = await this.api.get(`/v1/search/illust`, params)
         return response as Promise<PixivIllustSearch>
     }
@@ -30,7 +30,7 @@ export class Search {
      */
     public novels = async (params: PixivParams & {word: string}) => {
         params = this.searchDefaults(params)
-        params.word = replace.replaceTag(params.word)
+        if (!params.en) params.word = await replace.translateTag(params.word)
         const response = await this.api.get(`/v1/search/novel`, params)
         return response as Promise<PixivNovelSearch>
     }

@@ -51,6 +51,7 @@ export interface PixivClientUser {
 
 export interface PixivParams {
     access_token?: string
+    en?: boolean
     user_id?: number
     series_id?: number
     novel_id?: number

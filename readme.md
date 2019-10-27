@@ -45,6 +45,10 @@ async function useAPI() {
     we are only interested in the illusts we can use a .then() chain to get them directly.*/
     const illusts = await pixiv.search.illusts({word: "gabriel dropout"}).then((s) => s.illusts)
 
+    /*Tag translations - By default tags are translated to japanese, but you can remove this behavior by setting the 
+    en parameter to true.*/
+    const englishSearch = await pixiv.search.illusts({word: "hello", en: true}).then((s) => s.illusts)
+
     /*Great tags - Add R-18 get R-18 only, ugoira to get ugoiras only, and 00 to get illusts with over
     100 bookmarks only. Note that you must have R18 enabled on your account in order to get R18 illusts.
     To achieve the opposite and exclude tags, add a minus sign in front.*/
