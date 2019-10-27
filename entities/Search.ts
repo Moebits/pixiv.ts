@@ -41,6 +41,7 @@ export class Search {
         params = this.searchDefaults(params)
         params = await this.processWord(params)
         const response = await this.api.get(`/v1/search/illust`, params)
+        if (params.type) response.illusts = response.illusts.filter((i: PixivIllust) => i.type === params.type)
         response.illusts.forEach((i: PixivIllust) => i.url = `https://www.pixiv.net/en/artworks/${i.id}`)
         return response as Promise<PixivIllustSearch>
     }
