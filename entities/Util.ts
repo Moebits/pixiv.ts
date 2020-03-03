@@ -98,7 +98,7 @@ export class Util {
         }
         if (basename.includes(".")) folder = folder.replace(basename, "")
         if (!fs.existsSync(folder)) fs.mkdirSync(folder, {recursive: true})
-        const dest = basename.includes(".") ? `${folder}${basename}` : path.join(folder, `${url.match(/\d{8,}/)[0]}.png`)
+        const dest = basename.includes(".") ? `${folder}${basename}` : path.join(folder, `${url.match(/\d{6,}/) ? url.match(/\d{6,}/)[0] : "illust"}.png`)
         const writeStream = fs.createWriteStream(dest)
         await axios.get(url, {responseType: "stream", headers: {Referer: "https://www.pixiv.net/"}})
         .then((r) => r.data.pipe(writeStream))
@@ -116,7 +116,7 @@ export class Util {
             username = (illustResolvable as PixivIllust).user.name
         } else {
             url = illustResolvable as string
-            username = (illustResolvable as string).match(/\d{8,}/) ? (illustResolvable as string).match(/\d{8,}/)[0] : "profile"
+            username = (illustResolvable as string).match(/\d{6,}/) ? (illustResolvable as string).match(/\d{6,}/)[0] : "profile"
         }
         if (!url.startsWith("https://i.pximg.net/")) {
             const illust = await this.illust.get(url).then((i) => i.illust)
