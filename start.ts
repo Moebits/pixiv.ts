@@ -1,4 +1,4 @@
-import Pixiv from "./Pixiv"
+import Pixiv from "."
 
 require("dotenv").config();
 (async () => {

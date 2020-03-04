@@ -1,11 +1,11 @@
 {
   "name": "pixiv.ts",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "description": "Wrapper for the Pixiv API with typings",
   "main": "dist/pixiv.js",
   "types": "dist/pixiv.d.ts",
   "scripts": {
-    "start": "tsc && node dist/index.js",
+    "start": "tsc && node dist/start.js",
     "test": "ts-mocha --timeout 30000 -p tsconfig.json test/**/*.spec.ts",
     "docs": "typedoc --out docs ./",
     "prepublishOnly": "tsc"
