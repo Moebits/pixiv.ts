@@ -1,4 +1,4 @@
-import Pixiv from ".."
+import Pixiv from "../pixiv"
 
 require("dotenv").config()
 let pixiv: Pixiv
