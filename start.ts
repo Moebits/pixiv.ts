@@ -10,6 +10,6 @@ require("dotenv").config();
     // await pixiv.util.downloadUgoira("https://www.pixiv.net/en/artworks/77382629", "./downloads", "webp", 50)
     // const result = await pixiv.illust.get("gabriel dropout", {bookmarks: "100", type: "ugoira"})
     // const dest = await pixiv.util.downloadUgoira(result.illust, "./downloads")
-    const result = await pixiv.search.moe("黒タイツ")
+    const result = await pixiv.search.moe({query: "黒タイツ"})
     console.log(result)
 })()
