@@ -85,9 +85,16 @@ export class Search {
     }
 
     /**
-     * Searches pixiv.moe.
+     * Searches pixiv.moe. If there is no query, some defaults are provided.
      */
-    public moe = async (query: string) => {
+    public moe = async (query?: string) => {
+        const defaults = [
+            "gabriel dropout", "kisaragi", "azur lane", "konosuba",
+            "megumin", "aqua", "black tights", "white tights", "eromanga sensei",
+            "sagiri", "kancolle", "loli", "is the order a rabbit", "chino", "kiniro mosaic",
+            "gabriel", "interspecies reviewers", "hibiki", "tohru", "laffey", "kanna", "tights"
+        ]
+        if (!query) query = await replace.translateTag(defaults[Math.floor(Math.random()*defaults.length)])
         const response = await this.api.request(`https://api.kotori.love/pixiv/search?word=${encodeURIComponent(query)}`)
         return response.response.illusts as Promise<PixivIllust[]>
     }
