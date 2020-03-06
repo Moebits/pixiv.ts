@@ -73,4 +73,11 @@ export default class API {
             }
             return {baseUrl, params}
     }
+
+    /**
+     * Fetches any url.
+     */
+    public request = async (url: string, params?: any) => {
+        return axios.get(url, {params}).then((r) => r.data)
+    }
 }

@@ -8,8 +8,8 @@ require("dotenv").config();
         folder: "stockings 2", tag: "black tights"
     }])*/
     // await pixiv.util.downloadUgoira("https://www.pixiv.net/en/artworks/77382629", "./downloads", "webp", 50)
-    const result = await pixiv.illust.get("gabriel dropout", {bookmarks: "100", type: "ugoira"})
+    // const result = await pixiv.illust.get("gabriel dropout", {bookmarks: "100", type: "ugoira"})
+    // const dest = await pixiv.util.downloadUgoira(result.illust, "./downloads")
+    const result = await pixiv.search.moe("黒タイツ")
     console.log(result)
-    const dest = await pixiv.util.downloadUgoira(result.illust, "./downloads")
-    console.log(dest)
 })()

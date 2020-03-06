@@ -1,6 +1,6 @@
 {
   "name": "pixiv.ts",
-  "version": "0.2.3",
+  "version": "0.2.4",
   "description": "Wrapper for the Pixiv API with typings",
   "main": "dist/pixiv.js",
   "types": "dist/pixiv.d.ts",
@@ -8,7 +8,11 @@
     "start": "tsc && node dist/start.js",
     "test": "ts-mocha --timeout 30000 -p tsconfig.json test/**/*.spec.ts",
     "docs": "typedoc --out docs ./",
-    "prepublishOnly": "tsc"
+    "prepublishOnly": "tsc",
+    "preinstall": "npx npm-force-resolutions"
+  },
+  "resolutions": {
+    "graceful-fs": "4.2.3"
   },
   "repository": {
     "type": "git",
@@ -36,7 +40,7 @@
     "mocha": "^6.2.2",
     "ts-mocha": "^6.0.0",
     "typedoc": "^0.15.0",
-    "typescript": "^3.6.4"
+    "typescript": "^3.8.3"
   },
   "dependencies": {
     "@vitalets/google-translate-api": "^3.0.0",

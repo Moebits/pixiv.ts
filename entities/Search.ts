@@ -83,4 +83,12 @@ export class Search {
         const response = await this.api.get(`/v2/search/autocomplete`, params)
         return response as Promise<PixivAutoCompleteV2>
     }
+
+    /**
+     * Searches pixiv.moe.
+     */
+    public moe = async (query: string) => {
+        const response = await this.api.request(`https://api.kotori.love/pixiv/search?word=${encodeURIComponent(query)}`)
+        return response.response.illusts as Promise<PixivIllust[]>
+    }
 }
