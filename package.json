@@ -1,6 +1,6 @@
 {
   "name": "pixiv.ts",
-  "version": "0.3.1",
+  "version": "0.3.3",
   "description": "Wrapper for the Pixiv API with typings",
   "main": "dist/pixiv.js",
   "types": "dist/pixiv.d.ts",
@@ -8,15 +8,11 @@
     "start": "tsc && node dist/start.js",
     "test": "ts-mocha --timeout 30000 -p tsconfig.json test/**/*.spec.ts",
     "docs": "typedoc --out docs ./",
-    "prepublishOnly": "tsc",
-    "preinstall": "npx npm-force-resolutions"
+    "prepublishOnly": "tsc"
   },
   "repository": {
     "type": "git",
     "url": "https://github.com/Tenpi/pixiv.ts"
-  },
-  "resolutions": {
-    "graceful-fs": "4.2.3"
   },
   "keywords": [
     "pixiv",

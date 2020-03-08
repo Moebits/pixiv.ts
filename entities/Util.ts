@@ -305,9 +305,14 @@ export class Util {
             id = String(illustResolvable).match(/\d{8,}/)?.[0]?.trim()
         }
         const html = await axios.get(`https://www.pixiv.net/en/artworks/${id}`, {headers: {referer: "https://www.pixiv.net/"}}).then((r) => r.data)
-        const matches = html.match(/(?<="regular":")(.*?)(?=")/gm)?.map((m: string) => m)?.[0]
-        if (matches && (matches.match(/i-cf/) || matches.match(/tc-px/))) {
-            return matches
+        const match = html.match(/(?<="regular":")(.*?)(?=")/gm)?.map((m: string) => m)?.[0]
+        if (match && (match.match(/i-cf/) || match.match(/tc-px/))) {
+            try {
+                await axios.get(match, {headers: {referer: "https://www.pixiv.net/"}})
+                return match
+            } catch {
+                return null
+            }
         } else {
             return null
         }
