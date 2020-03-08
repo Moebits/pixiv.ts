@@ -144,7 +144,8 @@ export class Util {
      */
     public downloadIllusts = async (query: string, dest: string, size?: string, folderMap?: PixivFolderMap[]) => {
         if (!size) size = "medium"
-        const illusts = await this.search.illusts({word: query}).then((r) => r.illusts)
+        let illusts = await this.search.moe({query})
+        if (!illusts?.[0]?.title) illusts = await this.search.illusts({word: query}).then((r) => r.illusts)
         const promiseArray = []
         loop1:
         for (let i = 0; i < illusts.length; i++) {
