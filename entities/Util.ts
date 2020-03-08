@@ -293,4 +293,23 @@ export class Util {
         const destination = await this.encodeGif(fileArray)
         return destination
     }
+
+    /**
+     * Gets a viewable link for an illust, if it exists.
+     */
+    public viewLink = async (illustResolvable: string | PixivIllust): Promise<string | null> => {
+        let id: string
+        if (illustResolvable.hasOwnProperty("id")) {
+            id = String((illustResolvable as PixivIllust).id)
+        } else {
+            id = String(illustResolvable).match(/\d{8,}/)?.[0]?.trim()
+        }
+        const html = await axios.get(`https://www.pixiv.net/en/artworks/${id}`, {headers: {referer: "https://www.pixiv.net/"}}).then((r) => r.data)
+        const matches = html.match(/(?<="regular":")(.*?)(?=")/gm)?.map((m: string) => m)?.[0]
+        if (matches && (matches.match(/i-cf/) || matches.match(/tc-px/))) {
+            return matches
+        } else {
+            return null
+        }
+    }
 }
