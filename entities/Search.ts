@@ -88,6 +88,7 @@ export class Search {
      * Searches pixiv.moe. If there is no query, some defaults are provided.
      */
     public moe = async (params?: {query?: string, r18?: boolean, ugoira?: boolean}) => {
+        if (!params) params = {}
         const defaults = [
             "gabriel dropout", "kisaragi", "azur lane", "konosuba",
             "megumin", "aqua", "black tights", "white tights", "eromanga sensei",
