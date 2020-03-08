@@ -9,22 +9,22 @@ describe("Manga", async function() {
 
     it("should get a manga", async function() {
         const response = await pixiv.manga.get("https://www.pixiv.net/en/artworks/77338440")
-        assert(response.illust.hasOwnProperty("series"))
+        assert(response.hasOwnProperty("series"))
     })
 
     it("should get all manga pages", async function() {
         const response = await pixiv.manga.get("https://www.pixiv.net/en/artworks/77351709")
-        const pages = await pixiv.manga.getPages(response.illust)
+        const pages = await pixiv.manga.getPages(response)
         assert(typeof pages[0] === "string")
     })
 
     it("should get new manga", async function() {
         const response = await pixiv.manga.new()
-        assert(response.hasOwnProperty("illusts"))
+        assert(response?.[0].hasOwnProperty("title"))
     })
 
     it("should get recommended manga", async function() {
         const response = await pixiv.manga.recommended()
-        assert(response.hasOwnProperty("illusts"))
+        assert(response?.[0].hasOwnProperty("title"))
     })
 })

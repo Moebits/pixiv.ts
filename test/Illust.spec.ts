@@ -16,12 +16,12 @@ describe("Illust", async function() {
 
     it("should get an illust", async function() {
         const response = await pixiv.illust.get("https://www.pixiv.net/en/artworks/70115510")
-        assert(response.illust.hasOwnProperty("title"))
+        assert(response.hasOwnProperty("title"))
     })
 
     it("should get an illusts detail", async function() {
         const response = await pixiv.illust.detail({illust_id: 70728512})
-        assert(response.illust.hasOwnProperty("title"))
+        assert(response.hasOwnProperty("title"))
     })
 
     it("should get an illusts bookmark detail", async function() {
@@ -36,7 +36,7 @@ describe("Illust", async function() {
 
     it("should get bookmark tags", async function() {
         const response = await pixiv.illust.bookmarkTags({illust_id: 70728512})
-        assert(response.hasOwnProperty("bookmark_tags"))
+        assert(response?.[0].hasOwnProperty("name"))
     })
 
     it("should get comments", async function() {
@@ -51,27 +51,27 @@ describe("Illust", async function() {
 
     it("should get followed illusts", async function() {
         const response = await pixiv.illust.follow({user_id: 2913676})
-        assert(response.hasOwnProperty("illusts"))
+        assert(response?.[0].hasOwnProperty("title"))
     })
 
     it("should get new illusts", async function() {
         const response = await pixiv.illust.new()
-        assert(response.hasOwnProperty("illusts"))
+        assert(response?.[0].hasOwnProperty("title"))
     })
 
     it("should get popular previews", async function() {
         const response = await pixiv.illust.popularPreview({word: "gabriel dropout"})
-        assert(response.hasOwnProperty("illusts"))
+        assert(response?.[0].hasOwnProperty("title"))
     })
 
     it("should get ranking illusts", async function() {
         const response = await pixiv.illust.ranking()
-        assert(response.hasOwnProperty("illusts"))
+        assert(response?.[0].hasOwnProperty("title"))
     })
 
     it("should get recommended illusts", async function() {
         const response = await pixiv.illust.recommended()
-        assert(response.hasOwnProperty("illusts"))
+        assert(response?.[0].hasOwnProperty("title"))
     })
 
     it("should get trending tags", async function() {
@@ -81,7 +81,7 @@ describe("Illust", async function() {
 
     it("should get walkthrough illusts", async function() {
         const response = await pixiv.illust.walkthrough()
-        assert(response.hasOwnProperty("illusts"))
+        assert(response?.[0].hasOwnProperty("title"))
     })
 
 })

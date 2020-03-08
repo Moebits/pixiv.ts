@@ -45,9 +45,8 @@ async function useAPI() {
     /*To parse the id out of any url, you can use util.parseID()*/
     const id = await pixiv.util.parseID("https://www.pixiv.net/en/artworks/75788934") //75788934
 
-    /*You can search illusts with a query. It returns an object with an additional nextUrl() property, but since 
-    we are only interested in the illusts we can use a .then() chain to get them directly.*/
-    let illusts = await pixiv.search.illusts({word: "gabriel dropout"}).then((s) => s.illusts)
+    /*You can search illusts with a query. The nextURL is stored in pixiv.search.nextURL.*/
+    let illusts = await pixiv.search.illusts({word: "gabriel dropout"})
     /*There is also an utility to sort by most bookmarked.*/
     illusts = pixiv.util.sort(illusts)
 
@@ -58,11 +57,11 @@ async function useAPI() {
     const englishSearch = await pixiv.search.illusts({word: "cute", en: true})
 
     /*You can also search through the rankings, popular previews, etc.*/
-    const rankings = await pixiv.illust.ranking({mode: "day_r18"}).then((s) => s.illusts)
-    const popularPreviews = await pixiv.illust.popularPreview({word: "sagiri izumi"}).then((s) => s.illusts)
+    const rankings = await pixiv.illust.ranking({mode: "day_r18"})
+    const popularPreviews = await pixiv.illust.popularPreview({word: "sagiri izumi"})
 
     /*And get all the illusts from a user.*/
-    const userIllusts = await pixiv.user.illusts({user_id: 18590546}).then((s) => s.illusts)
+    const userIllusts = await pixiv.user.illusts({user_id: 18590546})
 
     /*Getting novels is practically identical to illusts. The alternative to the get() method is
     to query the api for the details directly.*/
@@ -94,10 +93,10 @@ async function useAPI() {
     const bookmarkRanges = await pixiv.illust.bookmarkRanges({word: "cute"}).then((b) => b.bookmark_ranges)
 
     /*Of course, you can also get all of the bookmarks of a user.*/
-    const bookmarks = await pixiv.user.bookmarksIllust({user_id: 21479436}).then((s) => s.illusts)
+    const bookmarks = await pixiv.user.bookmarksIllust({user_id: 21479436})
 
     /*To get articles from pixiv vision, you can use the spotlight endpoint.*/
-    const articles = await pixiv.spotlight.articles().then((s) => s.spotlight_articles)
+    const articles = await pixiv.spotlight.articles()
 }
 ```
 

@@ -4,6 +4,7 @@ PixivIllustDetail, PixivIllustSearch, PixivParams, PixivTrendTags} from "../type
 import {Search} from "./index"
 
 export class Illust {
+    public nextURL: string | null = null
     private readonly search = new Search(this.api)
     public constructor(protected readonly api: api) {}
 
@@ -15,8 +16,7 @@ export class Illust {
         if (!illustId) {
             if (!params) params = {}
             params.word = String(illustResolvable)
-            const result = await this.search.illusts(params as PixivParams & {word: string})
-            let illusts = result.illusts
+            let illusts = await this.search.illusts(params as PixivParams & {word: string})
             Array.prototype.sort.call(illusts, ((a: PixivIllust, b: PixivIllust) => (a.total_bookmarks - b.total_bookmarks) * -1))
             illusts = illusts.filter((i) => {
                 return (i.type === "illust" || i.type === "ugoira") ? true : false
@@ -24,7 +24,7 @@ export class Illust {
             illustId = String(illusts[0].id)
         }
         const response = await this.detail({illust_id: Number(illustId)})
-        response.illust.url = `https://www.pixiv.net/en/artworks/${response.illust.id}`
+        response.url = `https://www.pixiv.net/en/artworks/${response.id}`
         return response
     }
 
@@ -32,10 +32,10 @@ export class Illust {
      * Gets the details for an illust.
      */
     public detail = async (params: PixivParams & {illust_id: number}) => {
-        const response = await this.api.get(`/v1/illust/detail`, params)
+        const response = await this.api.get(`/v1/illust/detail`, params) as PixivIllustDetail
         if (response.illust.type !== "illust" && response.illust.type !== "ugoira") return Promise.reject(`This is not an illust, it is a ${response.illust.type}`)
         response.illust.url = `https://www.pixiv.net/en/artworks/${response.illust.id}`
-        return response as Promise<PixivIllustDetail>
+        return response.illust
     }
 
     /**
@@ -60,10 +60,11 @@ export class Illust {
     public new = async (params?: PixivParams) => {
         if (!params) params = {}
         params.content_type = "illust"
-        const response = await this.api.get(`/v1/illust/new`, params)
+        const response = await this.api.get(`/v1/illust/new`, params) as PixivIllustSearch
         if (params.type) response.illusts = response.illusts.filter((i: PixivIllust) => i.type === params.type)
         response.illusts.forEach((i: PixivIllust) => i.url = `https://www.pixiv.net/en/artworks/${i.id}`)
-        return response as Promise<PixivIllustSearch>
+        this.nextURL = response.next_url
+        return response.illusts
     }
 
     /**
@@ -71,10 +72,11 @@ export class Illust {
      */
     public follow = async (params: PixivParams & {user_id: number}) => {
         if (!params.restrict) params.restrict = "all"
-        const response = await this.api.get(`/v2/illust/follow`, params)
+        const response = await this.api.get(`/v2/illust/follow`, params) as PixivIllustSearch
         if (params.type) response.illusts = response.illusts.filter((i: PixivIllust) => i.type === params.type)
         response.illusts.forEach((i: PixivIllust) => i.url = `https://www.pixiv.net/en/artworks/${i.id}`)
-        return response as Promise<PixivIllustSearch>
+        this.nextURL = response.next_url
+        return response.illusts
     }
 
     /**
@@ -98,20 +100,22 @@ export class Illust {
      * Gets recommended illusts.
      */
     public recommended = async (params?: PixivParams) => {
-        const response = await this.api.get(`/v1/illust/recommended`, params)
+        const response = await this.api.get(`/v1/illust/recommended`, params) as PixivIllustSearch
         if (params.type) response.illusts = response.illusts.filter((i: PixivIllust) => i.type === params.type)
         response.illusts.forEach((i: PixivIllust) => i.url = `https://www.pixiv.net/en/artworks/${i.id}`)
-        return response as Promise<PixivIllustSearch>
+        this.nextURL = response.next_url
+        return response.illusts
     }
 
     /**
      * Gets walkthrough illusts.
      */
     public walkthrough = async (params?: PixivParams) => {
-        const response = await this.api.get(`/v1/walkthrough/illusts`, params)
+        const response = await this.api.get(`/v1/walkthrough/illusts`, params) as PixivIllustSearch
         if (params.type) response.illusts = response.illusts.filter((i: PixivIllust) => i.type === params.type)
         response.illusts.forEach((i: PixivIllust) => i.url = `https://www.pixiv.net/en/artworks/${i.id}`)
-        return response as Promise<PixivIllustSearch>
+        this.nextURL = response.next_url
+        return response.illusts
     }
 
     /**
@@ -120,20 +124,22 @@ export class Illust {
     public ranking = async (params?: PixivParams) => {
         if (!params) params = {}
         if (!params.mode) params.mode = "day"
-        const response = await this.api.get(`/v1/illust/ranking`, params)
+        const response = await this.api.get(`/v1/illust/ranking`, params) as PixivIllustSearch
         if (params.type) response.illusts = response.illusts.filter((i: PixivIllust) => i.type === params.type)
         response.illusts.forEach((i: PixivIllust) => i.url = `https://www.pixiv.net/en/artworks/${i.id}`)
-        return response as Promise<PixivIllustSearch>
+        this.nextURL = response.next_url
+        return response.illusts
     }
 
     /**
      * Searches illusts in the popular previews.
      */
     public popularPreview = async (params: PixivParams & {word: string}) => {
-        const response = await this.api.get(`/v1/search/popular-preview/illust`, params)
+        const response = await this.api.get(`/v1/search/popular-preview/illust`, params) as PixivIllustSearch
         if (params.type) response.illusts = response.illusts.filter((i: PixivIllust) => i.type === params.type)
         response.illusts.forEach((i: PixivIllust) => i.url = `https://www.pixiv.net/en/artworks/${i.id}`)
-        return response as Promise<PixivIllustSearch>
+        this.nextURL = response.next_url
+        return response.illusts
     }
 
     /**
@@ -158,8 +164,9 @@ export class Illust {
     public bookmarkTags = async (params?: PixivParams) => {
         if (!params) params = {}
         if (!params.restrict) params.restrict = "public"
-        const response = await this.api.get(`/v1/user/bookmark-tags/illust`, params)
-        return response as Promise<PixivBookmarkSearch>
+        const response = await this.api.get(`/v1/user/bookmark-tags/illust`, params) as PixivBookmarkSearch
+        this.nextURL = response.next_url
+        return response.bookmark_tags
     }
 
     /**

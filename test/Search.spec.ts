@@ -9,12 +9,12 @@ describe("Search", async function() {
 
     it("should search for illusts", async function() {
         const response = await pixiv.search.illusts({word: "gabriel"})
-        assert(response.hasOwnProperty("illusts"))
+        assert(response?.[0].hasOwnProperty("title"))
     })
 
     it("should search for novels", async function() {
         const response = await pixiv.search.novels({word: "gabriel"})
-        assert(response.hasOwnProperty("novels"))
+        assert(response?.[0].hasOwnProperty("title"))
     })
 
     it("should search for users", async function() {

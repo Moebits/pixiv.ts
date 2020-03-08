@@ -9,6 +9,6 @@ describe("Spotlight", async function() {
 
     it("should get spotlight articles", async function() {
         const response = await pixiv.spotlight.articles()
-        assert(response.hasOwnProperty("spotlight_articles"))
+        assert(response?.[0].hasOwnProperty("title"))
     })
 })

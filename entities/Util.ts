@@ -88,8 +88,8 @@ export class Util {
             url = illustResolvable as string
         }
         if (!url.startsWith("https://i.pximg.net/")) {
-            url = await this.illust.get(url).then((i) => i.illust.image_urls[size] ?
-            i.illust.image_urls[size] : i.illust.image_urls.medium)
+            url = await this.illust.get(url).then((i) => i.image_urls[size] ?
+            i.image_urls[size] : i.image_urls.medium)
         }
         if (__dirname.includes("node_modules")) {
             folder = path.join(__dirname, "../../../../", folder)
@@ -119,7 +119,7 @@ export class Util {
             username = (illustResolvable as string).match(/\d{6,}/) ? (illustResolvable as string).match(/\d{6,}/)[0] : "profile"
         }
         if (!url.startsWith("https://i.pximg.net/")) {
-            const illust = await this.illust.get(url).then((i) => i.illust)
+            const illust = await this.illust.get(url)
             url = illust.user.profile_image_urls[size] ?
             illust.user.profile_image_urls[size] : illust.user.profile_image_urls.medium
             username = illust.user.name
@@ -144,8 +144,7 @@ export class Util {
      */
     public downloadIllusts = async (query: string, dest: string, size?: string, folderMap?: PixivFolderMap[]) => {
         if (!size) size = "medium"
-        let illusts = await this.search.moe({query})
-        if (!illusts?.[0]?.title) illusts = await this.search.illusts({word: query}).then((r) => r.illusts)
+        const illusts = await this.search.illusts({word: query, moe: true})
         const promiseArray = []
         loop1:
         for (let i = 0; i < illusts.length; i++) {

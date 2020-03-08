@@ -16,7 +16,7 @@ describe("Novel", async function() {
 
     it("should get a novel", async function() {
         const response = await pixiv.novel.get("https://www.pixiv.net/novel/show.php?id=11826198")
-        assert(response.hasOwnProperty("novel"))
+        assert(response.hasOwnProperty("title"))
     })
 
     it("should get novel text", async function() {
@@ -46,32 +46,32 @@ describe("Novel", async function() {
 
     it("should get follow", async function() {
         const response = await pixiv.novel.follow()
-        assert(response.hasOwnProperty("novels"))
+        assert(response?.[0].hasOwnProperty("title"))
     })
 
     it("should get new novels", async function() {
         const response = await pixiv.novel.new()
-        assert(response.hasOwnProperty("novels"))
+        assert(response?.[0].hasOwnProperty("title"))
     })
 
     it("should get popular preview", async function() {
         const response = await pixiv.novel.popularPreview({word: "kawaii"})
-        assert(response.hasOwnProperty("novels"))
+        assert(response?.[0].hasOwnProperty("title"))
     })
 
     it("should get novel ranking", async function() {
         const response = await pixiv.novel.ranking()
-        assert(response.hasOwnProperty("novels"))
+        assert(response?.[0].hasOwnProperty("title"))
     })
 
     it("should get recommended novels", async function() {
         const response = await pixiv.novel.recommended()
-        assert(response.hasOwnProperty("novels"))
+        assert(response?.[0].hasOwnProperty("title"))
     })
 
     it("should get series", async function() {
         const response = await pixiv.novel.series({series_id: 1191447})
-        assert(response.hasOwnProperty("novels"))
+        assert(response?.[0].hasOwnProperty("title"))
     })
 
     it("should get trend tags", async function() {

@@ -19,22 +19,22 @@ describe("User", async function() {
 
     it("should get bookmark illust tags", async function() {
         const response = await pixiv.user.bookmarkIllustTags()
-        assert(response.hasOwnProperty("bookmark_tags"))
+        assert(response?.[0].hasOwnProperty("name"))
     })
 
     it("should get bookmark novel tags", async function() {
         const response = await pixiv.user.bookmarkNovelTags({user_id: 23040640})
-        assert(response.hasOwnProperty("bookmark_tags"))
+        assert(response?.[0].hasOwnProperty("name"))
     })
 
     it("should get bookmarked illusts", async function() {
         const response = await pixiv.user.bookmarksIllust({user_id: 23040640})
-        assert(response.hasOwnProperty("illusts"))
+        assert(response?.[0].hasOwnProperty("title"))
     })
 
     it("should get bookmarked novels", async function() {
         const response = await pixiv.user.bookmarksNovel({user_id: 23040640})
-        assert(response.hasOwnProperty("novels"))
+        assert(response?.[0].hasOwnProperty("title"))
     })
 
     it("should get follow details", async function() {
@@ -54,7 +54,7 @@ describe("User", async function() {
 
     it("should get user illusts", async function() {
         const response = await pixiv.user.illusts({user_id: 23040640})
-        assert(response.hasOwnProperty("illusts"))
+        assert(response?.[0].hasOwnProperty("title"))
     })
 
     it("should get user my pixiv", async function() {
@@ -64,7 +64,7 @@ describe("User", async function() {
 
     it("should get user novels", async function() {
         const response = await pixiv.user.novels({user_id: 23040640})
-        assert(response.hasOwnProperty("novels"))
+        assert(response?.[0].hasOwnProperty("title"))
     })
 
     it("should get user illusts", async function() {
