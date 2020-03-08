@@ -94,9 +94,9 @@ export class Search {
             "sagiri", "kancolle", "loli", "is the order a rabbit", "chino", "kiniro mosaic",
             "gabriel", "interspecies reviewers", "hibiki", "tohru", "laffey", "kanna", "tights"
         ]
-        if (!params.query) params.query = await replace.translateTag(defaults[Math.floor(Math.random()*defaults.length)])
-        if (params.ugoira) params.query += " うごイラ"
-        if (params.r18) params.query += " R-18"
+        if (!params?.query) params.query = await replace.translateTag(defaults[Math.floor(Math.random()*defaults.length)])
+        if (params?.ugoira) params.query += " うごイラ"
+        if (params?.r18) params.query += " R-18"
         const response = await this.api.request(`https://api.kotori.love/pixiv/search?word=${encodeURIComponent(params.query)}`)
         return response.response.illusts as Promise<PixivIllust[]>
     }
