@@ -142,13 +142,17 @@ export class Util {
      * Mass downloads illusts from a search result. You can map the results into different folders by tag
      * with the folderMap parameter.
      */
-    public downloadIllusts = async (query: string, dest: string, size?: string, folderMap?: PixivFolderMap[]) => {
+    public downloadIllusts = async (query: string, dest: string, size?: string, folderMap?: PixivFolderMap[], r18?: boolean) => {
         if (!size) size = "medium"
-        const illusts = await this.search.illusts({word: query, moe: true})
+        if (!r18) r18 = false
+        const illusts = await this.search.illusts({word: query, moe: true, r18})
         const promiseArray = []
         loop1:
         for (let i = 0; i < illusts.length; i++) {
             const illust = illusts[i]
+            if (!r18) {
+                if (illust.x_restrict !== 0) continue
+            }
             const imgUrl = illust.image_urls[size] ? illust.image_urls[size] : illust.image_urls.medium
             if (folderMap) {
                 for (let k = 0; k < illust.tags.length; k++) {

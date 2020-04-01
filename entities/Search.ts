@@ -126,7 +126,11 @@ export class Search {
         if (!params?.query) params.query = this.defaults[Math.floor(Math.random()*this.defaults.length)]
         if (!params?.en) params.query = await replace.translateTag(params.query)
         if (params?.ugoira) params.query += " うごイラ"
-        if (params?.r18) params.query += " R-18"
+        if (params?.r18 === true) {
+            params.query += " R-18"
+        } else {
+            params.query += " -R-18"
+        }
         const response = await this.api.request(`https://api.kotori.love/pixiv/search?word=${encodeURIComponent(params.query)}`)
         return response.response.illusts as Promise<PixivIllust[]>
     }
