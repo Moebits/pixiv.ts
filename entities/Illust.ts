@@ -33,7 +33,7 @@ export class Illust {
      */
     public detail = async (params: PixivParams & {illust_id: number}) => {
         const response = await this.api.get(`/v1/illust/detail`, params) as PixivIllustDetail
-        if (response.illust.type !== "illust" && response.illust.type !== "ugoira") return Promise.reject(`This is not an illust, it is a ${response.illust.type}`)
+        if (response.illust.type === "novel") return Promise.reject(`This is not an illust, it is a novel.`)
         response.illust.url = `https://www.pixiv.net/en/artworks/${response.illust.id}`
         return response.illust
     }
