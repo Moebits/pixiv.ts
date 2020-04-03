@@ -10,6 +10,7 @@ const webURL = "https://www.pixiv.net/"
 const publicURL = "https://public-api.secure.pixiv.net/"
 
 export default class API {
+    private readonly userAgent = {"user-agent": "PixivIOSApp/7.7.5 (iOS 13.2.0; iPhone XR)"}
     public constructor(private readonly data: PixivAuthData,
                        private readonly headers: PixivAuthHeaders,
                        private refreshToken: string,
@@ -44,7 +45,7 @@ export default class API {
         params.access_token = this.accessToken
         if (endpoint.startsWith("/")) endpoint = endpoint.slice(1)
         endpoint = appURL + endpoint
-        const response = await axios.get(endpoint, {json: true, form: true, params} as AxiosRequestConfig).then((r) => r.data)
+        const response = await axios.get(endpoint, {json: true, form: true, headers: this.userAgent, params} as AxiosRequestConfig).then((r) => r.data)
         return response
     }
 
@@ -55,7 +56,7 @@ export default class API {
         await this.refreshAccessToken()
         const {baseUrl, params} = this.destructureParams(nextUrl)
         params.access_token = this.accessToken
-        const response = await axios.get(baseUrl, {params}).then((r) => r.data)
+        const response = await axios.get(baseUrl, {params, headers: this.userAgent}).then((r) => r.data)
         return response
     }
 
@@ -78,6 +79,6 @@ export default class API {
      * Fetches any url.
      */
     public request = async (url: string, params?: any) => {
-        return axios.get(url, {params}).then((r) => r.data)
+        return axios.get(url, {params, headers: this.userAgent}).then((r) => r.data)
     }
 }
