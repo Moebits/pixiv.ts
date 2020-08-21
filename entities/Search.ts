@@ -132,6 +132,6 @@ export class Search {
             params.query += " -R-18"
         }
         const response = await this.api.request(`https://api.kotori.love/pixiv/search?word=${encodeURIComponent(params.query)}`)
-        return response.response.illusts as Promise<PixivIllust[]>
+        return response as Promise<PixivIllust[]>
     }
 }

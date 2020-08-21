@@ -79,6 +79,6 @@ export default class API {
      * Fetches any url.
      */
     public request = async (url: string, params?: any) => {
-        return axios.get(url, {params, headers: this.userAgent}).then((r) => r.data)
+        return axios.get(url, {params}).then((r) => r.data)
     }
 }

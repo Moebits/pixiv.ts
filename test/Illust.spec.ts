@@ -36,6 +36,7 @@ describe("Illust", async function() {
 
     it("should get bookmark tags", async function() {
         const response = await pixiv.illust.bookmarkTags({illust_id: 70728512})
+        console.log(response)
         assert(response?.[0].hasOwnProperty("name"))
     })
 
