@@ -3,7 +3,7 @@ import * as fs from "fs"
 import {imageSize} from "image-size"
 import * as path from "path"
 import * as stream from "stream"
-import * as zip from "unzipper"
+import * as unzip from "unzipper"
 import {URLSearchParams} from "url"
 import api from "../API"
 import replace from "../Translate"
@@ -262,7 +262,7 @@ export class Util {
         }
         if (!fs.existsSync(dest)) fs.mkdirSync(dest, {recursive: true})
         const writeStream = await axios.get(url, {responseType: "stream", headers: {Referer: "https://www.pixiv.net/"}})
-        .then((r) => r.data.pipe(zip.Extract({path: dest})))
+        .then((r) => r.data.pipe(unzip.Extract({path: dest})))
 
         await this.awaitStream(writeStream)
         return dest
