@@ -30,7 +30,7 @@
     "@types/chai": "^4.2.3",
     "@types/mocha": "^5.2.7",
     "@types/node": "^12.11.1",
-    "@types/unzip": "^0.1.1",
+    "@types/unzipper": "^0.10.3",
     "chai": "^4.2.0",
     "dotenv": "^8.2.0",
     "mocha": "^6.2.2",
@@ -44,6 +44,6 @@
     "get-pixels": "^3.3.2",
     "gif-encoder": "^0.7.2",
     "image-size": "^0.8.3",
-    "unzip": "^0.1.11"
+    "unzipper": "^0.10.11"
   }
 }
