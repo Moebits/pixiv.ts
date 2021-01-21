@@ -80,9 +80,4 @@ describe("Illust", async function() {
         assert(response.hasOwnProperty("trend_tags"))
     })
 
-    it("should get walkthrough illusts", async function() {
-        const response = await pixiv.illust.walkthrough()
-        assert(response?.[0].hasOwnProperty("title"))
-    })
-
 })

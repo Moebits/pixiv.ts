@@ -108,17 +108,6 @@ export class Illust {
     }
 
     /**
-     * Gets walkthrough illusts.
-     */
-    public walkthrough = async (params?: PixivParams) => {
-        const response = await this.api.get(`/v1/walkthrough/illusts`, params) as PixivIllustSearch
-        if (params.type) response.illusts = response.illusts.filter((i: PixivIllust) => i.type === params.type)
-        response.illusts.forEach((i: PixivIllust) => i.url = `https://www.pixiv.net/en/artworks/${i.id}`)
-        this.nextURL = response.next_url
-        return response.illusts
-    }
-
-    /**
      * Gets illusts from the ranking. Defaults to daily ranking
      */
     public ranking = async (params?: PixivParams) => {
