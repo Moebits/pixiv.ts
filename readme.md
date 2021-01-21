@@ -119,9 +119,9 @@ async function useAPI() {
   await pixiv.util.downloadZip("https://www.pixiv.net/en/artworks/77359698", "./ugoira")
 
   /*A ton of png/jpg files are not that useful... which is why you can also convert and download a 
-  ugoira as a gif! This uses downloadZip() and encodeGif() internally. The third parameter allows you
-  to constrain the gif to a certain number of frames, as the file size can become quite large.*/
-  await pixiv.util.downloadUgoira("https://www.pixiv.net/en/artworks/68064543", "./ugoira", 100)
+  ugoira as a gif! This uses downloadZip() and encodeGif() internally. The third parameter has some
+  options for speed and whether or not it's played in reverse.*/
+  await pixiv.util.downloadUgoira("https://www.pixiv.net/en/artworks/68064543", "./ugoira", {speed: 1.0, reverse: false})
 }
 ```
 

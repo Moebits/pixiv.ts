@@ -106,6 +106,9 @@ export class Util {
         return dest
     }
 
+    /**
+     * Downloads an author's profile picture locally.
+     */
     public downloadProfilePicture = async (illustResolvable: string | PixivIllust, folder: string, size?: string) => {
         const basename = path.basename(folder)
         if (!size) size = "medium"
@@ -176,24 +179,25 @@ export class Util {
     /**
      * Encodes a new gif from an array of file paths.
      */
-    public encodeGif = async (files: string[], dest?: string) => {
+    public encodeGif = async (files: string[], delays?: number[], dest?: string) => {
         const GifEncoder = require("gif-encoder")
         const getPixels = require("get-pixels")
-        const dimensions = imageSize(files[0])
-        const gif = new GifEncoder(dimensions.width, dimensions.height)
-        const pathIndex = files[0].search(/\d{8,}/)
-        const pathDir = files[0].slice(0, pathIndex)
-        if (!dest) dest = `${pathDir}${files[0].match(/\d{8,}/)[0]}.gif`
-        const file = fs.createWriteStream(dest)
-        gif.pipe(file)
-        gif.setQuality(20)
-        gif.setDelay(0)
-        gif.setRepeat(0)
-        gif.writeHeader()
-        let counter = 0
+        return new Promise<string>((resolve) => {
+            const dimensions = imageSize(files[0])
+            const gif = new GifEncoder(dimensions.width, dimensions.height)
+            const pathIndex = files[0].search(/\d{8,}/)
+            const pathDir = files[0].slice(0, pathIndex)
+            if (!dest) dest = `${pathDir}${files[0].match(/\d{8,}/)[0]}.gif`
+            const file = fs.createWriteStream(dest)
+            gif.pipe(file)
+            gif.setQuality(10)
+            gif.setRepeat(0)
+            gif.writeHeader()
+            let counter = 0
 
-        const addToGif = (frames: string[]) => {
+            const addToGif = (frames: string[]) => {
                 getPixels(frames[counter], function(err: Error, pixels: any) {
+                    delays ? gif.setDelay(delays[counter]) : gif.setDelay(0)
                     gif.addFrame(pixels.data)
                     gif.read()
                     if (counter >= frames.length - 1) {
@@ -204,16 +208,11 @@ export class Util {
                     }
                 })
             }
-        addToGif(files)
-        async function awaitGIF(gif: any) {
-            return new Promise((resolve) => {
-                gif.on("end", () => {
-                    resolve()
+            addToGif(files)
+            gif.on("end", () => {
+                    resolve(dest)
                 })
             })
-        }
-        await awaitGIF(gif)
-        return dest
     }
 
     /**
@@ -271,7 +270,7 @@ export class Util {
     /**
      * Downloads the zip archive of a ugoira and converts it to a gif.
      */
-    public downloadUgoira = async (illustResolvable: string | PixivIllust, dest: string, constrain?: number) => {
+    public downloadUgoira = async (illustResolvable: string | PixivIllust, dest: string, options?: {speed?: number, reverse?: boolean}) => {
         let url: string
         if (illustResolvable.hasOwnProperty("id")) {
             url = String((illustResolvable as PixivIllust).id)
@@ -282,18 +281,22 @@ export class Util {
         const zipUrl = metadata.zip_urls.medium
         const destPath = await this.downloadZip(zipUrl, dest).then((p) => p.replace("\\", "/"))
         const files = fs.readdirSync(destPath)
-        const frameAmount = files.length
-        let step = 1
-        if (constrain) step = Math.ceil(frameAmount / constrain)
-        const fileArray: string[] = []
-        const delayArray: number[] = []
-        for (let i = 0; i < frameAmount; i += step) {
+        const constraint = options.speed > 1 ? files.length / options.speed : files.length
+        let step = Math.ceil(files.length / constraint)
+        let fileArray: string[] = []
+        let delayArray: number[] = []
+        for (let i = 0; i < files.length; i += step) {
             if (files[i].slice(-5) === ".webp") continue
             if (!metadata.frames[i]) break
             fileArray.push(`${destPath}/${files[i]}`)
             delayArray.push(metadata.frames[i].delay)
         }
-        const destination = await this.encodeGif(fileArray)
+        if (options.speed < 1) delayArray = delayArray.map((n) => n / options.speed)
+        if (options.reverse) {
+            fileArray = fileArray.reverse()
+            delayArray = delayArray.reverse()
+        }
+        const destination = await this.encodeGif(fileArray, delayArray)
         return destination
     }
 
