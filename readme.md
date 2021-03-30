@@ -23,6 +23,11 @@ In order to receive an **access token** from pixiv, you must login using your **
 - [**Pixiv.ts Documentation**](https://tenpi.github.io/pixiv.ts/)
 - [**Pixivpy Wiki**](https://github.com/upbit/pixivpy/wiki)
 
+### Notes on password login
+Pixiv stopped supporting user/password logins, so you can only login with refresh token for now. Follow
+this [guide](https://gist.github.com/ZipFile/c9ebedb224406f4f11845ab700124362) to obtain your refresh token,
+and login instead with `await Pixiv.refreshLogin(process.env.PIXIV_REFRESH_TOKEN)`. 
+
 #### Searching for illusts, novels, and manga
 ```ts
 import Pixiv from "pixiv.ts"
