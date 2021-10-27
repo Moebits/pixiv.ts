@@ -40,7 +40,7 @@
   },
   "dependencies": {
     "@vitalets/google-translate-api": "github:vkedwardli/google-translate-api#batchexecute",
-    "axios": "^0.19.0",
+    "axios": "^0.21.1",
     "get-pixels": "^3.3.2",
     "gif-encoder": "^0.7.2",
     "image-size": "^0.8.3",
