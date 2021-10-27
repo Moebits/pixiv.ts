@@ -25,6 +25,14 @@ export class Util {
     }
 
     /**
+     * Translates a tag to Japanese.
+     *
+     */
+    public translateTag = async (tag: string) => {
+        return replace.translateTag(tag) as unknown as string
+    }
+
+    /**
      * Utility for awaiting a setTimeout
      */
     public timeout = async (ms: number) => {
