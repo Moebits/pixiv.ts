@@ -8,7 +8,7 @@ export default class Translate {
         const newTag = tag
         .replace(/gabriel dropout/i, "ガヴリールドロップアウト")
         .replace(/tenma gabriel white|gabriel white|gabriel/i, "天真=ガヴリール=ホワイト")
-        .replace(/vignette tsukinose april|vignette tsukinose|vignette/i, "月乃瀬=ヴィネット=エイプリル")
+        .replace(/vignette tsukinose april|vignette tsukinose|vignette|vigne/i, "月乃瀬=ヴィネット=エイプリル")
         .replace(/satanichia kurumizawa mcDowell|satania/i, "胡桃沢=サタニキア=マクドウェル")
         .replace(/chisaki tapris sugarbell|tapris/i, "千咲=タプリス=シュガーベル")
         .replace(/shiraha raphiel ainsworth|raphiel|raphi/i, "白羽=ラフィエル=エインズワース")
