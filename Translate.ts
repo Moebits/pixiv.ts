@@ -41,12 +41,20 @@ export default class Translate {
         .replace(/R18/i, "R-18")
         .replace(/R18G/i, "R-18G")
         if (newTag !== tag) return newTag
-        const translated = await translate(tag, "en", "ja")
-        return translated.translation
+        try {
+            const translated = await translate(tag, "en", "ja")
+            return translated.translation
+        } catch {
+            return tag
+        }
     }
 
     public static translateTitle = async (title: string) => {
-        const translated = await translate(title, "ja", "en")
-        return translated.translation
+        try {
+            const translated = await translate(title, "ja", "en")
+            return translated.translation
+        } catch {
+            return title
+        }
     }
 }
