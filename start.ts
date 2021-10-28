@@ -11,7 +11,7 @@ require("dotenv").config();
     // await pixiv.util.downloadUgoira("https://www.pixiv.net/en/artworks/77382629", "./downloads", "webp", 50)
     // const result = await pixiv.illust.get("gabriel dropout", {bookmarks: "100", type: "ugoira"})
     // const dest = await pixiv.util.downloadUgoira(result, "./downloads", {speed: 4.0, reverse: false})
-    const result = await pixiv.util.translateTitle("黒タイツ")
+    const result = await pixiv.util.translateTitle("落書き")
     // const result = await pixiv.search.illusts({word: "hello"})
     console.log(result)
 })()

@@ -1,4 +1,4 @@
-import * as translate from "@vitalets/google-translate-api"
+import {translate} from "bing-translate-api"
 
 /**
  * Translates search terms to japanese
@@ -41,12 +41,12 @@ export default class Translate {
         .replace(/R18/i, "R-18")
         .replace(/R18G/i, "R-18G")
         if (newTag !== tag) return newTag
-        const translated = await translate(tag, {to: "ja"})
-        return translated.text
+        const translated = await translate(tag, "en", "ja")
+        return translated.translation
     }
 
     public static translateTitle = async (title: string) => {
-        const translated = await translate(title, {to: "en"})
-        return translated.text
+        const translated = await translate(title, "ja", "en")
+        return translated.translation
     }
 }

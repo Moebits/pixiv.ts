@@ -1,6 +1,6 @@
 {
   "name": "pixiv.ts",
-  "version": "0.4.5",
+  "version": "0.4.6",
   "description": "Wrapper for the Pixiv API with typings",
   "main": "dist/pixiv.js",
   "types": "dist/pixiv.d.ts",
@@ -39,8 +39,8 @@
     "typescript": "^3.8.3"
   },
   "dependencies": {
-    "@vitalets/google-translate-api": "github:vkedwardli/google-translate-api#batchexecute",
     "axios": "^0.21.1",
+    "bing-translate-api": "^2.2.1",
     "get-pixels": "^3.3.2",
     "gif-encoder": "^0.7.2",
     "image-size": "^0.8.3",
