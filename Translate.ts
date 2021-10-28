@@ -44,4 +44,9 @@ export default class Translate {
         const translated = await translate(tag, {to: "ja"})
         return translated.text
     }
+
+    public static translateTitle = async (title: string) => {
+        const translated = await translate(title, {to: "en"})
+        return translated.text
+    }
 }

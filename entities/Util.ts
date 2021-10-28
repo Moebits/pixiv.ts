@@ -33,6 +33,13 @@ export class Util {
     }
 
     /**
+     * Translates a title to English.
+     */
+    public translateTitle = async (title: string) => {
+        return replace.translateTitle(title) as unknown as string
+    }
+
+    /**
      * Utility for awaiting a setTimeout
      */
     public timeout = async (ms: number) => {
@@ -156,7 +163,7 @@ export class Util {
     public downloadIllusts = async (query: string, dest: string, size?: string, folderMap?: PixivFolderMap[], r18?: boolean) => {
         if (!size) size = "medium"
         if (!r18) r18 = false
-        const illusts = await this.search.illusts({word: query, moe: true, r18})
+        const illusts = await this.search.illusts({word: query, r18})
         const promiseArray = []
         loop1:
         for (let i = 0; i < illusts.length; i++) {
