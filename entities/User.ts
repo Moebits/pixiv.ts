@@ -1,6 +1,6 @@
 import api from "../API"
 import {PixivBookmarkDetail, PixivBookmarkSearch, PixivFollowDetail, PixivIllustSearch, PixivNovelSearch,
-PixivParams, PixivUserDetail, PixivUserSearch} from "../types"
+PixivParams, PixivUserDetail, PixivUserSearch, PixivNovel} from "../types"
 
 export class User {
     public nextURL: string | null = null
@@ -39,6 +39,8 @@ export class User {
     public novels = async (params: PixivParams & {user_id: number}) => {
         const response = await this.api.get(`/v1/user/novels`, params) as PixivNovelSearch
         this.nextURL = response.next_url
+        response.novels.forEach((i: PixivNovel) => i.url = `https://www.pixiv.net/novel/show.php?id=${i.id}`)
+        response.novels.forEach((i: PixivNovel) => i.type = "novel")
         return response.novels
     }
 
@@ -76,8 +78,11 @@ export class User {
      */
     public bookmarksNovel = async (params: PixivParams & {user_id: number}) => {
         if (!params.restrict) params.restrict = "public"
-        const response = await this.api.get(`/v1/user/bookmarks/novel`, params)
-        return response as Promise<PixivNovelSearch>
+        const response = await this.api.get(`/v1/user/bookmarks/novel`, params) as PixivNovelSearch
+        response.novels.forEach((i: PixivNovel) => i.url = `https://www.pixiv.net/novel/show.php?id=${i.id}`)
+        response.novels.forEach((i: PixivNovel) => i.type = "novel")
+        this.nextURL = response.next_url
+        return response.novels
     }
 
     /**

@@ -79,7 +79,8 @@ export class Search {
         params = this.searchDefaults(params)
         params = await this.processWord(params)
         const response = await this.api.get(`/v1/search/novel`, params) as PixivNovelSearch
-        response.novels.forEach((i: PixivNovel) => i.url = `https://www.pixiv.net/en/artworks/${i.id}`)
+        response.novels.forEach((i: PixivNovel) => i.url = `https://www.pixiv.net/novel/show.php?id=${i.id}`)
+        response.novels.forEach((i: PixivNovel) => i.type = "novel")
         this.nextURL = response.next_url
         return response.novels
     }
