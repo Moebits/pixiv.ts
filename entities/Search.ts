@@ -39,7 +39,7 @@ export class Search {
                 default:
             }
         }
-        if (params.bookmarks) {
+        if (params.bookmarks && Number(params.bookmarks) > 0) {
             params.word += ` ${params.bookmarks}users入り`
         }
         return params
@@ -58,26 +58,17 @@ export class Search {
             response = await this.moe({query: params.word, r18: params.r18, en: params.en, ugoira: setUgoira})
             if (!response?.[0]) {
                 params.moe = undefined
-                params.word += " 00"
                 const res = await this.api.get(`/v1/search/illust`, params) as PixivIllustSearch
                 this.nextURL = res.next_url
                 response = res.illusts
             }
         } else {
-            params.word += " 00"
-            const res = await this.api.get(`/v1/search/illust`, params) as PixivIllustSearch
-            this.nextURL = res.next_url
-            response = res.illusts
-        }
-        if (!response?.[0]) {
-            params.word = params.word.slice(0, -2).trim()
             const res = await this.api.get(`/v1/search/illust`, params) as PixivIllustSearch
             this.nextURL = res.next_url
             response = res.illusts
         }
         if (params.type) response = response.filter((i: PixivIllust) => i.type === params.type)
         response.forEach((i: PixivIllust) => i.url = `https://www.pixiv.net/en/artworks/${i.id}`)
-        response = Array.prototype.sort.call(response, ((a: PixivIllust, b: PixivIllust) => (a.total_bookmarks - b.total_bookmarks) * -1))
         return response
     }
 

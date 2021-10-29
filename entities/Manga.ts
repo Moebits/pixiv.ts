@@ -30,14 +30,13 @@ export class Manga {
     /**
      * Gets all of the pages in a manga.
      */
-    public getPages = async (manga: PixivManga, size?: string) => {
-        if (!size) size = "medium"
+    public getPages = async (manga: PixivManga) => {
         const urls: string[] = []
         if (!manga.meta_pages[0]) {
-            urls.push(manga.image_urls[size])
+            urls.push(manga.image_urls.large ? manga.image_urls.large : manga.image_urls.medium)
         } else {
             for (let i = 0; i < manga.meta_pages.length; i++) {
-                urls.push(manga.meta_pages[i].image_urls[size])
+                urls.push(manga.meta_pages[i].image_urls.large ? manga.meta_pages[i].image_urls.large : manga.meta_pages[i].image_urls.medium)
             }
         }
         return urls

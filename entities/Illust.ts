@@ -41,14 +41,13 @@ export class Illust {
     /**
      * Gets the URLS of all the pages for an illust.
      */
-    public getPages = async (illust: PixivIllust, size?: string) => {
-        if (!size) size = "medium"
+    public getPages = async (illust: PixivIllust) => {
         const urls: string[] = []
         if (!illust.meta_pages[0]) {
-            urls.push(illust.image_urls[size])
+            urls.push(illust.image_urls.large ? illust.image_urls.large : illust.image_urls.medium)
         } else {
             for (let i = 0; i < illust.meta_pages.length; i++) {
-                urls.push(illust.meta_pages[i].image_urls[size])
+                urls.push(illust.meta_pages[i].image_urls.large ? illust.meta_pages[i].image_urls.large : illust.meta_pages[i].image_urls.medium)
             }
         }
         return urls
