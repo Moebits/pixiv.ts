@@ -45,5 +45,6 @@ export interface PixivNovel {
     is_muted: boolean
     is_mypixiv_only: boolean
     is_x_restricted: boolean
-    url?: string
+    url: string
+    type: string
   }

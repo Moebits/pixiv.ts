@@ -24,7 +24,8 @@ export class Novel {
             novelId = String(illusts[0].id)
         }
         const response = await this.detail({novel_id: Number(novelId)})
-        response.url = `https://www.pixiv.net/en/artworks/${response.id}`
+        response.url = `https://www.pixiv.net/novel/show.php?id=${response.id}`
+        response.type = "novel"
         return response
     }
 
@@ -33,7 +34,8 @@ export class Novel {
      */
     public detail = async (params: PixivParams & {novel_id: number}) => {
         const response = await this.api.get(`/v2/novel/detail`, params) as PixivNovelDetail
-        response.novel.url = `https://www.pixiv.net/en/artworks/${response.novel.id}`
+        response.novel.url = `https://www.pixiv.net/novel/show.php?id=${response.novel.id}`
+        response.novel.type = "novel"
         return response.novel
     }
 
@@ -50,7 +52,8 @@ export class Novel {
      */
     public new = async (params?: PixivParams) => {
         const response = await this.api.get(`/v1/novel/new`, params) as PixivNovelSearch
-        response.novels.forEach((i: PixivNovel) => i.url = `https://www.pixiv.net/en/artworks/${i.id}`)
+        response.novels.forEach((i: PixivNovel) => i.url = `https://www.pixiv.net/novel/show.php?id=${i.id}`)
+        response.novels.forEach((i: PixivNovel) => i.type = "novel")
         this.nextURL = response.next_url
         return response.novels
     }
@@ -62,7 +65,8 @@ export class Novel {
         if (!params) params = {}
         if (!params.restrict) params.restrict = "all"
         const response = await this.api.get(`/v1/novel/follow`, params) as PixivNovelSearch
-        response.novels.forEach((i: PixivNovel) => i.url = `https://www.pixiv.net/en/artworks/${i.id}`)
+        response.novels.forEach((i: PixivNovel) => i.url = `https://www.pixiv.net/novel/show.php?id=${i.id}`)
+        response.novels.forEach((i: PixivNovel) => i.type = "novel")
         this.nextURL = response.next_url
         return response.novels
     }
@@ -72,7 +76,8 @@ export class Novel {
      */
     public recommended = async (params?: PixivParams) => {
         const response = await this.api.get(`/v1/novel/recommended`, params) as PixivNovelSearch
-        response.novels.forEach((i: PixivNovel) => i.url = `https://www.pixiv.net/en/artworks/${i.id}`)
+        response.novels.forEach((i: PixivNovel) => i.url = `https://www.pixiv.net/novel/show.php?id=${i.id}`)
+        response.novels.forEach((i: PixivNovel) => i.type = "novel")
         this.nextURL = response.next_url
         return response.novels
     }
@@ -82,7 +87,8 @@ export class Novel {
      */
     public popularPreview = async (params: PixivParams & {word: string}) => {
         const response = await this.api.get(`/v1/search/popular-preview/novel`, params) as PixivNovelSearch
-        response.novels.forEach((i: PixivNovel) => i.url = `https://www.pixiv.net/en/artworks/${i.id}`)
+        response.novels.forEach((i: PixivNovel) => i.url = `https://www.pixiv.net/novel/show.php?id=${i.id}`)
+        response.novels.forEach((i: PixivNovel) => i.type = "novel")
         this.nextURL = response.next_url
         return response.novels
     }
@@ -124,7 +130,8 @@ export class Novel {
      */
     public series = async (params: PixivParams & {series_id: number}) => {
         const response = await this.api.get(`/v1/novel/series`, params) as PixivNovelSearch
-        response.novels.forEach((i: PixivNovel) => i.url = `https://www.pixiv.net/en/artworks/${i.id}`)
+        response.novels.forEach((i: PixivNovel) => i.url = `https://www.pixiv.net/novel/show.php?id=${i.id}`)
+        response.novels.forEach((i: PixivNovel) => i.type = "novel")
         this.nextURL = response.next_url
         return response.novels
     }
@@ -136,7 +143,8 @@ export class Novel {
         if (!params) params = {}
         if (!params.mode) params.mode = "day"
         const response = await this.api.get(`/v1/novel/ranking`, params) as PixivNovelSearch
-        response.novels.forEach((i: PixivNovel) => i.url = `https://www.pixiv.net/en/artworks/${i.id}`)
+        response.novels.forEach((i: PixivNovel) => i.url = `https://www.pixiv.net/novel/show.php?id=${i.id}`)
+        response.novels.forEach((i: PixivNovel) => i.type = "novel")
         this.nextURL = response.next_url
         return response.novels
     }
