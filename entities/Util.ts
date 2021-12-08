@@ -90,22 +90,8 @@ export class Util {
         return illusts
     }
 
-    /**
-     * Downloads an illust locally.
-     */
-    public downloadIllust = async (illustResolvable: string | PixivIllust, folder: string, size?: string) => {
+    private download = async (url: string,  folder: string, name_ext?: string) => {
         const basename = path.basename(folder)
-        if (!size) size = "medium"
-        let url: string
-        if (illustResolvable.hasOwnProperty("image_urls")) {
-            url = (illustResolvable as PixivIllust).image_urls[size]
-        } else {
-            url = illustResolvable as string
-        }
-        if (!url.startsWith("https://i.pximg.net/")) {
-            url = await this.illust.get(url).then((i) => i.image_urls[size] ?
-            i.image_urls[size] : i.image_urls.medium)
-        }
         if (__dirname.includes("node_modules")) {
             folder = path.join(__dirname, "../../../../", folder)
         } else {
@@ -113,12 +99,48 @@ export class Util {
         }
         if (basename.includes(".")) folder = folder.replace(basename, "")
         if (!fs.existsSync(folder)) fs.mkdirSync(folder, {recursive: true})
-        const dest = basename.includes(".") ? `${folder}${basename}` : path.join(folder, `${url.match(/\d{6,}/) ? url.match(/\d{6,}/)[0] : "illust"}.png`)
+        const dest = basename.includes(".") ? `${folder}${basename}` : path.join(folder, `${url.match(/\d{6,}/) ? url.match(/\d{6,}/)[0] : "illust"}${name_ext ?? ''}.png`)
         const writeStream = fs.createWriteStream(dest)
         await axios.get(url, {responseType: "stream", headers: {Referer: "https://www.pixiv.net/"}})
         .then((r) => r.data.pipe(writeStream))
         await this.awaitStream(writeStream)
         return dest
+    }
+
+    /**
+     * Downloads an illust locally.
+     */
+    public downloadIllust = async (illustResolvable: string | PixivIllust, folder: string, size?: 'medium' | 'large' | 'square_medium' | 'original') => {
+        if (!size) size = "medium"
+        let url: string
+        let illust = illustResolvable as PixivIllust;
+        if (illustResolvable.hasOwnProperty("image_urls")) {
+            if (illust.meta_pages.length === 0) {
+                // Single Image
+                if (size == 'original') {
+                    url = illust.meta_single_page.original_image_url;
+                } else {
+                    url = illust.image_urls[size];
+                }
+                this.download(url, folder);
+            } else {
+                let i = 0;
+                // Multiple Images
+                for await (const image of illust.meta_pages) {
+                    url = image.image_urls[size]
+                    this.download(url, folder, `_p${i++}`);
+                }
+            }
+        } else {
+            url = illustResolvable as string
+            if (url.startsWith("https://i.pximg.net/")) {
+                this.download(url, folder);
+            } else {
+                illust = await this.illust.get(url)
+                this.downloadIllust(illust, folder, size);
+            }
+        }
+
     }
 
     /**
@@ -160,7 +182,7 @@ export class Util {
      * Mass downloads illusts from a search result. You can map the results into different folders by tag
      * with the folderMap parameter.
      */
-    public downloadIllusts = async (query: string, dest: string, size?: string, folderMap?: PixivFolderMap[], r18?: boolean) => {
+    public downloadIllusts = async (query: string, dest: string, size?:  'medium' | 'large' | 'square_medium' | 'original', folderMap?: PixivFolderMap[], r18?: boolean) => {
         if (!size) size = "medium"
         if (!r18) r18 = false
         const illusts = await this.search.illusts({word: query, r18})
@@ -171,20 +193,19 @@ export class Util {
             if (!r18) {
                 if (illust.x_restrict !== 0) continue
             }
-            const imgUrl = illust.image_urls[size] ? illust.image_urls[size] : illust.image_urls.medium
             if (folderMap) {
                 for (let k = 0; k < illust.tags.length; k++) {
                     for (let j = 0; j < folderMap.length; j++) {
                         const tag = await replace.translateTag(folderMap[j].tag)
                         if (tag.includes(illust.tags[k].name)) {
-                            const promise = this.downloadIllust(imgUrl, path.join(dest, folderMap[j].folder))
+                            const promise = this.downloadIllust(illust, path.join(dest, folderMap[j].folder), size)
                             promiseArray.push(promise)
                             continue loop1
                         }
                     }
                 }
             }
-            const promise = this.downloadIllust(imgUrl, dest)
+            const promise = this.downloadIllust(illust, dest, size)
             promiseArray.push(promise)
         }
         const resolved = await Promise.all(promiseArray)
