@@ -99,7 +99,7 @@ export class Util {
         }
         if (basename.includes(".")) folder = folder.replace(basename, "")
         if (!fs.existsSync(folder)) fs.mkdirSync(folder, {recursive: true})
-        const dest = basename.includes(".") ? `${folder}${basename}` : path.join(folder, `${url.match(/\d{6,}/) ? url.match(/\d{6,}/)[0] : "illust"}${name_ext ?? ''}.png`)
+        const dest = basename.includes(".") ? `${folder}${basename}` : path.join(folder, `${url.match(/\d{6,}/) ? url.match(/\d{6,}/)[0] : "illust"}${name_ext ?? ""}.png`)
         const writeStream = fs.createWriteStream(dest)
         await axios.get(url, {responseType: "stream", headers: {Referer: "https://www.pixiv.net/"}})
         .then((r) => r.data.pipe(writeStream))
@@ -110,14 +110,14 @@ export class Util {
     /**
      * Downloads an illust locally.
      */
-    public downloadIllust = async (illustResolvable: string | PixivIllust, folder: string, size?: 'medium' | 'large' | 'square_medium' | 'original') => {
+    public downloadIllust = async (illustResolvable: string | PixivIllust, folder: string, size?: "medium" | "large" | "square_medium" | "original") => {
         if (!size) size = "medium"
         let url: string
         let illust = illustResolvable as PixivIllust
         if (illustResolvable.hasOwnProperty("image_urls")) {
             if (illust.meta_pages.length === 0) {
                 // Single Image
-                if (size == 'original') {
+                if (size == "original") {
                     url = illust.meta_single_page.original_image_url
                 } else {
                     url = illust.image_urls[size]
@@ -144,7 +144,7 @@ export class Util {
     }
 
     /**
-     * Downloads an author's profile picture locally.
+     * Downloads an author"s profile picture locally.
      */
     public downloadProfilePicture = async (illustResolvable: string | PixivIllust, folder: string, size?: string) => {
         const basename = path.basename(folder)
@@ -182,20 +182,20 @@ export class Util {
      * Mass downloads illusts from a search result. You can map the results into different folders by tag
      * with the folderMap parameter.
      */
-    public downloadIllusts = async (query: string, dest: string, size?:  'medium' | 'large' | 'square_medium' | 'original', folderMap?: PixivFolderMap[], r18?: boolean) => {
+    public downloadIllusts = async (query: string, dest: string, size?:  "medium" | "large" | "square_medium" | "original", folderMap?: PixivFolderMap[], r18?: boolean) => {
         if (!size) size = "medium"
         if (!r18) r18 = false
         const illusts = await this.search.illusts({word: query, r18})
         const promiseArray = []
         loop1:
-        for (let i = 0 i < illusts.length i++) {
+        for (let i = 0; i < illusts.length; i++) {
             const illust = illusts[i]
             if (!r18) {
                 if (illust.x_restrict !== 0) continue
             }
             if (folderMap) {
-                for (let k = 0 k < illust.tags.length k++) {
-                    for (let j = 0 j < folderMap.length j++) {
+                for (let k = 0; k < illust.tags.length; k++) {
+                    for (let j = 0; j < folderMap.length; j++) {
                         const tag = await replace.translateTag(folderMap[j].tag)
                         if (tag.includes(illust.tags[k].name)) {
                             const promise = this.downloadIllust(illust, path.join(dest, folderMap[j].folder), size)
@@ -271,13 +271,13 @@ export class Util {
             })
         }
 
-        for (let i = 0 i < files.length i++) {
+        for (let i = 0; i < files.length; i++) {
             const webpFile = `${files[i].slice(0, -4)}.webp`
             webpArray.push(webpFile)
             await convertToWebp(files[i], webpFile)
         }
 
-        for (let j = 0 j < webpArray.length j++) {
+        for (let j = 0; j < webpArray.length; j++) {
             inputArray.push(`${webpArray[j]} +${delays[j]}`)
         }
         webp.webpmux_animate(inputArray, dest, "10", "255,255,255,255", (status, error) => {console.log(status, error)})
@@ -321,7 +321,7 @@ export class Util {
         let step = Math.ceil(files.length / constraint)
         let fileArray: string[] = []
         let delayArray: number[] = []
-        for (let i = 0 i < files.length i += step) {
+        for (let i = 0; i < files.length; i += step) {
             if (files[i].slice(-5) === ".webp") continue
             if (!metadata.frames[i]) break
             fileArray.push(`${destPath}/${files[i]}`)
