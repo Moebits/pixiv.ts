@@ -113,31 +113,31 @@ export class Util {
     public downloadIllust = async (illustResolvable: string | PixivIllust, folder: string, size?: 'medium' | 'large' | 'square_medium' | 'original') => {
         if (!size) size = "medium"
         let url: string
-        let illust = illustResolvable as PixivIllust;
+        let illust = illustResolvable as PixivIllust
         if (illustResolvable.hasOwnProperty("image_urls")) {
             if (illust.meta_pages.length === 0) {
                 // Single Image
                 if (size == 'original') {
-                    url = illust.meta_single_page.original_image_url;
+                    url = illust.meta_single_page.original_image_url
                 } else {
-                    url = illust.image_urls[size];
+                    url = illust.image_urls[size]
                 }
-                this.download(url, folder);
+                this.download(url, folder)
             } else {
-                let i = 0;
+                let i = 0
                 // Multiple Images
                 for await (const image of illust.meta_pages) {
                     url = image.image_urls[size]
-                    this.download(url, folder, `_p${i++}`);
+                    this.download(url, folder, `_p${i++}`)
                 }
             }
         } else {
             url = illustResolvable as string
             if (url.startsWith("https://i.pximg.net/")) {
-                this.download(url, folder);
+                this.download(url, folder)
             } else {
                 illust = await this.illust.get(url)
-                this.downloadIllust(illust, folder, size);
+                this.downloadIllust(illust, folder, size)
             }
         }
 
@@ -188,14 +188,14 @@ export class Util {
         const illusts = await this.search.illusts({word: query, r18})
         const promiseArray = []
         loop1:
-        for (let i = 0; i < illusts.length; i++) {
+        for (let i = 0 i < illusts.length i++) {
             const illust = illusts[i]
             if (!r18) {
                 if (illust.x_restrict !== 0) continue
             }
             if (folderMap) {
-                for (let k = 0; k < illust.tags.length; k++) {
-                    for (let j = 0; j < folderMap.length; j++) {
+                for (let k = 0 k < illust.tags.length k++) {
+                    for (let j = 0 j < folderMap.length j++) {
                         const tag = await replace.translateTag(folderMap[j].tag)
                         if (tag.includes(illust.tags[k].name)) {
                             const promise = this.downloadIllust(illust, path.join(dest, folderMap[j].folder), size)
@@ -271,13 +271,13 @@ export class Util {
             })
         }
 
-        for (let i = 0; i < files.length; i++) {
+        for (let i = 0 i < files.length i++) {
             const webpFile = `${files[i].slice(0, -4)}.webp`
             webpArray.push(webpFile)
             await convertToWebp(files[i], webpFile)
         }
 
-        for (let j = 0; j < webpArray.length; j++) {
+        for (let j = 0 j < webpArray.length j++) {
             inputArray.push(`${webpArray[j]} +${delays[j]}`)
         }
         webp.webpmux_animate(inputArray, dest, "10", "255,255,255,255", (status, error) => {console.log(status, error)})
@@ -321,7 +321,7 @@ export class Util {
         let step = Math.ceil(files.length / constraint)
         let fileArray: string[] = []
         let delayArray: number[] = []
-        for (let i = 0; i < files.length; i += step) {
+        for (let i = 0 i < files.length i += step) {
             if (files[i].slice(-5) === ".webp") continue
             if (!metadata.frames[i]) break
             fileArray.push(`${destPath}/${files[i]}`)
