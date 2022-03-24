@@ -4,7 +4,7 @@ import {imageSize} from "image-size"
 import * as path from "path"
 import * as stream from "stream"
 import * as unzip from "unzipper"
-import {URLSearchParams} from "url"
+import * as child_process from "child_process"
 import api from "../API"
 import replace from "../Translate"
 import {PixivFolderMap, PixivIllust, PixivMultiCall} from "../types"
@@ -252,36 +252,35 @@ export class Util {
     }
 
     /**
-     * @ignore
+     * Encodes a webp from an array of file paths.
      */
-    /*
-    private readonly encodeWebp = async (files: string[], delays: number[], dest?: string) => {
+    public encodeAnimatedWebp = async (files: string[], delays: number[], dest?: string, webpPath?: string) => {
         const pathIndex = files[0].search(/\d{8,}/)
         const pathDir = files[0].slice(0, pathIndex)
-        const subDir = files[0].match(/(?<=\/)(\d{8,})(?=\/)/)[0]
-        if (!dest) dest = `${pathDir}${subDir}.webp`
-        const webpArray: string[] = []
-        const inputArray: string[] = []
+        if (!dest) dest = `${pathDir}${files[0].match(/\d{8,}/)[0]}.webp`
+        const frames = files.map((f, i) => `-d ${delays[i]} "${f}"`).join(" ")
+        const absolute = webpPath ? path.normalize(webpPath).replace(/\\/g, "/") : path.join(__dirname, "../../webp")
+        let program = `cd "${absolute}" && img2webp.exe`
+        if (process.platform === "darwin") program = `cd "${absolute}" && ./img2webp.app`
+        let command = `${program} -loop "0" ${frames} -o "${dest}"`
+        const child = child_process.exec(command)
+        let error = ""
+        await new Promise<void>((resolve, reject) => {
+            child.stderr.on("data", (chunk) => error += chunk)
+            child.on("close", () => resolve())
+        })
+        console.log(error)
+        return dest
+    }
 
-        async function convertToWebp(ifile: string, wFile: string) {
-            return new Promise((resolve) => {
-                webp.cwebp(ifile, wFile, "-q 80", (status, error) => {
-                    resolve()
-                })
-            })
-        }
-
-        for (let i = 0; i < files.length; i++) {
-            const webpFile = `${files[i].slice(0, -4)}.webp`
-            webpArray.push(webpFile)
-            await convertToWebp(files[i], webpFile)
-        }
-
-        for (let j = 0; j < webpArray.length; j++) {
-            inputArray.push(`${webpArray[j]} +${delays[j]}`)
-        }
-        webp.webpmux_animate(inputArray, dest, "10", "255,255,255,255", (status, error) => {console.log(status, error)})
-    }*/
+    /**
+     * Gives permission to webp binaries.
+     */
+    public chmod777 = (webpPath?: string) => {
+        if (process.platform === "win32") return
+        const webp = webpPath ? path.normalize(webpPath).replace(/\\/g, "/") : path.join(__dirname, "../../webp")
+        fs.chmodSync(webp, "777")
+    }
 
     /**
      * Downloads and extracts all of the individual images in a ugoira.
@@ -332,7 +331,8 @@ export class Util {
             fileArray = fileArray.reverse()
             delayArray = delayArray.reverse()
         }
-        const destination = await this.encodeGif(fileArray, delayArray)
+        let destination = ""
+        destination = await this.encodeGif(fileArray, delayArray)
         return destination
     }
 
