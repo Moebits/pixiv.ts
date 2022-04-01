@@ -130,6 +130,16 @@ async function useAPI() {
 }
 ```
 
+#### Obtaining subsequent API results
+```ts
+async function useAPI() {
+  /*You can obtain all subsequent search with util.multiCall(). The optional limit specifies how many extra api calls to make.*/
+  let limit = 100
+  let illusts = await pixiv.search.illusts({word: "word"})
+  if (pixiv.search.nextURL) illusts = await pixiv.util.multiCall({next_url: pixiv.search.nextURL, illusts}, limit)
+}
+```
+
 ### Common Parameters
 
 - `illust_id`: ID of the illust.

@@ -60,10 +60,10 @@ export class Util {
      * Makes subsequent api calls to get more search results, then returns them.
      */
     public multiCall = async (response: PixivMultiCall, limit?: number) => {
-        const responseArray = []
+        let responseArray = []
         let counter = limit || Infinity
         if (!response.next_url) return Promise.reject("You can only use this method on search responses.")
-        while ((response.next_url !== null) || (counter === 0)) {
+        while ((response.next_url !== null) && (counter > 0)) {
             response = await this.api.next(response.next_url)
             if (response.hasOwnProperty("illusts")) {
                 responseArray.push(response.illusts)
@@ -78,6 +78,17 @@ export class Util {
             }
             await this.timeout(1000)
             counter--
+        }
+        if (response.hasOwnProperty("illusts")) {
+            responseArray = [...response.illusts, responseArray]
+        } else if (response.hasOwnProperty("user_previews")) {
+            responseArray = [...response.user_previews, responseArray]
+        } else if (response.hasOwnProperty("comments")) {
+            responseArray = [...response.comments, responseArray]
+        } else if (response.hasOwnProperty("novels")) {
+            responseArray = [...response.novels, responseArray]
+        } else if (response.hasOwnProperty("bookmark_tags")) {
+            responseArray = [...response.bookmark_tags, responseArray]
         }
         return responseArray.flat(Infinity)
     }
