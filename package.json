@@ -1,6 +1,6 @@
 {
   "name": "pixiv.ts",
-  "version": "0.5.4",
+  "version": "0.5.5",
   "description": "Wrapper for the Pixiv API with typings",
   "main": "dist/pixiv.js",
   "types": "dist/pixiv.d.ts",
@@ -14,6 +14,9 @@
     "type": "git",
     "url": "https://github.com/Tenpi/pixiv.ts"
   },
+  "publishConfig": { 
+    "registry": "https://npm.pkg.github.com/tenpi"
+ },
   "keywords": [
     "pixiv",
     "typescript",
