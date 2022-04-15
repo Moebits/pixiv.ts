@@ -40,7 +40,7 @@ export default class Translate {
         .replace(/loli/i, "ロリ")
         .replace(/R18/i, "R-18")
         .replace(/R18G/i, "R-18G")
-        if (newTag !== tag) return newTag
+        if (!/[a-z]/i.test(newTag)) return newTag
         try {
             const translated = await translate(tag, "en", "ja")
             return translated.translation
