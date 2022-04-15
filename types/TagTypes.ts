@@ -28,5 +28,5 @@ export interface PixivAutoCompleteV2 {
   tags: {
     name: string,
     translated_name: string | null
-  }
+  }[]
 }
