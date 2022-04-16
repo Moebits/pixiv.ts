@@ -16,6 +16,8 @@ require("dotenv").config();
     // let illusts = await pixiv.search.illusts({word: "loli"})
     // if (pixiv.search.nextURL) illusts = await pixiv.util.multiCall({next_url: pixiv.search.nextURL, illusts}, 2)
     // console.log(illusts)
-    let candidates = await pixiv.search.searchForCandidates({ keyword: 'chino', lang: 'en' });
-    console.log(candidates);
+    // let illusts = await pixiv.util.translateTag("chino")
+    // console.log(illusts)
+    let candidates = await pixiv.search.searchForCandidates({ keyword: 'chino', lang: 'en' })
+    console.log(candidates)
 })()
