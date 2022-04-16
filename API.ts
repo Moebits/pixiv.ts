@@ -2,7 +2,7 @@ import axios, {AxiosRequestConfig} from "axios"
 import {ParsedUrlQueryInput, stringify} from "querystring"
 import {URLSearchParams} from "url"
 import {PixivAPIResponse} from "./types/ApiTypes"
-import {PixivAuthData, PixivAuthHeaders, PixivParams} from "./types/index"
+import {PixivAuthData, PixivAuthHeaders, PixivParams, PixivWebParams} from "./types/index"
 
 const oauthURL = "https://oauth.secure.pixiv.net/auth/token"
 const appURL = "https://app-api.pixiv.net/"
@@ -11,6 +11,7 @@ const publicURL = "https://public-api.secure.pixiv.net/"
 
 export default class API {
     private readonly userAgent = {"user-agent": "PixivIOSApp/7.7.5 (iOS 13.2.0; iPhone XR)"}
+    private readonly referer = {"referer": "https://www.pixiv.net/en/"}
     public constructor(private readonly data: PixivAuthData,
                        private readonly headers: PixivAuthHeaders,
                        private refreshToken: string,
@@ -46,6 +47,16 @@ export default class API {
         if (endpoint.startsWith("/")) endpoint = endpoint.slice(1)
         endpoint = appURL + endpoint
         const response = await axios.get(endpoint, {json: true, form: true, headers: this.userAgent, params} as AxiosRequestConfig).then((r) => r.data)
+        return response
+    }
+
+    /**
+     * Fetches from web url and returns the response.
+     */
+    public getWeb = async (endpoint: string, params: PixivWebParams) => {
+        if (endpoint.startsWith("/")) endpoint = endpoint.slice(1)
+        endpoint = webURL + endpoint
+        const response = await axios.get(endpoint, {json: true, form: true, headers: {"referer": this.referer.referer, "user-agent": this.userAgent["user-agent"]}, params} as AxiosRequestConfig).then((r) => r.data)
         return response
     }
 

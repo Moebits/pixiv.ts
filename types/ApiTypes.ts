@@ -101,3 +101,8 @@ export interface PixivParams {
     offset?: string
     category?: string
 }
+
+export interface PixivWebParams {
+  lang?: "en"
+  keyword: string
+}
