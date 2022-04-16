@@ -35,7 +35,7 @@ export interface PixivCandidates {
   candidates: {
     tag_name: string,
     access_count: string,
-    tag_translation?: string,
+    tag_translation: string | null,
     type: "romaji" | "tag_translation" | "prefix"
   }[]
 }
