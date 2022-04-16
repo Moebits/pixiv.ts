@@ -30,3 +30,12 @@ export interface PixivAutoCompleteV2 {
     translated_name: string | null
   }[]
 }
+
+export interface PixivCandidates {
+  candidates: {
+    tag_name: string,
+    access_count: string,
+    tag_translation?: string,
+    type: "romaji" | "tag_translation" | "prefix"
+  }[]
+}

@@ -2,8 +2,8 @@ import api from "../API"
 import Pixiv from "../pixiv"
 import replace from "../Translate"
 import axios from "axios"
-import {PixivAutoComplete, PixivAutoCompleteV2, PixivIllust,
-PixivIllustSearch, PixivNovel, PixivNovelSearch, PixivParams, PixivUserSearch} from "../types"
+import {PixivAutoComplete, PixivAutoCompleteV2, PixivCandidates, PixivIllust,
+PixivIllustSearch, PixivNovel, PixivNovelSearch, PixivParams, PixivUserSearch, PixivWebParams} from "../types"
 
 export class Search {
     public nextURL: string | null = null
@@ -110,6 +110,14 @@ export class Search {
         params = await this.processWord(params)
         const response = await this.api.get(`/v2/search/autocomplete`, params)
         return response as Promise<PixivAutoCompleteV2>
+    }
+
+    /**
+     * Gets suggested candidates from web url that includes tag translation and access count.
+     */
+    public candidates = async (params?: PixivWebParams) => {
+        const response = await this.api.getWeb(`/rpc/cps.php`, params)
+        return response as Promise<PixivCandidates>
     }
 
     /**
