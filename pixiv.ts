@@ -79,6 +79,16 @@ export default class Pixiv {
     public setLanguage = (language: 'English' | 'Japanese') => {
         this.acceptLanguage = language === 'Japanese' ? undefined : language
         this.api = new api(data, headers, Pixiv.refreshToken, Pixiv.accessToken, this.loginTime, this.expirationTime, this.acceptLanguage)
+        this.illust = new Illust(this.api)
+        this.illust = new Illust(this.api)
+        this.manga = new Manga(this.api)
+        this.novel = new Novel(this.api)
+        this.search = new Search(this.api)
+        this.user = new User(this.api)
+        this.ugoira = new Ugoira(this.api)
+        this.util = new Util(this.api)
+        this.spotlight = new Spotlight(this.api)
+        this.web = new Web(this.api)
     }
 
 

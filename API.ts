@@ -9,8 +9,14 @@ const appURL = "https://app-api.pixiv.net/"
 const webURL = "https://www.pixiv.net/"
 const publicURL = "https://public-api.secure.pixiv.net/"
 
+interface APIHeader {
+    'user-agent': string
+    referer: string
+    'accept-language'?: string
+}
+
 export default class API {
-    private readonly headers = {"user-agent": "PixivIOSApp/7.7.5 (iOS 13.2.0; iPhone XR)", "referer": "https://www.pixiv.net/", 'Accept-Language': undefined}
+    private readonly headers: APIHeader
     public constructor(private readonly data: PixivAuthData,
                        private readonly authHeaders: PixivAuthHeaders,
                        private refreshToken: string,
@@ -19,8 +25,11 @@ export default class API {
                        private readonly expirationTime: number,
                        private language?: 'English' | undefined) {
         this.headers = {
-            ...this.headers,
-            'Accept-Language': this.language
+            "user-agent": "PixivIOSApp/7.7.5 (iOS 13.2.0; iPhone XR)",
+            "referer": "https://www.pixiv.net/",
+            ...(language !== undefined ? {
+                'accept-language': language
+            } : {})
         }
     }
 
