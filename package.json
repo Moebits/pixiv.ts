@@ -1,6 +1,6 @@
 {
   "name": "pixiv.ts",
-  "version": "0.5.7",
+  "version": "0.5.8",
   "description": "Wrapper for the Pixiv API with typings",
   "main": "dist/pixiv.js",
   "types": "dist/pixiv.d.ts",
