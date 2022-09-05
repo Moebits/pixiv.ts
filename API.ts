@@ -10,19 +10,13 @@ const webURL = "https://www.pixiv.net/"
 const publicURL = "https://public-api.secure.pixiv.net/"
 
 export default class API {
-    private readonly headers = {"user-agent": "PixivIOSApp/7.7.5 (iOS 13.2.0; iPhone XR)", "referer": "https://www.pixiv.net/", 'Accept-Language': undefined}
+    private readonly headers = {"user-agent": "PixivIOSApp/7.7.5 (iOS 13.2.0; iPhone XR)", "referer": "https://www.pixiv.net/"}
     public constructor(private readonly data: PixivAuthData,
                        private readonly authHeaders: PixivAuthHeaders,
                        private refreshToken: string,
                        private accessToken: string,
                        private readonly loginTime: number,
-                       private readonly expirationTime: number,
-                       private language?: 'English' | undefined) {
-        this.headers = {
-            ...this.headers,
-            'Accept-Language': this.language
-        }
-    }
+                       private readonly expirationTime: number) {}
 
     /**
      * Gets a new access token if the refresh token expires.

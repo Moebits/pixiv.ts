@@ -38,7 +38,6 @@ const headers: PixivAuthHeaders = {
 export default class Pixiv {
     public static accessToken: string
     public static refreshToken: string
-    public acceptLanguage: 'English' | undefined
     public api = new api(data, headers, Pixiv.refreshToken, Pixiv.accessToken, this.loginTime, this.expirationTime)
     public illust = new Illust(this.api)
     public manga = new Manga(this.api)
@@ -59,7 +58,7 @@ export default class Pixiv {
         if (!refreshToken) refreshToken = Pixiv.refreshToken
         if (!refreshToken) return Promise.reject("You must login with a username and password first.")
         Pixiv.refreshToken = await this.api.refreshAccessToken(refreshToken)
-        this.api = new api(data, headers, Pixiv.refreshToken, Pixiv.accessToken, this.loginTime, this.expirationTime, this.acceptLanguage)
+        this.api = new api(data, headers, Pixiv.refreshToken, Pixiv.accessToken, this.loginTime, this.expirationTime)
         this.illust = new Illust(this.api)
         this.illust = new Illust(this.api)
         this.manga = new Manga(this.api)
@@ -72,15 +71,6 @@ export default class Pixiv {
         this.web = new Web(this.api)
         return Pixiv.refreshToken
     }
-
-    /**
-     * Set language to interact with the API. If language is set to Japanese, then Accept-Language header will not be passed into the api
-     */
-    public setLanguage = (language: 'English' | 'Japanese') => {
-        this.acceptLanguage = language === 'Japanese' ? undefined : language
-        this.api = new api(data, headers, Pixiv.refreshToken, Pixiv.accessToken, this.loginTime, this.expirationTime, this.acceptLanguage)
-    }
-
 
     /**
      * Logs into Pixiv with your username and password, or refresh token if it is available.
