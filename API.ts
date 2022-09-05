@@ -10,7 +10,7 @@ const webURL = "https://www.pixiv.net/"
 const publicURL = "https://public-api.secure.pixiv.net/"
 
 export default class API {
-    private readonly headers = {"user-agent": "PixivIOSApp/7.7.5 (iOS 13.2.0; iPhone XR)", "referer": "https://www.pixiv.net/"}
+    private readonly headers = {"user-agent": "PixivIOSApp/7.7.5 (iOS 13.2.0; iPhone XR)", "referer": "https://www.pixiv.net/", "accept-language": "English"}
     public constructor(private readonly data: PixivAuthData,
                        private readonly authHeaders: PixivAuthHeaders,
                        private refreshToken: string,
