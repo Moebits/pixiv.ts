@@ -133,22 +133,22 @@ export class Util {
                 } else {
                     url = illust.image_urls[size]
                 }
-                this.download(url, folder)
+                return this.download(url, folder)
             } else {
                 let i = 0
                 // Multiple Images
-                for await (const image of illust.meta_pages) {
+                for (const image of illust.meta_pages) {
                     url = image.image_urls[size]
-                    this.download(url, folder, `_p${i++}`)
+                    await this.download(url, folder, `_p${i++}`)
                 }
             }
         } else {
             url = illustResolvable as string
             if (url.startsWith("https://i.pximg.net/")) {
-                this.download(url, folder)
+                return this.download(url, folder)
             } else {
                 illust = await this.illust.get(url)
-                this.downloadIllust(illust, folder, size)
+                return this.downloadIllust(illust, folder, size)
             }
         }
 
