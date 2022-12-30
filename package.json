@@ -33,7 +33,7 @@
     "@types/unzipper": "^0.10.3",
     "chai": "^4.2.0",
     "dotenv": "^8.2.0",
-    "mocha": "^6.2.2",
+    "mocha": "^10.2.0",
     "ts-mocha": "^6.0.0",
     "typedoc": "^0.15.0",
     "typescript": "^3.8.3"
