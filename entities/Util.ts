@@ -151,7 +151,6 @@ export class Util {
                 return this.downloadIllust(illust, folder, size)
             }
         }
-
     }
 
     /**

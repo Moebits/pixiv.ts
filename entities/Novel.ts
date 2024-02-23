@@ -12,7 +12,7 @@ export class Novel {
      * Gets a novel by URL or ID.
      */
     public get = async (novelResolvable: string | number, params?: PixivParams) => {
-        let novelId = String(novelResolvable).match(/\d{8,}/) ? String(novelResolvable).match(/\d{8,}/)[0] : null
+        let novelId = String(novelResolvable).match(/\d{3,}/) ? String(novelResolvable).match(/\d{3,}/)[0] : null
         if (!novelId) {
             if (!params) params = {}
             params.word = String(novelResolvable)
