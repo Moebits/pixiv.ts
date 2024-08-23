@@ -45,11 +45,6 @@ describe("Illust", async function() {
         assert(response.hasOwnProperty("comments"))
     })
 
-    it("should get comments V2", async function() {
-        const response = await pixiv.illust.commentsV2({illust_id: 70728512})
-        assert(response.hasOwnProperty("comments"))
-    })
-
     it("should get followed illusts", async function() {
         const response = await pixiv.illust.follow({user_id: 2913676})
         assert(response?.[0].hasOwnProperty("title"))

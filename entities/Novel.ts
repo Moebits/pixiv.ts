@@ -1,5 +1,5 @@
 import api from "../API"
-import {PixivBookmarkDetail, PixivBookmarkRanges, PixivCommentSearch, PixivCommentSearchV2,
+import {PixivBookmarkDetail, PixivBookmarkRanges, PixivCommentSearch,
 PixivNovel, PixivNovelDetail, PixivNovelSearch, PixivNovelText, PixivParams, PixivTrendTags} from "../types"
 import {Search} from "./index"
 
@@ -110,19 +110,11 @@ export class Novel {
     }
 
     /**
-     * Gets the comments on a novel.
+     * Comments from V3 API
      */
     public comments = async (params: PixivParams & {novel_id: number}) => {
-        const response = await this.api.get(`/v1/novel/comments`, params)
+        const response = await this.api.get(`/v3/novel/comments`, params)
         return response as Promise<PixivCommentSearch>
-    }
-
-    /**
-     * CommentsV2 replaces parent_comment with has_replies.
-     */
-    public commentsV2 = async (params: PixivParams & {novel_id: number}) => {
-        const response = await this.api.get(`/v2/novel/comments`, params)
-        return response as Promise<PixivCommentSearchV2>
     }
 
     /**

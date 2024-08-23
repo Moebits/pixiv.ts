@@ -1,5 +1,5 @@
 import api from "../API"
-import {PixivBookmarkDetail, PixivBookmarkRanges, PixivBookmarkSearch, PixivCommentSearch, PixivCommentSearchV2, PixivIllust,
+import {PixivBookmarkDetail, PixivBookmarkRanges, PixivBookmarkSearch, PixivCommentSearch, PixivIllust,
 PixivIllustDetail, PixivIllustSearch, PixivParams, PixivTrendTags} from "../types"
 import {Search} from "./index"
 
@@ -79,20 +79,11 @@ export class Illust {
     }
 
     /**
-     * Fetches the comments on an illust.
+     * Comments from V3 API
      */
     public comments = async (params: PixivParams & {illust_id: number}) => {
-        const response = await this.api.get(`/v1/illust/comments`, params)
+        const response = await this.api.get(`/v3/illust/comments`, params)
         return response as Promise<PixivCommentSearch>
-    }
-
-    /**
-     * The difference from the V1 API is that parent_comment was replaced with
-     * has_replies.
-     */
-    public commentsV2 = async (params: PixivParams & {illust_id: number}) => {
-        const response = await this.api.get(`/v2/illust/comments`, params)
-        return response as Promise<PixivCommentSearchV2>
     }
 
     /**

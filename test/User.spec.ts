@@ -8,7 +8,7 @@ describe("User", async function() {
     })
 
     it("should get a user", async function() {
-        const response = await pixiv.user.get("https://www.pixiv.net/member.php?id=35096162")
+        const response = await pixiv.user.get("https://www.pixiv.net/en/users/42658805")
         assert(response.hasOwnProperty("user"))
     })
 

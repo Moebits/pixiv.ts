@@ -39,11 +39,6 @@ describe("Novel", async function() {
         assert(response.hasOwnProperty("comments"))
     })
 
-    it("should get bookmark comments v2", async function() {
-        const response = await pixiv.novel.commentsV2({novel_id: 11826198})
-        assert(response.hasOwnProperty("comments"))
-    })
-
     it("should get follow", async function() {
         const response = await pixiv.novel.follow()
         assert(response?.[0].hasOwnProperty("title"))
