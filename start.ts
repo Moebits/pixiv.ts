@@ -6,7 +6,7 @@ import Pixiv from "./pixiv"
 
 require("dotenv").config();
 (async () => {
-    const pixiv = await Pixiv.refreshLogin(process.env.REFRESH_TOKEN)
+    const pixiv = await Pixiv.refreshLogin(process.env.PIXIV_REFRESH_TOKEN)
     const result = await pixiv.illust.comments({illust_id: 72301885})
     console.log(result.comments[0])
 })()
