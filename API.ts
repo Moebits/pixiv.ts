@@ -42,10 +42,12 @@ export default class API {
         await this.refreshAccessToken()
         if (!params) params = {}
         params.filter = "for_ios"
-        params.access_token = this.accessToken
+        let headersWithAuth = Object.assign(this.headers, {
+            authorization: 'Bearer ' + this.accessToken
+        })
         if (endpoint.startsWith("/")) endpoint = endpoint.slice(1)
         endpoint = appURL + endpoint
-        const response = await axios.get(endpoint, {json: true, form: true, headers: this.headers, params} as AxiosRequestConfig).then((r) => r.data)
+        const response = await axios.get(endpoint, {json: true, form: true, headers: headersWithAuth, params} as AxiosRequestConfig).then((r) => r.data)
         return response
     }
 
@@ -65,8 +67,10 @@ export default class API {
     public next = async (nextUrl: string) => {
         await this.refreshAccessToken()
         const {baseUrl, params} = this.destructureParams(nextUrl)
-        params.access_token = this.accessToken
-        const response = await axios.get(baseUrl, {params, headers: this.headers}).then((r) => r.data)
+        let headersWithAuth = Object.assign(this.headers, {
+            authorization: 'Bearer ' + this.accessToken
+        })
+        const response = await axios.get(baseUrl, {params, headers: headersWithAuth}).then((r) => r.data)
         return response
     }
 
