@@ -20,7 +20,7 @@ export class Util {
      * Parsed a pixiv id from the url.
      */
     public parseID = (input: string) => {
-        const parsed = input.match(/\d+/)
+        const parsed = input.match(/\d{5,}/)
         return parsed ? Number(parsed) : null
     }
 
@@ -231,9 +231,9 @@ export class Util {
         return new Promise<string>((resolve) => {
             const dimensions = imageSize(files[0])
             const gif = new GifEncoder(dimensions.width, dimensions.height)
-            const pathIndex = files[0].search(/\d+/)
+            const pathIndex = files[0].search(/\d{5,}/)
             const pathDir = files[0].slice(0, pathIndex)
-            if (!dest) dest = `${pathDir}${files[0].match(/\d+/)[0]}.gif`
+            if (!dest) dest = `${pathDir}${files[0].match(/\d{5,}/)[0]}.gif`
             const file = fs.createWriteStream(dest)
             gif.pipe(file)
             gif.setQuality(10)
@@ -265,9 +265,9 @@ export class Util {
      * Encodes a webp from an array of file paths.
      */
     public encodeAnimatedWebp = async (files: string[], delays: number[], dest?: string, webpPath?: string) => {
-        const pathIndex = files[0].search(/\d+/)
+        const pathIndex = files[0].search(/\d{5,}/)
         const pathDir = files[0].slice(0, pathIndex)
-        if (!dest) dest = `${pathDir}${files[0].match(/\d+/)[0]}.webp`
+        if (!dest) dest = `${pathDir}${files[0].match(/\d{5,}/)[0]}.webp`
         const frames = files.map((f, i) => `-d ${delays[i]} "${f}"`).join(" ")
         const absolute = webpPath ? path.normalize(webpPath).replace(/\\/g, "/") : path.join(__dirname, "../../webp")
         let program = `cd "${absolute}" && img2webp.exe`
@@ -300,9 +300,9 @@ export class Util {
             url = await this.ugoira.get(url).then((u) => u.ugoira_metadata.zip_urls.medium)
         }
         if (__dirname.includes("node_modules")) {
-            dest = path.join(__dirname, "../../../../", dest, url.match(/\d+/)[0])
+            dest = path.join(__dirname, "../../../../", dest, url.match(/\d{5,}/)[0])
         } else {
-            dest = path.join(__dirname, "../../", dest, url.match(/\d+/)[0])
+            dest = path.join(__dirname, "../../", dest, url.match(/\d{5,}/)[0])
         }
         if (!fs.existsSync(dest)) fs.mkdirSync(dest, {recursive: true})
         const writeStream = await axios.get(url, {responseType: "stream", headers: {Referer: "https://www.pixiv.net/"}})
@@ -354,7 +354,7 @@ export class Util {
         if (illustResolvable.hasOwnProperty("id")) {
             id = String((illustResolvable as PixivIllust).id)
         } else {
-            id = String(illustResolvable).match(/\d+/)?.[0]?.trim()
+            id = String(illustResolvable).match(/\d{5,}/)?.[0]?.trim()
         }
         const html = await axios.get(`https://www.pixiv.net/en/artworks/${id}`, {headers: {referer: "https://www.pixiv.net/"}}).then((r) => r.data)
         const match = html.match(/(?<="regular":")(.*?)(?=")/gm)?.map((m: string) => m)?.[0]

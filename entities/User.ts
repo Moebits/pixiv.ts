@@ -10,7 +10,7 @@ export class User {
      * Gets a user by URL or ID.
      */
     public get = async (userResolvable: string | number) => {
-        const userId = String(userResolvable).match(/\d+/)
+        const userId = String(userResolvable).match(/\d{5,}/)
         if (!userId) return Promise.reject("Invalid id or url provided.")
         const response = await this.detail({user_id: Number(userId[0])})
         return response
