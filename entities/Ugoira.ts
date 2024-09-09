@@ -8,7 +8,7 @@ export class Ugoira {
      * Gets the metadata for a ugoira by URL or ID.
      */
     public get = async (ugoiraResolvable: string | number) => {
-        const ugoiraId = String(ugoiraResolvable).match(/\d{8,}/) ? String(ugoiraResolvable).match(/\d{8,}/)[0] : null
+        const ugoiraId = String(ugoiraResolvable).match(/\d+/) ? String(ugoiraResolvable).match(/\d+/)[0] : null
         if (!ugoiraId) return Promise.reject("This url or id is invalid.")
         return this.metadata({illust_id: Number(ugoiraId)})
     }

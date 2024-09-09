@@ -11,7 +11,7 @@ export class Manga {
      * Gets a manga by URL or ID.
      */
     public get = async (illustResolvable: string | number, params?: PixivParams) => {
-        let illustId = String(illustResolvable).match(/\d{8,}/) ? String(illustResolvable).match(/\d{8,}/)[0] : null
+        let illustId = String(illustResolvable).match(/\d+/) ? String(illustResolvable).match(/\d+/)[0] : null
         if (!illustId) {
             if (!params) params = {}
             params.word = String(illustResolvable)
