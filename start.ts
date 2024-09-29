@@ -7,6 +7,6 @@ import Pixiv from "./pixiv"
 require("dotenv").config();
 (async () => {
     const pixiv = await Pixiv.refreshLogin(process.env.PIXIV_REFRESH_TOKEN)
-    const result = await pixiv.illust.get("https://www.pixiv.net/en/artworks/6618255")
-    console.log(result)
+    let result = await pixiv.search.illusts({word: "橘ヒカリ", restrict: "public"})
+    console.log(result.length)
 })()

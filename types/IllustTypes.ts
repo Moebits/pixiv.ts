@@ -41,4 +41,6 @@ export interface PixivIllust {
     is_muted: boolean
     total_comments: number
     url?: string
+    illust_ai_type: number
+    illust_book_style: number
   }
