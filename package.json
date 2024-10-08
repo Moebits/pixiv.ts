@@ -1,6 +1,6 @@
 {
   "name": "pixiv.ts",
-  "version": "0.6.5",
+  "version": "0.6.6",
   "description": "Wrapper for the Pixiv API with typings",
   "main": "dist/pixiv.js",
   "types": "dist/pixiv.d.ts",
@@ -42,6 +42,6 @@
     "get-pixels": "^3.3.2",
     "gif-encoder": "^0.7.2",
     "image-size": "^0.8.3",
-    "unzipper": "^0.10.11"
+    "unzipper": "^0.12.3"
   }
 }
