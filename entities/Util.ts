@@ -332,7 +332,7 @@ export class Util {
         let id = this.parseID(url)
         const metadata = await this.ugoira.get(url).then((r) => r.ugoira_metadata)
         const zipUrl = metadata.zip_urls.medium
-        let zipDest = path.join(path.extname(dest) ? path.dirname(dest) : dest, String(id))
+        let zipDest = path.extname(dest) ? path.dirname(dest) : dest + `/${id}`
         const destPath = await this.downloadZip(zipUrl, zipDest).then((p) => p.replace("\\", "/"))
         const files = fs.readdirSync(destPath).filter((f) => f.endsWith(".jpg") || f.endsWith(".png"))
         const constraint = options?.speed > 1 ? files.length / options.speed : files.length
@@ -356,7 +356,9 @@ export class Util {
         } else {
             destination = await this.encodeGif(fileArray, delayArray, dest)
         }
-        this.removeLocalDirectory(zipDest)
+        try {
+            this.removeLocalDirectory(zipDest)
+        } catch {}
         return destination
     }
 
