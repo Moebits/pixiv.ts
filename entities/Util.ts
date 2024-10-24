@@ -77,8 +77,46 @@ export class Util {
             } else if (response.hasOwnProperty("bookmark_tags")) {
                 responseArray.push(response.bookmark_tags)
             }
-            await this.timeout(1000)
+            await this.timeout(500)
             counter--
+        }
+        if (response.hasOwnProperty("illusts")) {
+            responseArray = [...response.illusts, responseArray]
+        } else if (response.hasOwnProperty("user_previews")) {
+            responseArray = [...response.user_previews, responseArray]
+        } else if (response.hasOwnProperty("comments")) {
+            responseArray = [...response.comments, responseArray]
+        } else if (response.hasOwnProperty("novels")) {
+            responseArray = [...response.novels, responseArray]
+        } else if (response.hasOwnProperty("bookmark_tags")) {
+            responseArray = [...response.bookmark_tags, responseArray]
+        }
+        return responseArray.flat(Infinity)
+    }
+
+    public bookmarkMultiCall = async (response: PixivMultiCall, bookmarks: number, limit?: number) => {
+        let responseArray = []
+        if (!response.next_url) return Promise.reject("You can only use this method on search responses.")
+        let thresholdReached = false
+        while ((response.next_url !== null) && !thresholdReached) {
+            response = await this.api.next(response.next_url)
+            if (response.hasOwnProperty("illusts")) {
+                responseArray.push(response.illusts)
+            } else if (response.hasOwnProperty("user_previews")) {
+                responseArray.push(response.user_previews)
+            } else if (response.hasOwnProperty("comments")) {
+                responseArray.push(response.comments)
+            } else if (response.hasOwnProperty("novels")) {
+                responseArray.push(response.novels)
+            } else if (response.hasOwnProperty("bookmark_tags")) {
+                responseArray.push(response.bookmark_tags)
+            }
+            await this.timeout(500)
+            const lastBookmarks = response.illusts[response.illusts.length - 1]?.total_bookmarks
+            if (lastBookmarks === undefined) continue
+            if (!thresholdReached) thresholdReached = lastBookmarks <= bookmarks
+            const amount = responseArray.reduce((p, c) => p + c.length, 0)
+            if (amount >= limit) thresholdReached = true
         }
         if (response.hasOwnProperty("illusts")) {
             responseArray = [...response.illusts, responseArray]
