@@ -104,5 +104,5 @@ export interface PixivParams {
 
 export interface PixivWebParams {
   lang?: "en"
-  keyword: string
+  keyword?: string
 }

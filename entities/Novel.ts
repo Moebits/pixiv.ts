@@ -1,5 +1,5 @@
 import api from "../API"
-import {PixivBookmarkDetail, PixivBookmarkRanges, PixivCommentSearch,
+import {PixivBookmarkDetail, PixivBookmarkRanges, PixivCommentSearch, PixivAJAXNovelText,
 PixivNovel, PixivNovelDetail, PixivNovelSearch, PixivNovelText, PixivParams, PixivTrendTags} from "../types"
 import {Search} from "./index"
 
@@ -42,9 +42,9 @@ export class Novel {
     /**
      * Gets the text for a novel.
      */
-    public text = async (params: PixivParams & {novel_id: number}) => {
-        const response = await this.api.get(`/v1/novel/text`, params)
-        return response as Promise<PixivNovelText>
+    public text = async (params: {novel_id: number}) => {
+        const response = await this.api.getWeb(`/ajax/novel/${params.novel_id}`)
+        return response.body as Promise<PixivAJAXNovelText>
     }
 
     /**

@@ -21,7 +21,7 @@ describe("Novel", async function() {
 
     it("should get novel text", async function() {
         const response = await pixiv.novel.text({novel_id: 11826198})
-        assert(response.hasOwnProperty("novel_text"))
+        assert(response.hasOwnProperty("content"))
     })
 
     it("should get bookmark detail", async function() {

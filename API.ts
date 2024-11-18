@@ -54,7 +54,7 @@ export default class API {
     /**
      * Fetches from web url and returns the response.
      */
-    public getWeb = async (endpoint: string, params: PixivWebParams) => {
+    public getWeb = async (endpoint: string, params?: PixivWebParams) => {
         if (endpoint.startsWith("/")) endpoint = endpoint.slice(1)
         endpoint = webURL + endpoint
         const response = await axios.get(endpoint, {json: true, form: true, headers: this.headers, params} as AxiosRequestConfig).then((r) => r.data)

@@ -7,11 +7,12 @@ import * as unzip from "unzipper"
 import * as child_process from "child_process"
 import API from "../API"
 import replace from "../Translate"
-import {PixivFolderMap, PixivIllust, PixivMultiCall} from "../types"
-import {Illust, Search, Ugoira} from "./index"
+import {PixivFolderMap, PixivIllust, PixivNovel, PixivMultiCall} from "../types"
+import {Illust, Novel, Search, Ugoira} from "./index"
 
 export class Util {
     private readonly illust = new Illust(this.api)
+    private readonly novel = new Novel(this.api)
     private readonly search = new Search(this.api)
     private readonly ugoira = new Ugoira(this.api)
     constructor(private readonly api: API) {}
@@ -140,7 +141,7 @@ export class Util {
         return illusts
     }
 
-    private download = async (url: string,  folder: string, name_ext?: string) => {
+    private download = async (url: string,  folder: string, nameExt?: string, fileExt = "png") => {
         const basename = path.basename(folder)
         if (!path.isAbsolute(folder)) {
             if (__dirname.includes("node_modules")) {
@@ -151,11 +152,27 @@ export class Util {
         }
         if (basename.includes(".")) folder = folder.replace(basename, "")
         if (!fs.existsSync(folder)) fs.mkdirSync(folder, {recursive: true})
-        const dest = basename.includes(".") ? `${folder}${basename}` : path.join(folder, `${url.match(/\d{6,}/) ? url.match(/\d{6,}/)[0] : "illust"}${name_ext ?? ""}.png`)
+        const dest = basename.includes(".") ? `${folder}${basename}` : path.join(folder, `${url.match(/\d{6,}/) ? url.match(/\d{6,}/)[0] : "illust"}${nameExt ?? ""}.${fileExt}`)
         const writeStream = fs.createWriteStream(dest)
         await axios.get(url, {responseType: "stream", headers: {Referer: "https://www.pixiv.net/"}})
         .then((r) => r.data.pipe(writeStream))
         await this.awaitStream(writeStream)
+        return dest
+    }
+
+    private downloadData = async (data: string,  folder: string, id?: number, fileExt = "txt") => {
+        const basename = path.basename(folder)
+        if (!path.isAbsolute(folder)) {
+            if (__dirname.includes("node_modules")) {
+                folder = path.join(__dirname, "../../../../", folder)
+            } else {
+                folder = path.join(__dirname, "../../", folder)
+            }
+        }
+        if (basename.includes(".")) folder = folder.replace(basename, "")
+        if (!fs.existsSync(folder)) fs.mkdirSync(folder, {recursive: true})
+        const dest = basename.includes(".") ? `${folder}${basename}` : `${path.join(folder, id ? `${id}` : "data")}.${fileExt}`
+        fs.writeFileSync(dest, data)
         return dest
     }
 
@@ -228,6 +245,22 @@ export class Util {
         await axios.get(url, {responseType: "stream", headers: {Referer: "https://www.pixiv.net/"}})
         .then((r) => r.data.pipe(writeStream))
         await this.awaitStream(writeStream)
+        return dest
+    }
+
+    /**
+     * Downloads a novel locally.
+     */
+    public downloadNovel = async (novelResolvable: string | PixivNovel, folder: string) => {
+        let novel = novelResolvable as PixivNovel
+        if (novelResolvable.hasOwnProperty("image_urls")) {
+            // ignore
+        } else {
+            novel = await this.novel.get(novelResolvable as string)
+        }
+        const data = await this.novel.text({novel_id: novel.id})
+        const dest = await this.downloadData(data.content, folder, novel.id)
+        await this.download(data.coverUrl, folder)
         return dest
     }
 
