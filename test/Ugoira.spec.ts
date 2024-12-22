@@ -8,7 +8,7 @@ describe("Ugoira", async function() {
     })
 
     it("should get a ugoira", async function() {
-        const response = await pixiv.ugoira.get("https://www.pixiv.net/en/artworks/83088330")
+        const response = await pixiv.ugoira.get("https://www.pixiv.net/artworks/83088330")
         assert(response.ugoira_metadata.hasOwnProperty("frames"))
     })
 

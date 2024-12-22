@@ -68,7 +68,7 @@ export class Search {
             response = res.illusts
         }
         if (params.type) response = response.filter((i: PixivIllust) => i.type === params.type)
-        response.forEach((i: PixivIllust) => i.url = `https://www.pixiv.net/en/artworks/${i.id}`)
+        response.forEach((i: PixivIllust) => i.url = `https://www.pixiv.net/artworks/${i.id}`)
         return response
     }
 

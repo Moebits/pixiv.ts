@@ -443,7 +443,7 @@ export class Util {
         } else {
             id = String(illustResolvable).match(/\d{5,}/)?.[0]?.trim()
         }
-        const html = await axios.get(`https://www.pixiv.net/en/artworks/${id}`, {headers: {referer: "https://www.pixiv.net/"}}).then((r) => r.data)
+        const html = await axios.get(`https://www.pixiv.net/artworks/${id}`, {headers: {referer: "https://www.pixiv.net/"}}).then((r) => r.data)
         const match = html.match(/(?<="regular":")(.*?)(?=")/gm)?.map((m: string) => m)?.[0]
         if (match && (match.match(/i-cf/) || match.match(/tc-px/))) {
             try {

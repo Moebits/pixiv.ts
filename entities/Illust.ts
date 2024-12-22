@@ -25,7 +25,7 @@ export class Illust {
             illustId = String(illusts[0].id)
         }
         const response = await this.detail({illust_id: Number(illustId)})
-        response.url = `https://www.pixiv.net/en/artworks/${response.id}`
+        response.url = `https://www.pixiv.net/artworks/${response.id}`
         return response
     }
 
@@ -35,7 +35,7 @@ export class Illust {
     public detail = async (params: PixivParams & {illust_id: number}) => {
         const response = await this.api.get(`/v1/illust/detail`, params) as PixivIllustDetail
         if (response.illust.type === "novel") return Promise.reject(`This is not an illust, it is a novel.`)
-        response.illust.url = `https://www.pixiv.net/en/artworks/${response.illust.id}`
+        response.illust.url = `https://www.pixiv.net/artworks/${response.illust.id}`
         return response.illust
     }
 
@@ -62,7 +62,7 @@ export class Illust {
         params.content_type = "illust"
         const response = await this.api.get(`/v1/illust/new`, params) as PixivIllustSearch
         if (params.type) response.illusts = response.illusts.filter((i: PixivIllust) => i.type === params.type)
-        response.illusts.forEach((i: PixivIllust) => i.url = `https://www.pixiv.net/en/artworks/${i.id}`)
+        response.illusts.forEach((i: PixivIllust) => i.url = `https://www.pixiv.net/artworks/${i.id}`)
         this.nextURL = response.next_url
         return response.illusts
     }
@@ -74,7 +74,7 @@ export class Illust {
         if (!params.restrict) params.restrict = "all"
         const response = await this.api.get(`/v2/illust/follow`, params) as PixivIllustSearch
         if (params.type) response.illusts = response.illusts.filter((i: PixivIllust) => i.type === params.type)
-        response.illusts.forEach((i: PixivIllust) => i.url = `https://www.pixiv.net/en/artworks/${i.id}`)
+        response.illusts.forEach((i: PixivIllust) => i.url = `https://www.pixiv.net/artworks/${i.id}`)
         this.nextURL = response.next_url
         return response.illusts
     }
@@ -93,7 +93,7 @@ export class Illust {
     public recommended = async (params?: PixivParams) => {
         const response = await this.api.get(`/v1/illust/recommended`, params) as PixivIllustSearch
         if (params.type) response.illusts = response.illusts.filter((i: PixivIllust) => i.type === params.type)
-        response.illusts.forEach((i: PixivIllust) => i.url = `https://www.pixiv.net/en/artworks/${i.id}`)
+        response.illusts.forEach((i: PixivIllust) => i.url = `https://www.pixiv.net/artworks/${i.id}`)
         this.nextURL = response.next_url
         return response.illusts
     }
@@ -106,7 +106,7 @@ export class Illust {
         if (!params.mode) params.mode = "day"
         const response = await this.api.get(`/v1/illust/ranking`, params) as PixivIllustSearch
         if (params.type) response.illusts = response.illusts.filter((i: PixivIllust) => i.type === params.type)
-        response.illusts.forEach((i: PixivIllust) => i.url = `https://www.pixiv.net/en/artworks/${i.id}`)
+        response.illusts.forEach((i: PixivIllust) => i.url = `https://www.pixiv.net/artworks/${i.id}`)
         this.nextURL = response.next_url
         return response.illusts
     }
@@ -117,7 +117,7 @@ export class Illust {
     public popularPreview = async (params: PixivParams & {word: string}) => {
         const response = await this.api.get(`/v1/search/popular-preview/illust`, params) as PixivIllustSearch
         if (params.type) response.illusts = response.illusts.filter((i: PixivIllust) => i.type === params.type)
-        response.illusts.forEach((i: PixivIllust) => i.url = `https://www.pixiv.net/en/artworks/${i.id}`)
+        response.illusts.forEach((i: PixivIllust) => i.url = `https://www.pixiv.net/artworks/${i.id}`)
         this.nextURL = response.next_url
         return response.illusts
     }

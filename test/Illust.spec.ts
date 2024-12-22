@@ -15,7 +15,7 @@ describe("Illust", async function() {
     })
 
     it("should get an illust", async function() {
-        const response = await pixiv.illust.get("https://www.pixiv.net/en/artworks/70115510")
+        const response = await pixiv.illust.get("https://www.pixiv.net/artworks/70115510")
         assert(response.hasOwnProperty("title"))
     })
 
