@@ -79,3 +79,68 @@ export interface PixivFollowDetail {
     restrict: string
   }
 }
+
+export interface PixivWebUser {
+  userId: string
+  name: string
+  image: string
+  imageBig: string
+  premium: boolean
+  isFollowed: boolean
+  isMypixiv: boolean
+  isBlocking: boolean
+  background: {
+    repeat: boolean | null
+    color: string | null
+    url: string
+    isPrivate: boolean
+  }
+  sketchLiveId: string | null
+  partial: number
+  sketchLives: any[]
+  commission: string | null
+  following: number
+  mypixivCount: number
+  followedBack: boolean
+  comment: string
+  commentHtml: string
+  webpage: string
+  social: {
+    twitter: {url: string}
+  }
+  canSendMessage: boolean
+  region: {
+    name: string | null
+    region: string | null
+    prefecture: string | null
+    privacyLevel: string | null
+  }
+  age: {
+    name: string | null
+    privacyLevel: string |  null
+  }
+  birthDay: {
+    name: string | null
+    privacyLevel: string | null
+  }
+  gender: {
+    name: string | null
+    privacyLevel: string | null
+  }
+  job: {
+    name: string | null
+    privacyLevel: string | null
+  }
+  workspace: {
+    userWorkspacePc: string
+    userWorkspaceMonitor: string
+    userWorkspaceTablet: string
+    userWorkspaceDesktop: string
+  }
+  official: boolean
+  group: {
+    id: string
+    title: string
+    iconUrl: string
+  }[]
+}

@@ -1,6 +1,6 @@
 import api from "../API"
 import {PixivBookmarkDetail, PixivBookmarkSearch, PixivFollowDetail, PixivIllustSearch, PixivNovelSearch,
-PixivParams, PixivUserDetail, PixivUserSearch, PixivNovel} from "../types"
+PixivParams, PixivUserDetail, PixivUserSearch, PixivNovel, PixivWebUser} from "../types"
 
 export class User {
     public nextURL: string | null = null
@@ -22,6 +22,15 @@ export class User {
     public detail = async (params: PixivParams & {user_id: number}) => {
         const response = await this.api.get(`/v1/user/detail`, params)
         return response as Promise<PixivUserDetail>
+    }
+
+    /**
+     * 
+     * Get user profile (web)
+     */
+    public webDetail = async (userId: number) => {
+        const response = await this.api.getWeb(`/ajax/user/${userId}?full=1`)
+        return response.body as Promise<PixivWebUser>
     }
 
     /**
