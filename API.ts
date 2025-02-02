@@ -43,7 +43,7 @@ export default class API {
         if (!params) params = {}
         params.filter = "for_ios"
         let headersWithAuth = Object.assign(this.headers, {
-            authorization: 'Bearer ' + this.accessToken
+            authorization: `Bearer ${this.accessToken}`
         })
         if (endpoint.startsWith("/")) endpoint = endpoint.slice(1)
         endpoint = appURL + endpoint
@@ -68,7 +68,7 @@ export default class API {
         await this.refreshAccessToken()
         const {baseUrl, params} = this.destructureParams(nextUrl)
         let headersWithAuth = Object.assign(this.headers, {
-            authorization: 'Bearer ' + this.accessToken
+            authorization: `Bearer ${this.accessToken}`
         })
         const response = await axios.get(baseUrl, {params, headers: headersWithAuth}).then((r) => r.data)
         return response

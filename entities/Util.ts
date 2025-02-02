@@ -66,7 +66,7 @@ export class Util {
         let counter = limit || Infinity
         if (!response.next_url) return Promise.reject("You can only use this method on search responses.")
         while ((response.next_url !== null) && (counter > 0)) {
-            response = await this.api.next(response.next_url)
+            response = await this.api.next(response.next_url).catch(() => ({next_url: null}))
             if (response.hasOwnProperty("illusts")) {
                 responseArray.push(response.illusts)
             } else if (response.hasOwnProperty("user_previews")) {
@@ -100,7 +100,7 @@ export class Util {
         if (!response.next_url) return Promise.reject("You can only use this method on search responses.")
         let thresholdReached = false
         while ((response.next_url !== null) && !thresholdReached) {
-            response = await this.api.next(response.next_url)
+            response = await this.api.next(response.next_url).catch(() => ({next_url: null}))
             if (response.hasOwnProperty("illusts")) {
                 responseArray.push(response.illusts)
             } else if (response.hasOwnProperty("user_previews")) {
@@ -113,8 +113,8 @@ export class Util {
                 responseArray.push(response.bookmark_tags)
             }
             await this.timeout(500)
-            const lastBookmarks = response.illusts[response.illusts.length - 1]?.total_bookmarks
-            if (lastBookmarks === undefined) continue
+            const lastBookmarks = response?.illusts?.[response.illusts.length - 1]?.total_bookmarks
+            if (lastBookmarks === undefined) thresholdReached = true
             if (!thresholdReached) thresholdReached = lastBookmarks <= bookmarks
             const amount = responseArray.reduce((p, c) => p + c.length, 0)
             if (amount >= limit) thresholdReached = true
