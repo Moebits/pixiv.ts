@@ -179,7 +179,8 @@ export class Util {
     /**
      * Downloads an illust locally.
      */
-    public downloadIllust = async (illustResolvable: string | PixivIllust, folder: string, size?: "medium" | "large" | "square_medium" | "original") => {
+    public downloadIllust = async (illustResolvable: string | PixivIllust, folder: string, size?: "medium" | "large" | "square_medium" | "original"): Promise<string> => {
+        if (!illustResolvable) return ""
         if (!size) size = "medium"
         let url: string
         let illust = illustResolvable as PixivIllust
@@ -193,12 +194,14 @@ export class Util {
                 }
                 return this.download(url, folder)
             } else {
+                let dest = ""
                 let i = 0
                 // Multiple Images
                 for (const image of illust.meta_pages) {
                     url = image.image_urls[size]
-                    await this.download(url, folder, `_p${i++}`)
+                    if (!dest) dest = await this.download(url, folder, `_p${i++}`)
                 }
+                return dest
             }
         } else {
             url = illustResolvable as string
@@ -215,6 +218,7 @@ export class Util {
      * Downloads an author"s profile picture locally.
      */
     public downloadProfilePicture = async (illustResolvable: string | PixivIllust, folder: string, size?: string) => {
+        if (!illustResolvable) return ""
         const basename = path.basename(folder)
         if (!size) size = "medium"
         let url: string
@@ -228,6 +232,7 @@ export class Util {
         }
         if (!url.startsWith("https://i.pximg.net/")) {
             const illust = await this.illust.get(url)
+            if (!illust) return ""
             url = illust.user.profile_image_urls[size] ?
             illust.user.profile_image_urls[size] : illust.user.profile_image_urls.medium
             username = illust.user.name
