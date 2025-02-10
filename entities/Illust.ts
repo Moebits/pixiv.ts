@@ -22,7 +22,8 @@ export class Illust {
             illusts = illusts.filter((i) => {
                 return (i.type === "illust" || i.type === "ugoira") ? true : false
             })
-            illustId = String(illusts[0].id)
+            if (!illusts.length) return
+            illustId = String(illusts[0]?.id)
         }
         const response = await this.detail({illust_id: Number(illustId)})
         response.url = `https://www.pixiv.net/artworks/${response.id}`
