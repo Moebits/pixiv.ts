@@ -157,4 +157,21 @@ export class Illust {
         const response = await this.api.get(`/v1/search/bookmark-ranges/illust`, params)
         return response as Promise<PixivBookmarkRanges>
     }
+
+    
+    /**
+     * Bookmark the illust.
+     */
+    public doBookmarkIllust = async (params: PixivParams & {restrict: "public" | "private" | "all", illust_id: number}) => {
+        const response = await this.api.post(`/v2/illust/bookmark/add`, params)
+        return response as Promise<void>
+    }
+
+    /**
+     * Undo bookmark the illust.
+     */
+    public undoBookmarkIllust = async (params: PixivParams & {illust_id: number}) => {
+        const response = await this.api.post(`/v1/illust/bookmark/delete`, params)
+        return response as Promise<void>
+    }
 }

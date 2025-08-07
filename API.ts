@@ -52,6 +52,18 @@ export default class API {
     }
 
     /**
+     * Post with the API and returns the response.
+     */
+    public post = async (endpoint: string, params?: PixivParams) => {
+        await this.refreshAccessToken()
+        if (!params) params = {}
+        if (endpoint.startsWith("/")) endpoint = endpoint.slice(1)
+        endpoint = appURL + endpoint
+        const response = await axios.post(endpoint,stringify(params as unknown as ParsedUrlQueryInput), {headers: {Authorization:this.authHeaders.authorization,...this.headers}} as AxiosRequestConfig).then((r) => r.data)
+        return response
+    }
+
+    /**
      * Fetches from web url and returns the response.
      */
     public getWeb = async (endpoint: string, params?: PixivWebParams) => {
