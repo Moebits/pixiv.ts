@@ -1,4 +1,4 @@
-import axios from "axios"
+import {axiosInstance as axios} from "./AxiosInstance"
 import * as fs from "fs"
 import {imageSize} from "image-size"
 import * as path from "path"
