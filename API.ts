@@ -1,4 +1,5 @@
-import axios, {AxiosRequestConfig} from "axios"
+import {axiosInstance as axios} from "./entities/AxiosInstance"
+import {AxiosRequestConfig} from "axios"
 import {ParsedUrlQueryInput, stringify} from "querystring"
 import {URLSearchParams} from "url"
 import {PixivAPIResponse} from "./types/ApiTypes"

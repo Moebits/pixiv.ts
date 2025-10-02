@@ -1,4 +1,5 @@
-import axios, {AxiosRequestConfig} from "axios"
+import {axiosInstance as axios, updateAxiosInstance} from "./entities/AxiosInstance"
+import {AxiosRequestConfig} from "axios"
 import * as crypto from "crypto"
 import {ParsedUrlQueryInput, stringify} from "querystring"
 import api from "./API"
@@ -75,7 +76,8 @@ export default class Pixiv {
     /**
      * Logs into Pixiv with your username and password, or refresh token if it is available.
      */
-    public static login = async (username: string, password: string) => {
+    public static login = async (username: string, password: string, options?: AxiosRequestConfig) => {
+        updateAxiosInstance(options)
         if (!username || !password) {
             const missing = username ? "password" : (password ? "username" : "username and password")
             return Promise.reject(`You must provide a ${missing} in order to login!`)
@@ -98,7 +100,8 @@ export default class Pixiv {
     /**
      * Logs in with username and password only.
      */
-    public static passwordLogin = async (username: string, password: string) => {
+    public static passwordLogin = async (username: string, password: string, options?: AxiosRequestConfig) => {
+        updateAxiosInstance(options)
         if (!username || !password) {
             const missing = username ? "password" : (password ? "username" : "username and password")
             return Promise.reject(`You must provide a ${missing} in order to login!`)
@@ -116,7 +119,8 @@ export default class Pixiv {
     /**
      * Logs in with refresh token only.
      */
-    public static refreshLogin = async (refreshToken: string) => {
+    public static refreshLogin = async (refreshToken: string, options?: AxiosRequestConfig) => {
+        updateAxiosInstance(options)
         data.refresh_token = refreshToken
         data.grant_type = "refresh_token"
         const result = await axios.post(oauthURL, stringify(data as unknown as ParsedUrlQueryInput), {headers} as AxiosRequestConfig).then((r) => r.data) as PixivAPIResponse

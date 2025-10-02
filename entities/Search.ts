@@ -1,7 +1,7 @@
 import api from "../API"
 import Pixiv from "../pixiv"
 import replace from "../Translate"
-import axios from "axios"
+import {axiosInstance as axios} from "./AxiosInstance"
 import {PixivAutoComplete, PixivAutoCompleteV2, PixivIllust,
 PixivIllustSearch, PixivNovel, PixivNovelSearch, PixivParams, PixivUserSearch} from "../types"
 
