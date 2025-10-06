@@ -12,7 +12,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/Moebits/pixiv.ts"
+    "url": "https://github.com/Moebytes/pixiv.ts"
   },
   "keywords": [
     "pixiv",
@@ -22,7 +22,7 @@
     "anime",
     "art"
   ],
-  "author": "Moebits",
+  "author": "Moebytes",
   "license": "MIT",
   "devDependencies": {
     "@types/chai": "^4.2.3",
