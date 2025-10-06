@@ -1,6 +1,6 @@
 <div align="left">
   <p>
-    <a href="https://moebits.github.io/pixiv.ts/"><img src="https://raw.githubusercontent.com/Moebits/pixiv.ts/master/images/pixiv.tslogo.gif" width="500" /></a>
+    <a href="https://moebytes.github.io/pixiv.ts/"><img src="https://raw.githubusercontent.com/moebytes/pixiv.ts/master/images/pixiv.tslogo.gif" width="500" /></a>
   </p>
   <p>
     <a href="https://nodei.co/npm/pixiv.ts/"><img src="https://nodei.co/npm/pixiv.ts.png" /></a>
@@ -20,7 +20,7 @@ npm install pixiv.ts
 In order to receive an **access token** from pixiv, you must login using your **username** and **password**. All subsequent logins after the first will be done using the **refresh token** you receive on first login, and it will be regenerated automatically whenever it expires.
 
 ### Useful Links
-- [**Pixiv.ts Documentation**](https://moebits.github.io/pixiv.ts/)
+- [**Pixiv.ts Documentation**](https://moebytes.github.io/pixiv.ts/)
 - [**Pixivpy Wiki**](https://github.com/upbit/pixivpy/wiki)
 
 ### Notes on password login

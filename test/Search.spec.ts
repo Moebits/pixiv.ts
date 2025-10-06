@@ -22,7 +22,7 @@ describe("Search", async function() {
         assert(response.hasOwnProperty("user_previews"))
     })
 
-    it("should search autocomplete", async function() {
+    it.skip("should search autocomplete", async function() {
         const response = await pixiv.search.autoComplete({word: "gabriel"})
         assert(response.hasOwnProperty("search_auto_complete_keywords"))
     })

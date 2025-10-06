@@ -8,7 +8,7 @@ describe("Manga", async function() {
     })
 
     it("should get a manga", async function() {
-        const response = await pixiv.manga.get("https://www.pixiv.net/artworks/77338440")
+        const response = await pixiv.manga.get("https://www.pixiv.net/en/artworks/130555694")
         assert(response.hasOwnProperty("series"))
     })
 
