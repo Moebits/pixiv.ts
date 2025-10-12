@@ -81,8 +81,9 @@
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="pixivcomment.html#comment" class="tsd-kind-icon">comment</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="pixivcomment.html#date" class="tsd-kind-icon">date</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="pixivcomment.html#has_replies" class="tsd-kind-icon">has_<wbr>replies</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="pixivcomment.html#id" class="tsd-kind-icon">id</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="pixivcomment.html#parent_comment" class="tsd-kind-icon">parent_<wbr>comment</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="pixivcomment.html#stamp" class="tsd-kind-icon">stamp</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="pixivcomment.html#user" class="tsd-kind-icon">user</a></li>
 							</ul>
 						</section>
@@ -97,7 +98,7 @@
 					<div class="tsd-signature tsd-kind-icon">comment<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/Tenpi/pixiv.ts/blob/1654ebb/types/CommentTypes.ts#L16">types/CommentTypes.ts:16</a></li>
+							<li>Defined in <a href="https://github.com/Moebytes/pixiv.ts/blob/bda2f83/types/CommentTypes.ts#L11">types/CommentTypes.ts:11</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -107,7 +108,17 @@
 					<div class="tsd-signature tsd-kind-icon">date<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/Tenpi/pixiv.ts/blob/1654ebb/types/CommentTypes.ts#L17">types/CommentTypes.ts:17</a></li>
+							<li>Defined in <a href="https://github.com/Moebytes/pixiv.ts/blob/bda2f83/types/CommentTypes.ts#L12">types/CommentTypes.ts:12</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="has_replies" class="tsd-anchor"></a>
+					<h3>has_<wbr>replies</h3>
+					<div class="tsd-signature tsd-kind-icon">has_<wbr>replies<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/Moebytes/pixiv.ts/blob/bda2f83/types/CommentTypes.ts#L14">types/CommentTypes.ts:14</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -117,19 +128,30 @@
 					<div class="tsd-signature tsd-kind-icon">id<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/Tenpi/pixiv.ts/blob/1654ebb/types/CommentTypes.ts#L15">types/CommentTypes.ts:15</a></li>
+							<li>Defined in <a href="https://github.com/Moebytes/pixiv.ts/blob/bda2f83/types/CommentTypes.ts#L10">types/CommentTypes.ts:10</a></li>
 						</ul>
 					</aside>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="parent_comment" class="tsd-anchor"></a>
-					<h3>parent_<wbr>comment</h3>
-					<div class="tsd-signature tsd-kind-icon">parent_<wbr>comment<span class="tsd-signature-symbol">:</span> <a href="pixivcomment.html" class="tsd-signature-type">PixivComment</a></div>
+					<a name="stamp" class="tsd-anchor"></a>
+					<h3>stamp</h3>
+					<div class="tsd-signature tsd-kind-icon">stamp<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">object</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/Tenpi/pixiv.ts/blob/1654ebb/types/CommentTypes.ts#L19">types/CommentTypes.ts:19</a></li>
+							<li>Defined in <a href="https://github.com/Moebytes/pixiv.ts/blob/bda2f83/types/CommentTypes.ts#L15">types/CommentTypes.ts:15</a></li>
 						</ul>
 					</aside>
+					<div class="tsd-type-declaration">
+						<h4>Type declaration</h4>
+						<ul class="tsd-parameters">
+							<li class="tsd-parameter">
+								<h5>stamp_<wbr>id<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span></h5>
+							</li>
+							<li class="tsd-parameter">
+								<h5>stamp_<wbr>url<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span></h5>
+							</li>
+						</ul>
+					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
 					<a name="user" class="tsd-anchor"></a>
@@ -137,7 +159,7 @@
 					<div class="tsd-signature tsd-kind-icon">user<span class="tsd-signature-symbol">:</span> <a href="pixivuser.html" class="tsd-signature-type">PixivUser</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/Tenpi/pixiv.ts/blob/1654ebb/types/CommentTypes.ts#L18">types/CommentTypes.ts:18</a></li>
+							<li>Defined in <a href="https://github.com/Moebytes/pixiv.ts/blob/bda2f83/types/CommentTypes.ts#L13">types/CommentTypes.ts:13</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -165,10 +187,13 @@
 								<a href="pixivcomment.html#date" class="tsd-kind-icon">date</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="pixivcomment.html#has_replies" class="tsd-kind-icon">has_<wbr>replies</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
 								<a href="pixivcomment.html#id" class="tsd-kind-icon">id</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="pixivcomment.html#parent_comment" class="tsd-kind-icon">parent_<wbr>comment</a>
+								<a href="pixivcomment.html#stamp" class="tsd-kind-icon">stamp</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
 								<a href="pixivcomment.html#user" class="tsd-kind-icon">user</a>

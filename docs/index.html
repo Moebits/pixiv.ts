@@ -64,7 +64,7 @@
 			<div class="tsd-panel tsd-typography">
 				<div align="left">
 					<p>
-						<a href="https://tenpi.github.io/pixiv.ts/"><img src="https://raw.githubusercontent.com/Tenpi/pixiv.ts/master/images/pixiv.tslogo.gif" width="500" /></a>
+						<a href="https://moebytes.github.io/pixiv.ts/"><img src="https://raw.githubusercontent.com/moebytes/pixiv.ts/master/images/pixiv.tslogo.gif" width="500" /></a>
 					</p>
 					<p>
 						<a href="https://nodei.co/npm/pixiv.ts/"><img src="https://nodei.co/npm/pixiv.ts.png" /></a>
@@ -87,9 +87,15 @@
 					<h3>Useful Links</h3>
 				</a>
 				<ul>
-					<li><a href="https://tenpi.github.io/pixiv.ts/"><strong>Pixiv.ts Documentation</strong></a></li>
+					<li><a href="https://moebytes.github.io/pixiv.ts/"><strong>Pixiv.ts Documentation</strong></a></li>
 					<li><a href="https://github.com/upbit/pixivpy/wiki"><strong>Pixivpy Wiki</strong></a></li>
 				</ul>
+				<a href="#notes-on-password-login" id="notes-on-password-login" style="color: inherit; text-decoration: none;">
+					<h3>Notes on password login</h3>
+				</a>
+				<p>Pixiv stopped supporting user/password logins, so you can only login with refresh token for now. Follow
+					this <a href="https://gist.github.com/ZipFile/c9ebedb224406f4f11845ab700124362">guide</a> to obtain your refresh token,
+				and login instead with <code>await Pixiv.refreshLogin(process.env.PIXIV_REFRESH_TOKEN)</code>. </p>
 				<a href="#searching-for-illusts-novels-and-manga" id="searching-for-illusts-novels-and-manga" style="color: inherit; text-decoration: none;">
 					<h4>Searching for illusts, novels, and manga</h4>
 				</a>
@@ -106,19 +112,30 @@
     that will parse the id out of the url automatically.*/</span>
     <span class="hljs-keyword">const</span> illust = <span class="hljs-keyword">await</span> pixiv.illust.get(<span class="hljs-string">"https://www.pixiv.net/en/artworks/76833012"</span>)
 
+    <span class="hljs-comment">/*You could also get the most bookmarked illust from the query. This uses search internally, so you can
+    specify the parameters in the second argument.*/</span>
+    <span class="hljs-keyword">const</span> shortcut = <span class="hljs-keyword">await</span> pixiv.illust.get(<span class="hljs-string">"gabriel"</span>, {r18: <span class="hljs-literal">true</span>})
+
     <span class="hljs-comment">/*To parse the id out of any url, you can use util.parseID()*/</span>
     <span class="hljs-keyword">const</span> id = <span class="hljs-keyword">await</span> pixiv.util.parseID(<span class="hljs-string">"https://www.pixiv.net/en/artworks/75788934"</span>) <span class="hljs-comment">//75788934</span>
 
-    <span class="hljs-comment">/*You can search illusts with a query. It returns an object with an additional nextUrl() property, but since 
-    we are only interested in the illusts we can use a .then() chain to get them directly.*/</span>
-    <span class="hljs-keyword">const</span> illusts = <span class="hljs-keyword">await</span> pixiv.search.illusts({word: <span class="hljs-string">"gabriel dropout"</span>}).then(<span class="hljs-function">(<span class="hljs-params">s</span>) =&gt;</span> s.illusts)
+    <span class="hljs-comment">/*You can search illusts with a query. The nextURL is stored in pixiv.search.nextURL.*/</span>
+    <span class="hljs-keyword">let</span> illusts = <span class="hljs-keyword">await</span> pixiv.search.illusts({word: <span class="hljs-string">"gabriel dropout"</span>})
+    <span class="hljs-comment">/*There is also an utility to sort by most bookmarked.*/</span>
+    illusts = pixiv.util.sort(illusts)
+
+    <span class="hljs-comment">/*Filter parameters: en to search for english tags, type to filter by type, r18 to filter r18 illusts,
+    and bookmarks to filter by minimum bookmarks. By default tags are translated to japanese, but you can change
+    that behavior by changing en to true.*/</span>
+    <span class="hljs-keyword">const</span> filteredSearch = <span class="hljs-keyword">await</span> pixiv.search.illusts({word: <span class="hljs-string">"megumin"</span>, r18: <span class="hljs-literal">true</span>, <span class="hljs-keyword">type</span>: <span class="hljs-string">"illust"</span>, bookmarks: <span class="hljs-string">"100"</span>})
+    <span class="hljs-keyword">const</span> englishSearch = <span class="hljs-keyword">await</span> pixiv.search.illusts({word: <span class="hljs-string">"cute"</span>, en: <span class="hljs-literal">true</span>})
 
     <span class="hljs-comment">/*You can also search through the rankings, popular previews, etc.*/</span>
-    <span class="hljs-keyword">const</span> rankings = <span class="hljs-keyword">await</span> pixiv.illust.ranking({mode: <span class="hljs-string">"day"</span>}).then(<span class="hljs-function">(<span class="hljs-params">s</span>) =&gt;</span> s.illusts)
-    <span class="hljs-keyword">const</span> popularPreviews = <span class="hljs-keyword">await</span> pixiv.illust.popularPreview({word: <span class="hljs-string">"sagiri izumi"</span>}).then(<span class="hljs-function">(<span class="hljs-params">s</span>) =&gt;</span> s.illusts)
+    <span class="hljs-keyword">const</span> rankings = <span class="hljs-keyword">await</span> pixiv.illust.ranking({mode: <span class="hljs-string">"day_r18"</span>})
+    <span class="hljs-keyword">const</span> popularPreviews = <span class="hljs-keyword">await</span> pixiv.illust.popularPreview({word: <span class="hljs-string">"sagiri izumi"</span>})
 
     <span class="hljs-comment">/*And get all the illusts from a user.*/</span>
-    <span class="hljs-keyword">const</span> userIllusts = <span class="hljs-keyword">await</span> pixiv.user.illusts({user_id: <span class="hljs-number">18590546</span>}).then(<span class="hljs-function">(<span class="hljs-params">s</span>) =&gt;</span> s.illusts)
+    <span class="hljs-keyword">const</span> userIllusts = <span class="hljs-keyword">await</span> pixiv.user.illusts({user_id: <span class="hljs-number">18590546</span>})
 
     <span class="hljs-comment">/*Getting novels is practically identical to illusts. The alternative to the get() method is
     to query the api for the details directly.*/</span>
@@ -150,10 +167,10 @@ useAPI()</code></pre>
     <span class="hljs-keyword">const</span> bookmarkRanges = <span class="hljs-keyword">await</span> pixiv.illust.bookmarkRanges({word: <span class="hljs-string">"cute"</span>}).then(<span class="hljs-function">(<span class="hljs-params">b</span>) =&gt;</span> b.bookmark_ranges)
 
     <span class="hljs-comment">/*Of course, you can also get all of the bookmarks of a user.*/</span>
-    <span class="hljs-keyword">const</span> bookmarks = <span class="hljs-keyword">await</span> pixiv.user.bookmarksIllust({user_id: <span class="hljs-number">21479436</span>}).then(<span class="hljs-function">(<span class="hljs-params">s</span>) =&gt;</span> s.illusts)
+    <span class="hljs-keyword">const</span> bookmarks = <span class="hljs-keyword">await</span> pixiv.user.bookmarksIllust({user_id: <span class="hljs-number">21479436</span>})
 
     <span class="hljs-comment">/*To get articles from pixiv vision, you can use the spotlight endpoint.*/</span>
-    <span class="hljs-keyword">const</span> articles = <span class="hljs-keyword">await</span> pixiv.spotlight.articles().then(<span class="hljs-function">(<span class="hljs-params">s</span>) =&gt;</span> s.spotlight_articles)
+    <span class="hljs-keyword">const</span> articles = <span class="hljs-keyword">await</span> pixiv.spotlight.articles()
 }</code></pre>
 				<a href="#downloading-illusts-and-converting-ugoiras-to-gifs" id="downloading-illusts-and-converting-ugoiras-to-gifs" style="color: inherit; text-decoration: none;">
 					<h4>Downloading Illusts and Converting Ugoiras to gifs</h4>
@@ -175,9 +192,18 @@ useAPI()</code></pre>
   <span class="hljs-keyword">await</span> pixiv.util.downloadZip(<span class="hljs-string">"https://www.pixiv.net/en/artworks/77359698"</span>, <span class="hljs-string">"./ugoira"</span>)
 
   <span class="hljs-comment">/*A ton of png/jpg files are not that useful... which is why you can also convert and download a 
-  ugoira as a gif! This uses downloadZip() and encodeGif() internally. The third parameter allows you
-  to constrain the gif to a certain number of frames, as the file size can become quite large.*/</span>
-  <span class="hljs-keyword">await</span> pixiv.util.downloadUgoira(<span class="hljs-string">"https://www.pixiv.net/en/artworks/68064543"</span>, <span class="hljs-string">"./ugoira"</span>, <span class="hljs-number">100</span>)
+  ugoira as a gif! This uses downloadZip() and encodeGif() internally. The third parameter has some
+  options for speed and whether or not it's played in reverse.*/</span>
+  <span class="hljs-keyword">await</span> pixiv.util.downloadUgoira(<span class="hljs-string">"https://www.pixiv.net/en/artworks/68064543"</span>, <span class="hljs-string">"./ugoira"</span>, {speed: <span class="hljs-number">1.0</span>, reverse: <span class="hljs-literal">false</span>})
+}</code></pre>
+				<a href="#obtaining-subsequent-api-results" id="obtaining-subsequent-api-results" style="color: inherit; text-decoration: none;">
+					<h4>Obtaining subsequent API results</h4>
+				</a>
+				<pre><code class="language-ts"><span class="hljs-keyword">async</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">useAPI</span>(<span class="hljs-params"></span>) </span>{
+  <span class="hljs-comment">/*You can obtain all subsequent search with util.multiCall(). The optional limit specifies how many extra api calls to make.*/</span>
+  <span class="hljs-keyword">let</span> limit = <span class="hljs-number">100</span>
+  <span class="hljs-keyword">let</span> illusts = <span class="hljs-keyword">await</span> pixiv.search.illusts({word: <span class="hljs-string">"word"</span>})
+  <span class="hljs-keyword">if</span> (pixiv.search.nextURL) illusts = <span class="hljs-keyword">await</span> pixiv.util.multiCall({next_url: pixiv.search.nextURL, illusts}, limit)
 }</code></pre>
 				<a href="#common-parameters" id="common-parameters" style="color: inherit; text-decoration: none;">
 					<h3>Common Parameters</h3>
@@ -188,7 +214,7 @@ useAPI()</code></pre>
 					<li><code>novel_id</code>: ID of the novel.</li>
 					<li><code>series_id</code>: ID of the series.</li>
 					<li><code>word</code>: The search query to search.</li>
-					<li><code>type</code>: The type of content to search: <code>&quot;illust&quot; | &quot;novel&quot; | &quot;manga&quot; | &quot;ugoira</code></li>
+					<li><code>type</code>: The type of content to search: <code>&quot;illust&quot; | &quot;novel&quot; | &quot;manga&quot; | &quot;ugoira&quot;</code></li>
 					<li><code>restrict</code>: Restricts the bookmarks you search: <code>&quot;public&quot; | &quot;private&quot; | &quot;all&quot;</code></li>
 					<li><code>search_target</code>: The matching options in the search endpoint: <code>&quot;partial_match_for_tags&quot; | &quot;exact_match_for_tags&quot; | &quot;title_and_caption&quot;</code></li>
 					<li><code>mode</code>: For searching rankings, either: <code>&quot;day&quot; | &quot;week&quot; | &quot;month&quot; | &quot;day_male&quot; | &quot;day_female&quot; | &quot;week_original&quot; | &quot;week_rookie&quot; | &quot;day_r18&quot; | &quot;day_male_r18&quot; | &quot;day_female_r18&quot; | &quot;week_r18&quot; | &quot;week_r18g&quot; | &quot;day_manga&quot; | &quot;week_manga&quot; | &quot;month_manga&quot; | &quot;week_rookie_manga&quot; | &quot;day_r18_manga&quot; | &quot;week_r18_manga&quot; | &quot;week_r18g_manga&quot;</code></li>
@@ -338,13 +364,13 @@ useAPI()</code></pre>
 						<a href="classes/pixiv.html" class="tsd-kind-icon">Pixiv</a>
 					</li>
 					<li class=" tsd-kind-class">
-						<a href="classes/replace.html" class="tsd-kind-icon">Replace</a>
-					</li>
-					<li class=" tsd-kind-class">
 						<a href="classes/search.html" class="tsd-kind-icon">Search</a>
 					</li>
 					<li class=" tsd-kind-class">
 						<a href="classes/spotlight.html" class="tsd-kind-icon">Spotlight</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="classes/translate.html" class="tsd-kind-icon">Translate</a>
 					</li>
 					<li class=" tsd-kind-class">
 						<a href="classes/ugoira.html" class="tsd-kind-icon">Ugoira</a>
@@ -354,6 +380,15 @@ useAPI()</code></pre>
 					</li>
 					<li class=" tsd-kind-class">
 						<a href="classes/util.html" class="tsd-kind-icon">Util</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="classes/web.html" class="tsd-kind-icon">Web</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/pixivajaxnovel.html" class="tsd-kind-icon">PixivAJAXNovel</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/pixivajaxnoveltext.html" class="tsd-kind-icon">PixivAJAXNovel<wbr>Text</a>
 					</li>
 					<li class=" tsd-kind-interface">
 						<a href="interfaces/pixivapiresponse.html" class="tsd-kind-icon">PixivAPIResponse</a>
@@ -386,6 +421,9 @@ useAPI()</code></pre>
 						<a href="interfaces/pixivbookmarksearch.html" class="tsd-kind-icon">Pixiv<wbr>Bookmark<wbr>Search</a>
 					</li>
 					<li class=" tsd-kind-interface">
+						<a href="interfaces/pixivcandidates.html" class="tsd-kind-icon">Pixiv<wbr>Candidates</a>
+					</li>
+					<li class=" tsd-kind-interface">
 						<a href="interfaces/pixivclientuser.html" class="tsd-kind-icon">Pixiv<wbr>Client<wbr>User</a>
 					</li>
 					<li class=" tsd-kind-interface">
@@ -393,12 +431,6 @@ useAPI()</code></pre>
 					</li>
 					<li class=" tsd-kind-interface">
 						<a href="interfaces/pixivcommentsearch.html" class="tsd-kind-icon">Pixiv<wbr>Comment<wbr>Search</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="interfaces/pixivcommentsearchv2.html" class="tsd-kind-icon">Pixiv<wbr>Comment<wbr>Search<wbr>V2</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="interfaces/pixivcommentv2.html" class="tsd-kind-icon">Pixiv<wbr>Comment<wbr>V2</a>
 					</li>
 					<li class=" tsd-kind-interface">
 						<a href="interfaces/pixivfoldermap.html" class="tsd-kind-icon">Pixiv<wbr>Folder<wbr>Map</a>
@@ -461,10 +493,13 @@ useAPI()</code></pre>
 						<a href="interfaces/pixivusersearch.html" class="tsd-kind-icon">Pixiv<wbr>User<wbr>Search</a>
 					</li>
 					<li class=" tsd-kind-interface">
-						<a href="interfaces/ugoirametadata.html" class="tsd-kind-icon">Ugoira<wbr>Meta<wbr>Data</a>
+						<a href="interfaces/pixivwebparams.html" class="tsd-kind-icon">Pixiv<wbr>Web<wbr>Params</a>
 					</li>
-					<li class=" tsd-kind-variable tsd-is-not-exported">
-						<a href="globals.html#gifencoder" class="tsd-kind-icon">Gif<wbr>Encoder</a>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/pixivwebuser.html" class="tsd-kind-icon">Pixiv<wbr>Web<wbr>User</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/ugoirametadata.html" class="tsd-kind-icon">Ugoira<wbr>Meta<wbr>Data</a>
 					</li>
 					<li class=" tsd-kind-variable tsd-is-not-exported">
 						<a href="globals.html#appurl" class="tsd-kind-icon">appURL</a>
@@ -480,9 +515,6 @@ useAPI()</code></pre>
 					</li>
 					<li class=" tsd-kind-variable tsd-is-not-exported">
 						<a href="globals.html#clienttime" class="tsd-kind-icon">client<wbr>Time</a>
-					</li>
-					<li class=" tsd-kind-variable tsd-is-not-exported">
-						<a href="globals.html#getpixels" class="tsd-kind-icon">get<wbr>Pixels</a>
 					</li>
 					<li class=" tsd-kind-variable tsd-is-not-exported">
 						<a href="globals.html#hashsecret" class="tsd-kind-icon">hash<wbr>Secret</a>

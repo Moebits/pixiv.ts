@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>PixivCommentV2 | pixiv.ts</title>
+	<title>Web | pixiv.ts</title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -54,10 +54,10 @@
 					<a href="../globals.html">Globals</a>
 				</li>
 				<li>
-					<a href="pixivcommentv2.html">PixivCommentV2</a>
+					<a href="web.html">Web</a>
 				</li>
 			</ul>
-			<h1>Interface PixivCommentV2</h1>
+			<h1>Class Web</h1>
 		</div>
 	</div>
 </header>
@@ -68,7 +68,7 @@
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
 					<li>
-						<span class="target">PixivCommentV2</span>
+						<span class="target">Web</span>
 					</li>
 				</ul>
 			</section>
@@ -77,69 +77,94 @@
 				<section class="tsd-panel tsd-index-panel">
 					<div class="tsd-index-content">
 						<section class="tsd-index-section ">
+							<h3>Constructors</h3>
+							<ul class="tsd-index-list">
+								<li class="tsd-kind-constructor tsd-parent-kind-class"><a href="web.html#constructor" class="tsd-kind-icon">constructor</a></li>
+							</ul>
+						</section>
+						<section class="tsd-index-section tsd-is-private tsd-is-private-protected">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="pixivcommentv2.html#comment" class="tsd-kind-icon">comment</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="pixivcommentv2.html#date" class="tsd-kind-icon">date</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="pixivcommentv2.html#has_replies" class="tsd-kind-icon">has_<wbr>replies</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="pixivcommentv2.html#id" class="tsd-kind-icon">id</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="pixivcommentv2.html#user" class="tsd-kind-icon">user</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="web.html#api" class="tsd-kind-icon">api</a></li>
+							</ul>
+						</section>
+						<section class="tsd-index-section ">
+							<h3>Methods</h3>
+							<ul class="tsd-index-list">
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="web.html#candidates" class="tsd-kind-icon">candidates</a></li>
 							</ul>
 						</section>
 					</div>
 				</section>
 			</section>
 			<section class="tsd-panel-group tsd-member-group ">
+				<h2>Constructors</h2>
+				<section class="tsd-panel tsd-member tsd-kind-constructor tsd-parent-kind-class">
+					<a name="constructor" class="tsd-anchor"></a>
+					<h3>constructor</h3>
+					<ul class="tsd-signatures tsd-kind-constructor tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">new <wbr>Web<span class="tsd-signature-symbol">(</span>api<span class="tsd-signature-symbol">: </span><a href="" class="tsd-signature-type">api</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="web.html" class="tsd-signature-type">Web</a></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/Moebytes/pixiv.ts/blob/bda2f83/entities/Web.ts#L4">entities/Web.ts:4</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>api: <a href="" class="tsd-signature-type">api</a></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="web.html" class="tsd-signature-type">Web</a></h4>
+						</li>
+					</ul>
+				</section>
+			</section>
+			<section class="tsd-panel-group tsd-member-group tsd-is-private tsd-is-private-protected">
 				<h2>Properties</h2>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="comment" class="tsd-anchor"></a>
-					<h3>comment</h3>
-					<div class="tsd-signature tsd-kind-icon">comment<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-private">
+					<a name="api" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagPrivate">Private</span> api</h3>
+					<div class="tsd-signature tsd-kind-icon">api<span class="tsd-signature-symbol">:</span> <a href="web.html#api" class="tsd-signature-type">api</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/Tenpi/pixiv.ts/blob/1654ebb/types/CommentTypes.ts#L24">types/CommentTypes.ts:24</a></li>
+							<li>Defined in <a href="https://github.com/Moebytes/pixiv.ts/blob/bda2f83/entities/Web.ts#L5">entities/Web.ts:5</a></li>
 						</ul>
 					</aside>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="date" class="tsd-anchor"></a>
-					<h3>date</h3>
-					<div class="tsd-signature tsd-kind-icon">date<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/Tenpi/pixiv.ts/blob/1654ebb/types/CommentTypes.ts#L25">types/CommentTypes.ts:25</a></li>
-						</ul>
-					</aside>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="has_replies" class="tsd-anchor"></a>
-					<h3>has_<wbr>replies</h3>
-					<div class="tsd-signature tsd-kind-icon">has_<wbr>replies<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/Tenpi/pixiv.ts/blob/1654ebb/types/CommentTypes.ts#L27">types/CommentTypes.ts:27</a></li>
-						</ul>
-					</aside>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="id" class="tsd-anchor"></a>
-					<h3>id</h3>
-					<div class="tsd-signature tsd-kind-icon">id<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/Tenpi/pixiv.ts/blob/1654ebb/types/CommentTypes.ts#L23">types/CommentTypes.ts:23</a></li>
-						</ul>
-					</aside>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="user" class="tsd-anchor"></a>
-					<h3>user</h3>
-					<div class="tsd-signature tsd-kind-icon">user<span class="tsd-signature-symbol">:</span> <a href="pixivuser.html" class="tsd-signature-type">PixivUser</a></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/Tenpi/pixiv.ts/blob/1654ebb/types/CommentTypes.ts#L26">types/CommentTypes.ts:26</a></li>
-						</ul>
-					</aside>
+			</section>
+			<section class="tsd-panel-group tsd-member-group ">
+				<h2>Methods</h2>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="candidates" class="tsd-anchor"></a>
+					<h3>candidates</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">candidates<span class="tsd-signature-symbol">(</span>params<span class="tsd-signature-symbol">?: </span><a href="../interfaces/pixivwebparams.html" class="tsd-signature-type">PixivWebParams</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/Moebytes/pixiv.ts/blob/bda2f83/entities/Web.ts#L10">entities/Web.ts:10</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Gets suggested candidates from web url that includes tag translation and access count.</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> params: <a href="../interfaces/pixivwebparams.html" class="tsd-signature-type">PixivWebParams</a></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span></h4>
+						</li>
+					</ul>
 				</section>
 			</section>
 		</div>
@@ -155,23 +180,17 @@
 				<ul class="before-current">
 				</ul>
 				<ul class="current">
-					<li class="current tsd-kind-interface">
-						<a href="pixivcommentv2.html" class="tsd-kind-icon">Pixiv<wbr>Comment<wbr>V2</a>
+					<li class="current tsd-kind-class">
+						<a href="web.html" class="tsd-kind-icon">Web</a>
 						<ul>
-							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="pixivcommentv2.html#comment" class="tsd-kind-icon">comment</a>
+							<li class=" tsd-kind-constructor tsd-parent-kind-class">
+								<a href="web.html#constructor" class="tsd-kind-icon">constructor</a>
 							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="pixivcommentv2.html#date" class="tsd-kind-icon">date</a>
+							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-private">
+								<a href="web.html#api" class="tsd-kind-icon">api</a>
 							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="pixivcommentv2.html#has_replies" class="tsd-kind-icon">has_<wbr>replies</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="pixivcommentv2.html#id" class="tsd-kind-icon">id</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="pixivcommentv2.html#user" class="tsd-kind-icon">user</a>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="web.html#candidates" class="tsd-kind-icon">candidates</a>
 							</li>
 						</ul>
 					</li>

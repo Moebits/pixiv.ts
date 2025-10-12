@@ -41,6 +41,22 @@ export class Util {
     }
 
     /**
+     * Attempts to detect if The illust is AI.
+     */ 
+    public isAI = (illust: PixivIllust, AIUsers: number[] = []) => {
+        let AITags = ["AIイラスト", "AI生成", "StableDiffusion", "NovelAI"]
+        const defaultAIUsers = [87833254]
+        AIUsers = [...defaultAIUsers, ...AIUsers]
+        const tagNames = illust.tags.map((t: any) => t.name)
+
+        return (
+            illust.illust_ai_type === 2 || 
+            AITags.some(tag => tagNames.includes(tag)) ||
+            AIUsers.includes(illust.user.id)
+        )
+    }
+
+    /**
      * Utility for awaiting a setTimeout
      */
     public timeout = async (ms: number) => {
@@ -95,6 +111,9 @@ export class Util {
         return responseArray.flat(Infinity)
     }
 
+    /**
+     * Like multicall but with a minimum bookmark limit.
+     */
     public bookmarkMultiCall = async (response: PixivMultiCall, bookmarks: number, limit?: number) => {
         let responseArray = []
         if (!response.next_url) return Promise.reject("You can only use this method on search responses.")
@@ -160,7 +179,7 @@ export class Util {
         return dest
     }
 
-    private downloadData = async (data: string,  folder: string, id?: number, fileExt = "txt") => {
+    private downloadData = async (data: string, folder: string, id?: number, fileExt = "txt") => {
         const basename = path.basename(folder)
         if (!path.isAbsolute(folder)) {
             if (__dirname.includes("node_modules")) {
@@ -179,9 +198,10 @@ export class Util {
     /**
      * Downloads an illust locally.
      */
-    public downloadIllust = async (illustResolvable: string | PixivIllust, folder: string, size?: "medium" | "large" | "square_medium" | "original"): Promise<string> => {
+    public downloadIllust = async (illustResolvable: string | PixivIllust, folder: string, size?: "medium" | "large" | "square_medium" | "original", multiFolder?: string): Promise<string> => {
         if (!illustResolvable) return ""
         if (!size) size = "medium"
+        if (!multiFolder) multiFolder = folder
         let url: string
         let illust = illustResolvable as PixivIllust
         if (illustResolvable.hasOwnProperty("image_urls")) {
@@ -199,7 +219,7 @@ export class Util {
                 // Multiple Images
                 for (const image of illust.meta_pages) {
                     url = image.image_urls[size]
-                    if (!dest) dest = await this.download(url, folder, `_p${i++}`)
+                    if (!dest) dest = await this.download(url, multiFolder, `_p${i++}`)
                 }
                 return dest
             }

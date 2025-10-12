@@ -82,10 +82,12 @@
 								<li class="tsd-kind-constructor tsd-parent-kind-class"><a href="manga.html#constructor" class="tsd-kind-icon">constructor</a></li>
 							</ul>
 						</section>
-						<section class="tsd-index-section tsd-is-private tsd-is-private-protected">
+						<section class="tsd-index-section ">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="manga.html#api" class="tsd-kind-icon">api</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="manga.html#nexturl" class="tsd-kind-icon">nextURL</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="manga.html#search" class="tsd-kind-icon">search</a></li>
 							</ul>
 						</section>
 						<section class="tsd-index-section ">
@@ -113,7 +115,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/Tenpi/pixiv.ts/blob/1654ebb/entities/Manga.ts#L4">entities/Manga.ts:4</a></li>
+									<li>Defined in <a href="https://github.com/Moebytes/pixiv.ts/blob/bda2f83/entities/Manga.ts#L7">entities/Manga.ts:7</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -127,7 +129,7 @@
 					</ul>
 				</section>
 			</section>
-			<section class="tsd-panel-group tsd-member-group tsd-is-private tsd-is-private-protected">
+			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Properties</h2>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-private">
 					<a name="api" class="tsd-anchor"></a>
@@ -135,7 +137,27 @@
 					<div class="tsd-signature tsd-kind-icon">api<span class="tsd-signature-symbol">:</span> <a href="manga.html#api" class="tsd-signature-type">api</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/Tenpi/pixiv.ts/blob/1654ebb/entities/Manga.ts#L5">entities/Manga.ts:5</a></li>
+							<li>Defined in <a href="https://github.com/Moebytes/pixiv.ts/blob/bda2f83/entities/Manga.ts#L8">entities/Manga.ts:8</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+					<a name="nexturl" class="tsd-anchor"></a>
+					<h3>nextURL</h3>
+					<div class="tsd-signature tsd-kind-icon">nextURL<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span><span class="tsd-signature-symbol"> =&nbsp;null</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/Moebytes/pixiv.ts/blob/bda2f83/entities/Manga.ts#L6">entities/Manga.ts:6</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-private">
+					<a name="search" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagPrivate">Private</span> search</h3>
+					<div class="tsd-signature tsd-kind-icon">search<span class="tsd-signature-symbol">:</span> <a href="search.html" class="tsd-signature-type">Search</a><span class="tsd-signature-symbol"> =&nbsp;new Search(this.api)</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/Moebytes/pixiv.ts/blob/bda2f83/entities/Manga.ts#L7">entities/Manga.ts:7</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -152,7 +174,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/Tenpi/pixiv.ts/blob/1654ebb/entities/Manga.ts#L36">entities/Manga.ts:36</a></li>
+									<li>Defined in <a href="https://github.com/Moebytes/pixiv.ts/blob/bda2f83/entities/Manga.ts#L48">entities/Manga.ts:48</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -174,13 +196,13 @@
 					<a name="get" class="tsd-anchor"></a>
 					<h3>get</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">get<span class="tsd-signature-symbol">(</span>illustResolvable<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon">get<span class="tsd-signature-symbol">(</span>illustResolvable<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span>, params<span class="tsd-signature-symbol">?: </span><a href="../interfaces/pixivparams.html" class="tsd-signature-type">PixivParams</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/Tenpi/pixiv.ts/blob/1654ebb/entities/Manga.ts#L10">entities/Manga.ts:10</a></li>
+									<li>Defined in <a href="https://github.com/Moebytes/pixiv.ts/blob/bda2f83/entities/Manga.ts#L13">entities/Manga.ts:13</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -193,6 +215,9 @@
 								<li>
 									<h5>illustResolvable: <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span></h5>
 								</li>
+								<li>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> params: <a href="../interfaces/pixivparams.html" class="tsd-signature-type">PixivParams</a></h5>
+								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span></h4>
 						</li>
@@ -202,13 +227,13 @@
 					<a name="getpages" class="tsd-anchor"></a>
 					<h3>get<wbr>Pages</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">get<wbr>Pages<span class="tsd-signature-symbol">(</span>manga<span class="tsd-signature-symbol">: </span><a href="../interfaces/pixivmanga.html" class="tsd-signature-type">PixivManga</a>, size<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon">get<wbr>Pages<span class="tsd-signature-symbol">(</span>manga<span class="tsd-signature-symbol">: </span><a href="../interfaces/pixivmanga.html" class="tsd-signature-type">PixivManga</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/Tenpi/pixiv.ts/blob/1654ebb/entities/Manga.ts#L20">entities/Manga.ts:20</a></li>
+									<li>Defined in <a href="https://github.com/Moebytes/pixiv.ts/blob/bda2f83/entities/Manga.ts#L33">entities/Manga.ts:33</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -220,9 +245,6 @@
 							<ul class="tsd-parameters">
 								<li>
 									<h5>manga: <a href="../interfaces/pixivmanga.html" class="tsd-signature-type">PixivManga</a></h5>
-								</li>
-								<li>
-									<h5><span class="tsd-flag ts-flagOptional">Optional</span> size: <span class="tsd-signature-type">string</span></h5>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">&gt;</span></h4>
@@ -239,7 +261,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/Tenpi/pixiv.ts/blob/1654ebb/entities/Manga.ts#L45">entities/Manga.ts:45</a></li>
+									<li>Defined in <a href="https://github.com/Moebytes/pixiv.ts/blob/bda2f83/entities/Manga.ts#L58">entities/Manga.ts:58</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -267,7 +289,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/Tenpi/pixiv.ts/blob/1654ebb/entities/Manga.ts#L53">entities/Manga.ts:53</a></li>
+									<li>Defined in <a href="https://github.com/Moebytes/pixiv.ts/blob/bda2f83/entities/Manga.ts#L68">entities/Manga.ts:68</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -307,6 +329,12 @@
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-private">
 								<a href="manga.html#api" class="tsd-kind-icon">api</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class">
+								<a href="manga.html#nexturl" class="tsd-kind-icon">nextURL</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-private">
+								<a href="manga.html#search" class="tsd-kind-icon">search</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
 								<a href="manga.html#detail" class="tsd-kind-icon">detail</a>

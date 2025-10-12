@@ -82,15 +82,15 @@
 								<li class="tsd-kind-constructor tsd-parent-kind-class"><a href="api.html#constructor" class="tsd-kind-icon">constructor</a></li>
 							</ul>
 						</section>
-						<section class="tsd-index-section tsd-is-private tsd-is-private-protected">
+						<section class="tsd-index-section ">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="api.html#accesstoken" class="tsd-kind-icon">access<wbr>Token</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="api.html#accesstoken" class="tsd-kind-icon">access<wbr>Token</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="api.html#authheaders" class="tsd-kind-icon">auth<wbr>Headers</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="api.html#data" class="tsd-kind-icon">data</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="api.html#expirationtime" class="tsd-kind-icon">expiration<wbr>Time</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="api.html#headers" class="tsd-kind-icon">headers</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="api.html#logintime" class="tsd-kind-icon">login<wbr>Time</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="api.html#refreshtoken" class="tsd-kind-icon">refresh<wbr>Token</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="api.html#refreshtoken" class="tsd-kind-icon">refresh<wbr>Token</a></li>
 							</ul>
 						</section>
 						<section class="tsd-index-section ">
@@ -98,8 +98,17 @@
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="api.html#destructureparams" class="tsd-kind-icon">destructure<wbr>Params</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="api.html#get" class="tsd-kind-icon">get</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="api.html#getweb" class="tsd-kind-icon">get<wbr>Web</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="api.html#next" class="tsd-kind-icon">next</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="api.html#post" class="tsd-kind-icon">post</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="api.html#refreshaccesstoken" class="tsd-kind-icon">refresh<wbr>Access<wbr>Token</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="api.html#request" class="tsd-kind-icon">request</a></li>
+							</ul>
+						</section>
+						<section class="tsd-index-section tsd-is-private tsd-is-private-protected">
+							<h3>Object literals</h3>
+							<ul class="tsd-index-list">
+								<li class="tsd-kind-object-literal tsd-parent-kind-class tsd-is-private"><a href="api.html#headers" class="tsd-kind-icon">headers</a></li>
 							</ul>
 						</section>
 					</div>
@@ -111,13 +120,13 @@
 					<a name="constructor" class="tsd-anchor"></a>
 					<h3>constructor</h3>
 					<ul class="tsd-signatures tsd-kind-constructor tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">new API<span class="tsd-signature-symbol">(</span>data<span class="tsd-signature-symbol">: </span><a href="../interfaces/pixivauthdata.html" class="tsd-signature-type">PixivAuthData</a>, headers<span class="tsd-signature-symbol">: </span><a href="../interfaces/pixivauthheaders.html" class="tsd-signature-type">PixivAuthHeaders</a>, refreshToken<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, accessToken<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, loginTime<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span>, expirationTime<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="api.html" class="tsd-signature-type">API</a></li>
+						<li class="tsd-signature tsd-kind-icon">new API<span class="tsd-signature-symbol">(</span>data<span class="tsd-signature-symbol">: </span><a href="../interfaces/pixivauthdata.html" class="tsd-signature-type">PixivAuthData</a>, authHeaders<span class="tsd-signature-symbol">: </span><a href="../interfaces/pixivauthheaders.html" class="tsd-signature-type">PixivAuthHeaders</a>, refreshToken<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, accessToken<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, loginTime<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span>, expirationTime<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="api.html" class="tsd-signature-type">API</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/Tenpi/pixiv.ts/blob/1654ebb/API.ts#L12">API.ts:12</a></li>
+									<li>Defined in <a href="https://github.com/Moebytes/pixiv.ts/blob/bda2f83/API.ts#L13">API.ts:13</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -126,7 +135,7 @@
 									<h5>data: <a href="../interfaces/pixivauthdata.html" class="tsd-signature-type">PixivAuthData</a></h5>
 								</li>
 								<li>
-									<h5>headers: <a href="../interfaces/pixivauthheaders.html" class="tsd-signature-type">PixivAuthHeaders</a></h5>
+									<h5>authHeaders: <a href="../interfaces/pixivauthheaders.html" class="tsd-signature-type">PixivAuthHeaders</a></h5>
 								</li>
 								<li>
 									<h5>refreshToken: <span class="tsd-signature-type">string</span></h5>
@@ -146,15 +155,25 @@
 					</ul>
 				</section>
 			</section>
-			<section class="tsd-panel-group tsd-member-group tsd-is-private tsd-is-private-protected">
+			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Properties</h2>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-private">
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
 					<a name="accesstoken" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagPrivate">Private</span> access<wbr>Token</h3>
+					<h3>access<wbr>Token</h3>
 					<div class="tsd-signature tsd-kind-icon">access<wbr>Token<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/Tenpi/pixiv.ts/blob/1654ebb/API.ts#L16">API.ts:16</a></li>
+							<li>Defined in <a href="https://github.com/Moebytes/pixiv.ts/blob/bda2f83/API.ts#L17">API.ts:17</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-private">
+					<a name="authheaders" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagPrivate">Private</span> auth<wbr>Headers</h3>
+					<div class="tsd-signature tsd-kind-icon">auth<wbr>Headers<span class="tsd-signature-symbol">:</span> <a href="../interfaces/pixivauthheaders.html" class="tsd-signature-type">PixivAuthHeaders</a></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/Moebytes/pixiv.ts/blob/bda2f83/API.ts#L15">API.ts:15</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -164,7 +183,7 @@
 					<div class="tsd-signature tsd-kind-icon">data<span class="tsd-signature-symbol">:</span> <a href="../interfaces/pixivauthdata.html" class="tsd-signature-type">PixivAuthData</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/Tenpi/pixiv.ts/blob/1654ebb/API.ts#L13">API.ts:13</a></li>
+							<li>Defined in <a href="https://github.com/Moebytes/pixiv.ts/blob/bda2f83/API.ts#L14">API.ts:14</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -174,17 +193,7 @@
 					<div class="tsd-signature tsd-kind-icon">expiration<wbr>Time<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/Tenpi/pixiv.ts/blob/1654ebb/API.ts#L18">API.ts:18</a></li>
-						</ul>
-					</aside>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-private">
-					<a name="headers" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagPrivate">Private</span> headers</h3>
-					<div class="tsd-signature tsd-kind-icon">headers<span class="tsd-signature-symbol">:</span> <a href="../interfaces/pixivauthheaders.html" class="tsd-signature-type">PixivAuthHeaders</a></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/Tenpi/pixiv.ts/blob/1654ebb/API.ts#L14">API.ts:14</a></li>
+							<li>Defined in <a href="https://github.com/Moebytes/pixiv.ts/blob/bda2f83/API.ts#L19">API.ts:19</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -194,17 +203,17 @@
 					<div class="tsd-signature tsd-kind-icon">login<wbr>Time<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/Tenpi/pixiv.ts/blob/1654ebb/API.ts#L17">API.ts:17</a></li>
+							<li>Defined in <a href="https://github.com/Moebytes/pixiv.ts/blob/bda2f83/API.ts#L18">API.ts:18</a></li>
 						</ul>
 					</aside>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-private">
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
 					<a name="refreshtoken" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagPrivate">Private</span> refresh<wbr>Token</h3>
+					<h3>refresh<wbr>Token</h3>
 					<div class="tsd-signature tsd-kind-icon">refresh<wbr>Token<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/Tenpi/pixiv.ts/blob/1654ebb/API.ts#L15">API.ts:15</a></li>
+							<li>Defined in <a href="https://github.com/Moebytes/pixiv.ts/blob/bda2f83/API.ts#L16">API.ts:16</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -221,7 +230,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/Tenpi/pixiv.ts/blob/1654ebb/API.ts#L64">API.ts:64</a></li>
+									<li>Defined in <a href="https://github.com/Moebytes/pixiv.ts/blob/bda2f83/API.ts#L92">API.ts:92</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -257,7 +266,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/Tenpi/pixiv.ts/blob/1654ebb/API.ts#L40">API.ts:40</a></li>
+									<li>Defined in <a href="https://github.com/Moebytes/pixiv.ts/blob/bda2f83/API.ts#L41">API.ts:41</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -279,6 +288,37 @@
 					</ul>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="getweb" class="tsd-anchor"></a>
+					<h3>get<wbr>Web</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">get<wbr>Web<span class="tsd-signature-symbol">(</span>endpoint<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, params<span class="tsd-signature-symbol">?: </span><a href="../interfaces/pixivwebparams.html" class="tsd-signature-type">PixivWebParams</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/Moebytes/pixiv.ts/blob/bda2f83/API.ts#L69">API.ts:69</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Fetches from web url and returns the response.</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>endpoint: <span class="tsd-signature-type">string</span></h5>
+								</li>
+								<li>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> params: <a href="../interfaces/pixivwebparams.html" class="tsd-signature-type">PixivWebParams</a></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
 					<a name="next" class="tsd-anchor"></a>
 					<h3>next</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
@@ -288,7 +328,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/Tenpi/pixiv.ts/blob/1654ebb/API.ts#L53">API.ts:53</a></li>
+									<li>Defined in <a href="https://github.com/Moebytes/pixiv.ts/blob/bda2f83/API.ts#L79">API.ts:79</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -307,6 +347,37 @@
 					</ul>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="post" class="tsd-anchor"></a>
+					<h3>post</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">post<span class="tsd-signature-symbol">(</span>endpoint<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, params<span class="tsd-signature-symbol">?: </span><a href="../interfaces/pixivparams.html" class="tsd-signature-type">PixivParams</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/Moebytes/pixiv.ts/blob/bda2f83/API.ts#L57">API.ts:57</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Post with the API and returns the response.</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>endpoint: <span class="tsd-signature-type">string</span></h5>
+								</li>
+								<li>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> params: <a href="../interfaces/pixivparams.html" class="tsd-signature-type">PixivParams</a></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
 					<a name="refreshaccesstoken" class="tsd-anchor"></a>
 					<h3>refresh<wbr>Access<wbr>Token</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
@@ -316,7 +387,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/Tenpi/pixiv.ts/blob/1654ebb/API.ts#L23">API.ts:23</a></li>
+									<li>Defined in <a href="https://github.com/Moebytes/pixiv.ts/blob/bda2f83/API.ts#L24">API.ts:24</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -333,6 +404,80 @@
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">&gt;</span></h4>
 						</li>
 					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="request" class="tsd-anchor"></a>
+					<h3>request</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">request<span class="tsd-signature-symbol">(</span>url<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, params<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/Moebytes/pixiv.ts/blob/bda2f83/API.ts#L107">API.ts:107</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Fetches any url.</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>url: <span class="tsd-signature-type">string</span></h5>
+								</li>
+								<li>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> params: <span class="tsd-signature-type">any</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span></h4>
+						</li>
+					</ul>
+				</section>
+			</section>
+			<section class="tsd-panel-group tsd-member-group tsd-is-private tsd-is-private-protected">
+				<h2>Object literals</h2>
+				<section class="tsd-panel tsd-member tsd-kind-object-literal tsd-parent-kind-class tsd-is-private">
+					<a name="headers" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagPrivate">Private</span> headers</h3>
+					<div class="tsd-signature tsd-kind-icon">headers<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">object</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/Moebytes/pixiv.ts/blob/bda2f83/API.ts#L13">API.ts:13</a></li>
+						</ul>
+					</aside>
+					<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal">
+						<a name="headers.accept_language" class="tsd-anchor"></a>
+						<h3>accept-<wbr>language</h3>
+						<div class="tsd-signature tsd-kind-icon">accept-<wbr>language<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> =&nbsp;&quot;English&quot;</span></div>
+						<aside class="tsd-sources">
+							<ul>
+								<li>Defined in <a href="https://github.com/Moebytes/pixiv.ts/blob/bda2f83/API.ts#L13">API.ts:13</a></li>
+							</ul>
+						</aside>
+					</section>
+					<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal">
+						<a name="headers.referer" class="tsd-anchor"></a>
+						<h3>referer</h3>
+						<div class="tsd-signature tsd-kind-icon">referer<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> =&nbsp;&quot;https://www.pixiv.net/&quot;</span></div>
+						<aside class="tsd-sources">
+							<ul>
+								<li>Defined in <a href="https://github.com/Moebytes/pixiv.ts/blob/bda2f83/API.ts#L13">API.ts:13</a></li>
+							</ul>
+						</aside>
+					</section>
+					<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal">
+						<a name="headers.user_agent" class="tsd-anchor"></a>
+						<h3>user-<wbr>agent</h3>
+						<div class="tsd-signature tsd-kind-icon">user-<wbr>agent<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> =&nbsp;&quot;PixivIOSApp/7.7.5 (iOS 13.2.0; iPhone XR)&quot;</span></div>
+						<aside class="tsd-sources">
+							<ul>
+								<li>Defined in <a href="https://github.com/Moebytes/pixiv.ts/blob/bda2f83/API.ts#L13">API.ts:13</a></li>
+							</ul>
+						</aside>
+					</section>
 				</section>
 			</section>
 		</div>
@@ -354,8 +499,11 @@
 							<li class=" tsd-kind-constructor tsd-parent-kind-class">
 								<a href="api.html#constructor" class="tsd-kind-icon">constructor</a>
 							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-private">
+							<li class=" tsd-kind-property tsd-parent-kind-class">
 								<a href="api.html#accesstoken" class="tsd-kind-icon">access<wbr>Token</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-private">
+								<a href="api.html#authheaders" class="tsd-kind-icon">auth<wbr>Headers</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-private">
 								<a href="api.html#data" class="tsd-kind-icon">data</a>
@@ -364,12 +512,9 @@
 								<a href="api.html#expirationtime" class="tsd-kind-icon">expiration<wbr>Time</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-private">
-								<a href="api.html#headers" class="tsd-kind-icon">headers</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-private">
 								<a href="api.html#logintime" class="tsd-kind-icon">login<wbr>Time</a>
 							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-private">
+							<li class=" tsd-kind-property tsd-parent-kind-class">
 								<a href="api.html#refreshtoken" class="tsd-kind-icon">refresh<wbr>Token</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
@@ -379,10 +524,22 @@
 								<a href="api.html#get" class="tsd-kind-icon">get</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="api.html#getweb" class="tsd-kind-icon">get<wbr>Web</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
 								<a href="api.html#next" class="tsd-kind-icon">next</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="api.html#post" class="tsd-kind-icon">post</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
 								<a href="api.html#refreshaccesstoken" class="tsd-kind-icon">refresh<wbr>Access<wbr>Token</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="api.html#request" class="tsd-kind-icon">request</a>
+							</li>
+							<li class=" tsd-kind-object-literal tsd-parent-kind-class tsd-is-private">
+								<a href="api.html#headers" class="tsd-kind-icon">headers</a>
 							</li>
 						</ul>
 					</li>

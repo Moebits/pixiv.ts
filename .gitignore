@@ -3,3 +3,4 @@ dist
 .env
 .vscode
 downloads
+.DS_Store

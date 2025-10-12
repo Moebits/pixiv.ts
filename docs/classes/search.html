@@ -82,10 +82,12 @@
 								<li class="tsd-kind-constructor tsd-parent-kind-class"><a href="search.html#constructor" class="tsd-kind-icon">constructor</a></li>
 							</ul>
 						</section>
-						<section class="tsd-index-section tsd-is-private tsd-is-private-protected">
+						<section class="tsd-index-section ">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="search.html#api" class="tsd-kind-icon">api</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="search.html#defaults" class="tsd-kind-icon">defaults</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="search.html#nexturl" class="tsd-kind-icon">nextURL</a></li>
 							</ul>
 						</section>
 						<section class="tsd-index-section ">
@@ -94,7 +96,9 @@
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="search.html#autocomplete" class="tsd-kind-icon">auto<wbr>Complete</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="search.html#autocompletev2" class="tsd-kind-icon">auto<wbr>Complete<wbr>V2</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="search.html#illusts" class="tsd-kind-icon">illusts</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="search.html#moe" class="tsd-kind-icon">moe</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="search.html#novels" class="tsd-kind-icon">novels</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-private"><a href="search.html#processword" class="tsd-kind-icon">process<wbr>Word</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-private"><a href="search.html#searchdefaults" class="tsd-kind-icon">search<wbr>Defaults</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="search.html#users" class="tsd-kind-icon">users</a></li>
 							</ul>
@@ -114,7 +118,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/Tenpi/pixiv.ts/blob/1654ebb/entities/Search.ts#L6">entities/Search.ts:6</a></li>
+									<li>Defined in <a href="https://github.com/Moebytes/pixiv.ts/blob/bda2f83/entities/Search.ts#L15">entities/Search.ts:15</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -128,7 +132,7 @@
 					</ul>
 				</section>
 			</section>
-			<section class="tsd-panel-group tsd-member-group tsd-is-private tsd-is-private-protected">
+			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Properties</h2>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-private">
 					<a name="api" class="tsd-anchor"></a>
@@ -136,7 +140,27 @@
 					<div class="tsd-signature tsd-kind-icon">api<span class="tsd-signature-symbol">:</span> <a href="search.html#api" class="tsd-signature-type">api</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/Tenpi/pixiv.ts/blob/1654ebb/entities/Search.ts#L7">entities/Search.ts:7</a></li>
+							<li>Defined in <a href="https://github.com/Moebytes/pixiv.ts/blob/bda2f83/entities/Search.ts#L16">entities/Search.ts:16</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-private">
+					<a name="defaults" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagPrivate">Private</span> defaults</h3>
+					<div class="tsd-signature tsd-kind-icon">defaults<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol"> =&nbsp;[&quot;gabriel dropout&quot;, &quot;kisaragi&quot;, &quot;azur lane&quot;, &quot;konosuba&quot;,&quot;megumin&quot;, &quot;aqua&quot;, &quot;black tights&quot;, &quot;white tights&quot;, &quot;eromanga sensei&quot;,&quot;sagiri&quot;, &quot;kancolle&quot;, &quot;loli&quot;, &quot;is the order a rabbit&quot;, &quot;chino&quot;, &quot;kiniro mosaic&quot;,&quot;gabriel&quot;, &quot;hibiki&quot;, &quot;tohru&quot;, &quot;laffey&quot;, &quot;kanna&quot;, &quot;tights&quot;]</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/Moebytes/pixiv.ts/blob/bda2f83/entities/Search.ts#L10">entities/Search.ts:10</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+					<a name="nexturl" class="tsd-anchor"></a>
+					<h3>nextURL</h3>
+					<div class="tsd-signature tsd-kind-icon">nextURL<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span><span class="tsd-signature-symbol"> =&nbsp;null</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/Moebytes/pixiv.ts/blob/bda2f83/entities/Search.ts#L9">entities/Search.ts:9</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -147,13 +171,13 @@
 					<a name="autocomplete" class="tsd-anchor"></a>
 					<h3>auto<wbr>Complete</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">auto<wbr>Complete<span class="tsd-signature-symbol">(</span>params<span class="tsd-signature-symbol">: </span><a href="../interfaces/pixivparams.html" class="tsd-signature-type">PixivParams</a><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">object</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon">auto<wbr>Complete<span class="tsd-signature-symbol">(</span>params<span class="tsd-signature-symbol">?: </span><a href="../interfaces/pixivparams.html" class="tsd-signature-type">PixivParams</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/Tenpi/pixiv.ts/blob/1654ebb/entities/Search.ts#L49">entities/Search.ts:49</a></li>
+									<li>Defined in <a href="https://github.com/Moebytes/pixiv.ts/blob/bda2f83/entities/Search.ts#L100">entities/Search.ts:100</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -164,7 +188,7 @@
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>params: <a href="../interfaces/pixivparams.html" class="tsd-signature-type">PixivParams</a><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">object</span></h5>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> params: <a href="../interfaces/pixivparams.html" class="tsd-signature-type">PixivParams</a></h5>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span></h4>
@@ -175,13 +199,13 @@
 					<a name="autocompletev2" class="tsd-anchor"></a>
 					<h3>auto<wbr>Complete<wbr>V2</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">auto<wbr>Complete<wbr>V2<span class="tsd-signature-symbol">(</span>params<span class="tsd-signature-symbol">: </span><a href="../interfaces/pixivparams.html" class="tsd-signature-type">PixivParams</a><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">object</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon">auto<wbr>Complete<wbr>V2<span class="tsd-signature-symbol">(</span>params<span class="tsd-signature-symbol">?: </span><a href="../interfaces/pixivparams.html" class="tsd-signature-type">PixivParams</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/Tenpi/pixiv.ts/blob/1654ebb/entities/Search.ts#L57">entities/Search.ts:57</a></li>
+									<li>Defined in <a href="https://github.com/Moebytes/pixiv.ts/blob/bda2f83/entities/Search.ts#L109">entities/Search.ts:109</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -192,7 +216,7 @@
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>params: <a href="../interfaces/pixivparams.html" class="tsd-signature-type">PixivParams</a><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">object</span></h5>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> params: <a href="../interfaces/pixivparams.html" class="tsd-signature-type">PixivParams</a></h5>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span></h4>
@@ -203,13 +227,13 @@
 					<a name="illusts" class="tsd-anchor"></a>
 					<h3>illusts</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">illusts<span class="tsd-signature-symbol">(</span>params<span class="tsd-signature-symbol">: </span><a href="../interfaces/pixivparams.html" class="tsd-signature-type">PixivParams</a><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">object</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon">illusts<span class="tsd-signature-symbol">(</span>params<span class="tsd-signature-symbol">?: </span><a href="../interfaces/pixivparams.html" class="tsd-signature-type">PixivParams</a><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">object</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/Tenpi/pixiv.ts/blob/1654ebb/entities/Search.ts#L21">entities/Search.ts:21</a></li>
+									<li>Defined in <a href="https://github.com/Moebytes/pixiv.ts/blob/bda2f83/entities/Search.ts#L51">entities/Search.ts:51</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -220,10 +244,52 @@
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>params: <a href="../interfaces/pixivparams.html" class="tsd-signature-type">PixivParams</a><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">object</span></h5>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> params: <a href="../interfaces/pixivparams.html" class="tsd-signature-type">PixivParams</a><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">object</span></h5>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span></h4>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">&gt;</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="moe" class="tsd-anchor"></a>
+					<h3>moe</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">moe<span class="tsd-signature-symbol">(</span>params<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">object</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">&gt;</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/Moebytes/pixiv.ts/blob/bda2f83/entities/Search.ts#L118">entities/Search.ts:118</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Searches pixiv.moe. If there is no query, some defaults are provided.</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> params: <span class="tsd-signature-type">object</span></h5>
+									<ul class="tsd-parameters">
+										<li class="tsd-parameter">
+											<h5><span class="tsd-flag ts-flagOptional">Optional</span> en<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">boolean</span></h5>
+										</li>
+										<li class="tsd-parameter">
+											<h5><span class="tsd-flag ts-flagOptional">Optional</span> query<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">string</span></h5>
+										</li>
+										<li class="tsd-parameter">
+											<h5><span class="tsd-flag ts-flagOptional">Optional</span> r18<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">boolean</span></h5>
+										</li>
+										<li class="tsd-parameter">
+											<h5><span class="tsd-flag ts-flagOptional">Optional</span> ugoira<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">boolean</span></h5>
+										</li>
+									</ul>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">&gt;</span></h4>
 						</li>
 					</ul>
 				</section>
@@ -231,13 +297,13 @@
 					<a name="novels" class="tsd-anchor"></a>
 					<h3>novels</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">novels<span class="tsd-signature-symbol">(</span>params<span class="tsd-signature-symbol">: </span><a href="../interfaces/pixivparams.html" class="tsd-signature-type">PixivParams</a><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">object</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon">novels<span class="tsd-signature-symbol">(</span>params<span class="tsd-signature-symbol">?: </span><a href="../interfaces/pixivparams.html" class="tsd-signature-type">PixivParams</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/Tenpi/pixiv.ts/blob/1654ebb/entities/Search.ts#L31">entities/Search.ts:31</a></li>
+									<li>Defined in <a href="https://github.com/Moebytes/pixiv.ts/blob/bda2f83/entities/Search.ts#L78">entities/Search.ts:78</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -248,7 +314,30 @@
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>params: <a href="../interfaces/pixivparams.html" class="tsd-signature-type">PixivParams</a><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">object</span></h5>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> params: <a href="../interfaces/pixivparams.html" class="tsd-signature-type">PixivParams</a></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-private">
+					<a name="processword" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagPrivate">Private</span> process<wbr>Word</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-private">
+						<li class="tsd-signature tsd-kind-icon">process<wbr>Word<span class="tsd-signature-symbol">(</span>params<span class="tsd-signature-symbol">: </span><a href="../interfaces/pixivparams.html" class="tsd-signature-type">PixivParams</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/Moebytes/pixiv.ts/blob/bda2f83/entities/Search.ts#L28">entities/Search.ts:28</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>params: <a href="../interfaces/pixivparams.html" class="tsd-signature-type">PixivParams</a></h5>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span></h4>
@@ -259,13 +348,13 @@
 					<a name="searchdefaults" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagPrivate">Private</span> search<wbr>Defaults</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-private">
-						<li class="tsd-signature tsd-kind-icon">search<wbr>Defaults<span class="tsd-signature-symbol">(</span>params<span class="tsd-signature-symbol">?: </span><a href="../interfaces/pixivparams.html" class="tsd-signature-type">PixivParams</a><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">object</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span></li>
+						<li class="tsd-signature tsd-kind-icon">search<wbr>Defaults<span class="tsd-signature-symbol">(</span>params<span class="tsd-signature-symbol">?: </span><a href="../interfaces/pixivparams.html" class="tsd-signature-type">PixivParams</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/Tenpi/pixiv.ts/blob/1654ebb/entities/Search.ts#L12">entities/Search.ts:12</a></li>
+									<li>Defined in <a href="https://github.com/Moebytes/pixiv.ts/blob/bda2f83/entities/Search.ts#L21">entities/Search.ts:21</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -276,7 +365,7 @@
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5><span class="tsd-flag ts-flagOptional">Optional</span> params: <a href="../interfaces/pixivparams.html" class="tsd-signature-type">PixivParams</a><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">object</span></h5>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> params: <a href="../interfaces/pixivparams.html" class="tsd-signature-type">PixivParams</a></h5>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">any</span></h4>
@@ -287,13 +376,13 @@
 					<a name="users" class="tsd-anchor"></a>
 					<h3>users</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">users<span class="tsd-signature-symbol">(</span>params<span class="tsd-signature-symbol">: </span><a href="../interfaces/pixivparams.html" class="tsd-signature-type">PixivParams</a><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">object</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon">users<span class="tsd-signature-symbol">(</span>params<span class="tsd-signature-symbol">?: </span><a href="../interfaces/pixivparams.html" class="tsd-signature-type">PixivParams</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/Tenpi/pixiv.ts/blob/1654ebb/entities/Search.ts#L41">entities/Search.ts:41</a></li>
+									<li>Defined in <a href="https://github.com/Moebytes/pixiv.ts/blob/bda2f83/entities/Search.ts#L91">entities/Search.ts:91</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -304,7 +393,7 @@
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>params: <a href="../interfaces/pixivparams.html" class="tsd-signature-type">PixivParams</a><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">object</span></h5>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> params: <a href="../interfaces/pixivparams.html" class="tsd-signature-type">PixivParams</a></h5>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span></h4>
@@ -334,6 +423,12 @@
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-private">
 								<a href="search.html#api" class="tsd-kind-icon">api</a>
 							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-private">
+								<a href="search.html#defaults" class="tsd-kind-icon">defaults</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class">
+								<a href="search.html#nexturl" class="tsd-kind-icon">nextURL</a>
+							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
 								<a href="search.html#autocomplete" class="tsd-kind-icon">auto<wbr>Complete</a>
 							</li>
@@ -344,7 +439,13 @@
 								<a href="search.html#illusts" class="tsd-kind-icon">illusts</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="search.html#moe" class="tsd-kind-icon">moe</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
 								<a href="search.html#novels" class="tsd-kind-icon">novels</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-private">
+								<a href="search.html#processword" class="tsd-kind-icon">process<wbr>Word</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-private">
 								<a href="search.html#searchdefaults" class="tsd-kind-icon">search<wbr>Defaults</a>
