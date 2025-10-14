@@ -160,7 +160,7 @@ export class Util {
         return illusts
     }
 
-    private download = async (url: string,  folder: string, nameExt?: string, fileExt = "png") => {
+    private download = async (url: string,  folder: string, nameExt?: string) => {
         const basename = path.basename(folder)
         if (!path.isAbsolute(folder)) {
             if (__dirname.includes("node_modules")) {
@@ -169,9 +169,11 @@ export class Util {
                 folder = path.join(__dirname, "../../", folder)
             }
         }
+        let fileExt = path.extname(url)
         if (basename.includes(".")) folder = folder.replace(basename, "")
         if (!fs.existsSync(folder)) fs.mkdirSync(folder, {recursive: true})
-        const dest = basename.includes(".") ? `${folder}${basename}` : path.join(folder, `${url.match(/\d{6,}/) ? url.match(/\d{6,}/)[0] : "illust"}${nameExt ?? ""}.${fileExt}`)
+        const dest = basename.includes(".") ? `${folder}${path.basename(basename, path.extname(basename))}${fileExt}` : 
+        path.join(folder, `${url.match(/\d{6,}/) ? url.match(/\d{6,}/)[0] : "illust"}${nameExt ?? ""}${fileExt}`)
         const writeStream = fs.createWriteStream(dest)
         await axios.get(url, {responseType: "stream", headers: {Referer: "https://www.pixiv.net/"}})
         .then((r) => r.data.pipe(writeStream))
@@ -219,7 +221,7 @@ export class Util {
                 // Multiple Images
                 for (const image of illust.meta_pages) {
                     url = image.image_urls[size]
-                    if (!dest) dest = await this.download(url, multiFolder, `_p${i++}`)
+                    dest = await this.download(url, multiFolder, `_p${i++}`)
                 }
                 return dest
             }
