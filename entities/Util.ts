@@ -442,9 +442,8 @@ export class Util {
         let delayArray: number[] = []
         for (let i = 0; i < files.length; i += step) {
             if (files[i].slice(-5) === ".webp") continue
-            if (!metadata.frames[i]) break
             fileArray.push(`${destPath}/${files[i]}`)
-            delayArray.push(metadata.frames[i].delay)
+            delayArray.push(metadata.frames[i]?.delay ||0)
         }
         if (options?.speed < 1) delayArray = delayArray.map((n) => n / options.speed)
         if (options.reverse) {
