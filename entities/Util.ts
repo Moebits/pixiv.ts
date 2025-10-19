@@ -4,6 +4,7 @@ import {imageSize} from "image-size"
 import * as path from "path"
 import * as stream from "stream"
 import * as unzip from "unzipper"
+import * as archiver from "archiver"
 import * as child_process from "child_process"
 import API from "../API"
 import replace from "../Translate"
@@ -200,7 +201,8 @@ export class Util {
     /**
      * Downloads an illust locally.
      */
-    public downloadIllust = async (illustResolvable: string | PixivIllust, folder: string, size?: "medium" | "large" | "square_medium" | "original", multiFolder?: string): Promise<string> => {
+    public downloadIllust = async (illustResolvable: string | PixivIllust, folder: string, 
+        size?: "medium" | "large" | "square_medium" | "original", multiFolder?: string): Promise<string> => {
         if (!illustResolvable) return ""
         if (!size) size = "medium"
         if (!multiFolder) multiFolder = folder
@@ -419,7 +421,8 @@ export class Util {
     /**
      * Downloads the zip archive of a ugoira and converts it to a gif.
      */
-    public downloadUgoira = async (illustResolvable: string | PixivIllust, dest: string, options?: {speed?: number, reverse?: boolean, webp?: boolean, webpPath?: string}) => {
+    public downloadUgoira = async (illustResolvable: string | PixivIllust, dest: string, 
+        options?: {speed?: number, reverse?: boolean, webp?: boolean, webpPath?: string}) => {
         if (!options) options = {speed: 1, reverse: false, webp: false, webpPath: null}
         let url: string
         if (illustResolvable.hasOwnProperty("id")) {
@@ -458,6 +461,34 @@ export class Util {
             this.removeLocalDirectory(zipDest)
         } catch {}
         return destination
+    }
+
+    /**
+     * Downloads the ugoira as zip with animation.json file.
+     */
+    public downloadUgoiraZip = async (illustResolvable: string | PixivIllust, dest: string) => {
+        let url: string
+        if (illustResolvable.hasOwnProperty("id")) {
+            url = String((illustResolvable as PixivIllust).id)
+        } else {
+            url = illustResolvable as string
+        }
+        const metadata = await this.ugoira.get(url).then((r) => r.ugoira_metadata)
+        const zipUrl = metadata.zip_urls.medium
+        const destPath = await this.downloadZip(zipUrl, dest).then((p) => p.replace("\\", "/"))
+        let animationPath = path.join(destPath, "animation.json")
+        fs.writeFileSync(animationPath, JSON.stringify(metadata.frames))
+
+        const outputZipPath = path.resolve(`${destPath}.zip`)
+        const output = fs.createWriteStream(outputZipPath)
+        const archive = archiver("zip", {zlib: {level: 9}})
+
+        archive.pipe(output)
+        archive.directory(destPath, false)
+        await archive.finalize()
+
+        this.removeLocalDirectory(destPath)
+        return outputZipPath
     }
 
     /**
