@@ -1,4 +1,3 @@
-import axios, {AxiosRequestConfig} from "axios"
 import {ParsedUrlQueryInput, stringify} from "querystring"
 import {URLSearchParams} from "url"
 import {PixivAPIResponse} from "./types/ApiTypes"
@@ -26,8 +25,8 @@ export default class API {
         const expired = (Date.now() - this.loginTime) > (this.expirationTime * 900)
         if (expired) {
             this.data.grant_type = "refresh_token"
-            const result = await axios.post(oauthURL, stringify(this.data as unknown as ParsedUrlQueryInput),
-            {headers: this.headers} as AxiosRequestConfig).then((r) => r.data) as PixivAPIResponse
+            const result = await fetch(oauthURL, {method: "POST", body: stringify(this.data as unknown as ParsedUrlQueryInput),
+            headers: this.headers}).then((r) => r.json()) as PixivAPIResponse
             this.accessToken = result.response.access_token
             this.refreshToken = result.response.refresh_token
             this.authHeaders.authorization = `Bearer ${this.accessToken}`
@@ -46,8 +45,15 @@ export default class API {
             authorization: `Bearer ${this.accessToken}`
         })
         if (endpoint.startsWith("/")) endpoint = endpoint.slice(1)
-        endpoint = appURL + endpoint
-        const response = await axios.get(endpoint, {json: true, form: true, headers: headersWithAuth, params} as AxiosRequestConfig).then((r) => r.data)
+        const url = new URL(appURL + endpoint)
+        if (params) {
+            Object.entries(params).forEach(([key, value]) => {
+                if (value !== undefined && value !== null) {
+                    url.searchParams.append(key, String(value))
+                }
+            })
+        }
+        const response = await fetch(url.toString(), {headers: headersWithAuth}).then((r) => r.json())
         return response
     }
 
@@ -58,8 +64,11 @@ export default class API {
         await this.refreshAccessToken()
         if (!params) params = {}
         if (endpoint.startsWith("/")) endpoint = endpoint.slice(1)
-        endpoint = appURL + endpoint
-        const response = await axios.post(endpoint,stringify(params as unknown as ParsedUrlQueryInput), {headers: {Authorization:this.authHeaders.authorization,...this.headers}} as AxiosRequestConfig).then((r) => r.data)
+        const url = appURL + endpoint
+        const response = await fetch(url, {method: "POST", 
+            headers: {Authorization:this.authHeaders.authorization,...this.headers},
+            body: stringify(params as any)
+        }).then((r) => r.json())
         return response
     }
 
@@ -68,9 +77,16 @@ export default class API {
      */
     public getWeb = async (endpoint: string, params?: PixivWebParams) => {
         if (endpoint.startsWith("/")) endpoint = endpoint.slice(1)
-        endpoint = webURL + endpoint
-        const response = await axios.get(endpoint, {json: true, form: true, headers: this.headers, params} as AxiosRequestConfig).then((r) => r.data)
-        return response
+        const url = new URL(webURL + endpoint)
+        if (params) {
+            Object.entries(params).forEach(([key, value]) => {
+                if (value !== undefined && value !== null) {
+                    url.searchParams.append(key, String(value))
+                }
+            })
+        }
+        const response = await fetch(url.toString(), {headers: this.headers}).then((r) => r.json())
+        return response as Promise<any>
     }
 
     /**
@@ -82,7 +98,15 @@ export default class API {
         let headersWithAuth = Object.assign(this.headers, {
             authorization: `Bearer ${this.accessToken}`
         })
-        const response = await axios.get(baseUrl, {params, headers: headersWithAuth}).then((r) => r.data)
+        const url = new URL(baseUrl)
+        if (params) {
+            Object.entries(params).forEach(([key, value]) => {
+                if (value !== undefined && value !== null) {
+                    url.searchParams.append(key, String(value))
+                }
+            })
+        }
+        const response = await fetch(url.toString(), { headers: headersWithAuth}).then((r) => r.json())
         return response
     }
 
@@ -104,7 +128,15 @@ export default class API {
     /**
      * Fetches any url.
      */
-    public request = async (url: string, params?: any) => {
-        return axios.get(url, params).then((r) => r.data)
+    public request = async (baseUrl: string, params?: any) => {
+        const url = new URL(baseUrl)
+        if (params) {
+            Object.entries(params).forEach(([key, value]) => {
+                if (value !== undefined && value !== null) {
+                    url.searchParams.append(key, String(value))
+                }
+            })
+        }
+        return fetch(url.toString(), params).then((r) => r.json())
     }
 }

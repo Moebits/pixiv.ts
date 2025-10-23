@@ -1,7 +1,5 @@
 import api from "../API"
-import Pixiv from "../pixiv"
 import replace from "../Translate"
-import axios from "axios"
 import {PixivAutoComplete, PixivAutoCompleteV2, PixivIllust,
 PixivIllustSearch, PixivNovel, PixivNovelSearch, PixivParams, PixivUserSearch} from "../types"
 
@@ -125,8 +123,10 @@ export class Search {
         } else {
             params.query += " -R-18"
         }
-        const kotoriToken = await axios.get("https://api.pixiv.moe/session").then(((r) => r.data.response.access_token))
-        const response = await axios.get(`https://api.pixiv.moe/v2/search?word=${encodeURIComponent(params.query)}`, {headers: {"x-kotori-token": kotoriToken}}).then((r) => r.data.response.illusts)
+        const kotoriToken = await fetch("https://api.pixiv.moe/session").then((r) => r.json())
+            .then((r: any) => r.response.access_token)
+        const response = await fetch(`https://api.pixiv.moe/v2/search?word=${encodeURIComponent(params.query)}`, 
+            {headers: {"x-kotori-token": kotoriToken}}).then((r) => r.json()).then((r: any) => r.response.illusts)
         return response as Promise<PixivIllust[]>
     }
 }

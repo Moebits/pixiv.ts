@@ -1,11 +1,3 @@
-import axios from "axios"
-import * as fs from "fs"
-import {imageSize} from "image-size"
-import * as path from "path"
-import * as stream from "stream"
-import * as unzip from "unzipper"
-import * as archiver from "archiver"
-import * as child_process from "child_process"
 import API from "../API"
 import replace from "../Translate"
 import {PixivFolderMap, PixivIllust, PixivNovel, PixivMultiCall} from "../types"
@@ -62,17 +54,6 @@ export class Util {
      */
     public timeout = async (ms: number) => {
         return new Promise((resolve) => setTimeout(resolve, ms))
-    }
-
-    /**
-     * Utility for awaiting a stream.Writable
-     */
-    public awaitStream = async (writeStream: stream.Writable) => {
-        return new Promise((resolve, reject) => {
-            writeStream.on("finish", resolve)
-            writeStream.on("end", resolve)
-            writeStream.on("error", reject)
-        })
     }
 
     /**
@@ -162,6 +143,8 @@ export class Util {
     }
 
     private download = async (url: string,  folder: string, nameExt?: string) => {
+        const fs = await import("fs")
+        const path = await import("path")
         const basename = path.basename(folder)
         if (!path.isAbsolute(folder)) {
             if (__dirname.includes("node_modules")) {
@@ -175,14 +158,14 @@ export class Util {
         if (!fs.existsSync(folder)) fs.mkdirSync(folder, {recursive: true})
         const dest = basename.includes(".") ? `${folder}${path.basename(basename, path.extname(basename))}${fileExt}` : 
         path.join(folder, `${url.match(/\d{6,}/) ? url.match(/\d{6,}/)[0] : "illust"}${nameExt ?? ""}${fileExt}`)
-        const writeStream = fs.createWriteStream(dest)
-        await axios.get(url, {responseType: "stream", headers: {Referer: "https://www.pixiv.net/"}})
-        .then((r) => r.data.pipe(writeStream))
-        await this.awaitStream(writeStream)
+        const buffer = await fetch(url, {headers: {Referer: "https://www.pixiv.net/"}}).then((r) => r.arrayBuffer())
+        fs.writeFileSync(dest, Buffer.from(buffer))
         return dest
     }
 
     private downloadData = async (data: string, folder: string, id?: number, fileExt = "txt") => {
+        const fs = await import("fs")
+        const path = await import("path")
         const basename = path.basename(folder)
         if (!path.isAbsolute(folder)) {
             if (__dirname.includes("node_modules")) {
@@ -242,6 +225,8 @@ export class Util {
      * Downloads an author"s profile picture locally.
      */
     public downloadProfilePicture = async (illustResolvable: string | PixivIllust, folder: string, size?: string) => {
+        const fs = await import("fs")
+        const path = await import("path")
         if (!illustResolvable) return ""
         const basename = path.basename(folder)
         if (!size) size = "medium"
@@ -270,10 +255,8 @@ export class Util {
         }
         if (!fs.existsSync(folder)) fs.mkdirSync(folder, {recursive: true})
         const dest = basename.includes(".") ? `${folder}${basename}` : path.join(folder, `${username}.png`)
-        const writeStream = fs.createWriteStream(dest)
-        await axios.get(url, {responseType: "stream", headers: {Referer: "https://www.pixiv.net/"}})
-        .then((r) => r.data.pipe(writeStream))
-        await this.awaitStream(writeStream)
+        const buffer = await fetch(url, {headers: {Referer: "https://www.pixiv.net/"}}).then((r) => r.arrayBuffer())
+        fs.writeFileSync(dest, Buffer.from(buffer))
         return dest
     }
 
@@ -298,6 +281,7 @@ export class Util {
      * with the folderMap parameter.
      */
     public downloadIllusts = async (query: string, dest: string, size?:  "medium" | "large" | "square_medium" | "original", folderMap?: PixivFolderMap[], r18?: boolean) => {
+        const path = await import("path")
         if (!size) size = "medium"
         if (!r18) r18 = false
         const illusts = await this.search.illusts({word: query, r18})
@@ -331,8 +315,10 @@ export class Util {
      * Encodes a new gif from an array of file paths.
      */
     public encodeGif = async (files: string[], delays?: number[], dest?: string) => {
-        const GifEncoder = require("gif-encoder")
-        const getPixels = require("get-pixels")
+        const fs = await import("fs")
+        const GifEncoder = await import("gif-encoder")
+        const getPixels = await import("get-pixels")
+        const {imageSize} = await import("image-size")
         return new Promise<string>((resolve) => {
             const dimensions = imageSize(files[0])
             const gif = new GifEncoder(dimensions.width, dimensions.height)
@@ -370,6 +356,8 @@ export class Util {
      * Encodes a webp from an array of file paths.
      */
     public encodeAnimatedWebp = async (files: string[], delays: number[], dest?: string, webpPath?: string) => {
+        const path = await import("path")
+        const child_process = await import("child_process")
         const pathIndex = files[0].search(/\d{5,}/)
         const pathDir = files[0].slice(0, pathIndex)
         if (!dest) dest = `${pathDir}${files[0].match(/\d{5,}/)[0]}.webp`
@@ -391,7 +379,9 @@ export class Util {
     /**
      * Gives permission to webp binaries.
      */
-    public chmod777 = (webpPath?: string) => {
+    public chmod777 = async (webpPath?: string) => {
+        const fs = await import("fs")
+        const path = await import("path")
         if (process.platform === "win32") return
         const webp = webpPath ? path.normalize(webpPath).replace(/\\/g, "/") : path.join(__dirname, "../../webp")
         fs.chmodSync(webp, "777")
@@ -401,6 +391,12 @@ export class Util {
      * Downloads and extracts all of the individual images in a ugoira.
      */
     public downloadZip = async (url: string, dest: string) => {
+        const fs = await import("fs")
+        const path = await import("path")
+        const stream = await import("stream")
+        const unzip = await import("unzipper")
+        const {promisify} = await import("util")
+        const streamPipeline = promisify(stream.pipeline)
         if (!url.startsWith("https://i.pximg.net/")) {
             url = await this.ugoira.get(url).then((u) => u.ugoira_metadata.zip_urls.medium)
         }
@@ -412,9 +408,9 @@ export class Util {
             }
         }
         if (!fs.existsSync(dest)) fs.mkdirSync(dest, {recursive: true})
-        const writeStream = await axios.get(url, {responseType: "stream", headers: {Referer: "https://www.pixiv.net/"}})
-        .then((r) => r.data.pipe(unzip.Extract({path: dest})))
-        await this.awaitStream(writeStream)
+
+        const response = await fetch(url, {headers: {Referer: "https://www.pixiv.net/"}})
+        await streamPipeline(response.body, unzip.Extract({path: dest}))
         return dest
     }
 
@@ -423,6 +419,8 @@ export class Util {
      */
     public downloadUgoira = async (illustResolvable: string | PixivIllust, dest: string, 
         options?: {speed?: number, reverse?: boolean, webp?: boolean, webpPath?: string}) => {
+        const path = await import("path")
+        const fs = await import("fs")
         if (!options) options = {speed: 1, reverse: false, webp: false, webpPath: null}
         let url: string
         if (illustResolvable.hasOwnProperty("id")) {
@@ -443,7 +441,7 @@ export class Util {
         for (let i = 0; i < files.length; i += step) {
             if (files[i].slice(-5) === ".webp") continue
             fileArray.push(`${destPath}/${files[i]}`)
-            delayArray.push(metadata.frames[i]?.delay ||0)
+            delayArray.push(metadata.frames[i]?.delay || 0)
         }
         if (options?.speed < 1) delayArray = delayArray.map((n) => n / options.speed)
         if (options.reverse) {
@@ -457,7 +455,7 @@ export class Util {
             destination = await this.encodeGif(fileArray, delayArray, dest)
         }
         try {
-            this.removeLocalDirectory(zipDest)
+            this.removeLocalDirectory(fs, path, zipDest)
         } catch {}
         return destination
     }
@@ -466,6 +464,9 @@ export class Util {
      * Downloads the ugoira as zip with animation.json file.
      */
     public downloadUgoiraZip = async (illustResolvable: string | PixivIllust, dest: string) => {
+        const fs = await import("fs")
+        const path = await import("path")
+        const archiver = await import("archiver")
         let url: string
         if (illustResolvable.hasOwnProperty("id")) {
             url = String((illustResolvable as PixivIllust).id)
@@ -486,7 +487,7 @@ export class Util {
         archive.directory(destPath, false)
         await archive.finalize()
 
-        this.removeLocalDirectory(destPath)
+        this.removeLocalDirectory(fs, path, destPath)
         return outputZipPath
     }
 
@@ -500,11 +501,11 @@ export class Util {
         } else {
             id = String(illustResolvable).match(/\d{5,}/)?.[0]?.trim()
         }
-        const html = await axios.get(`https://www.pixiv.net/artworks/${id}`, {headers: {referer: "https://www.pixiv.net/"}}).then((r) => r.data)
+        const html = await fetch(`https://www.pixiv.net/artworks/${id}`, {headers: {referer: "https://www.pixiv.net/"}}).then((r) => r.text())
         const match = html.match(/(?<="regular":")(.*?)(?=")/gm)?.map((m: string) => m)?.[0]
         if (match && (match.match(/i-cf/) || match.match(/tc-px/))) {
             try {
-                await axios.get(match, {headers: {referer: "https://www.pixiv.net/"}})
+                await fetch(match, {headers: {referer: "https://www.pixiv.net/"}})
                 return match
             } catch {
                 return null
@@ -514,12 +515,12 @@ export class Util {
         }
     }
 
-    private removeLocalDirectory = (dir: string) => {
+    private removeLocalDirectory = (fs: any, path: any, dir: string) => {
         if (!fs.existsSync(dir)) return
-        fs.readdirSync(dir).forEach((file) => {
+        fs.readdirSync(dir).forEach((file: string) => {
             const current = path.join(dir, file)
             if (fs.lstatSync(current).isDirectory()) {
-                this.removeLocalDirectory(current)
+                this.removeLocalDirectory(fs, path, current)
             } else {
                 fs.unlinkSync(current)
             }

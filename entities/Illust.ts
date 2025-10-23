@@ -93,9 +93,9 @@ export class Illust {
      */
     public recommended = async (params?: PixivParams) => {
         const response = await this.api.get(`/v1/illust/recommended`, params) as PixivIllustSearch
-        if (params.type) response.illusts = response.illusts.filter((i: PixivIllust) => i.type === params.type)
+        if (params?.type) response.illusts = response.illusts.filter((i: PixivIllust) => i.type === params.type)
         response.illusts.forEach((i: PixivIllust) => i.url = `https://www.pixiv.net/artworks/${i.id}`)
-        this.nextURL = response.next_url
+        if (response.next_url) this.nextURL = response.next_url
         return response.illusts
     }
 

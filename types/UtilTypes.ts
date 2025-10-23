@@ -1,7 +1,7 @@
 import {PixivComment, PixivIllust, PixivNovel, PixivTag, PixivUser} from "./index"
 
 export interface PixivMultiCall {
-    next_url: string
+    next_url?: string
     illusts?: PixivIllust[]
     comments?: PixivComment[]
     user_previews?: Array<{
