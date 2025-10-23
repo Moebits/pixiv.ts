@@ -10,6 +10,10 @@ build({
   platform: "browser",
   format: "esm",
   outfile: "dist/pixiv.browser.js",
+  define: {
+    "process.env.NODE_ENV": "'production'",
+    "process.versions.node": "'23.7.0'"
+  },
   plugins: [
     NodeGlobalsPolyfillPlugin({
       process: true,
