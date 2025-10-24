@@ -1,7 +1,17 @@
+import * as fs from "fs"
+import {imageSize} from "image-size"
+import * as path from "path"
+import * as stream from "stream"
+import * as unzip from "unzipper"
+import * as archiver from "archiver"
+import * as child_process from "child_process"
+import {promisify} from "util"
 import API from "../API"
 import replace from "../Translate"
 import {PixivFolderMap, PixivIllust, PixivNovel, PixivMultiCall} from "../types"
 import {Illust, Novel, Search, Ugoira} from "./index"
+
+const streamPipeline = promisify(stream.pipeline)
 
 export class Util {
     private readonly illust = new Illust(this.api)
@@ -54,6 +64,17 @@ export class Util {
      */
     public timeout = async (ms: number) => {
         return new Promise((resolve) => setTimeout(resolve, ms))
+    }
+
+    /**
+     * Utility for awaiting a stream.Writable
+     */
+    public awaitStream = async (writeStream: stream.Writable) => {
+        return new Promise((resolve, reject) => {
+            writeStream.on("finish", resolve)
+            writeStream.on("end", resolve)
+            writeStream.on("error", reject)
+        })
     }
 
     /**
@@ -143,8 +164,6 @@ export class Util {
     }
 
     private download = async (url: string,  folder: string, nameExt?: string) => {
-        const fs = await import("fs")
-        const path = await import("path")
         const basename = path.basename(folder)
         if (!path.isAbsolute(folder)) {
             if (__dirname.includes("node_modules")) {
@@ -164,8 +183,6 @@ export class Util {
     }
 
     private downloadData = async (data: string, folder: string, id?: number, fileExt = "txt") => {
-        const fs = await import("fs")
-        const path = await import("path")
         const basename = path.basename(folder)
         if (!path.isAbsolute(folder)) {
             if (__dirname.includes("node_modules")) {
@@ -225,8 +242,6 @@ export class Util {
      * Downloads an author"s profile picture locally.
      */
     public downloadProfilePicture = async (illustResolvable: string | PixivIllust, folder: string, size?: string) => {
-        const fs = await import("fs")
-        const path = await import("path")
         if (!illustResolvable) return ""
         const basename = path.basename(folder)
         if (!size) size = "medium"
@@ -281,7 +296,6 @@ export class Util {
      * with the folderMap parameter.
      */
     public downloadIllusts = async (query: string, dest: string, size?:  "medium" | "large" | "square_medium" | "original", folderMap?: PixivFolderMap[], r18?: boolean) => {
-        const path = await import("path")
         if (!size) size = "medium"
         if (!r18) r18 = false
         const illusts = await this.search.illusts({word: query, r18})
@@ -315,10 +329,8 @@ export class Util {
      * Encodes a new gif from an array of file paths.
      */
     public encodeGif = async (files: string[], delays?: number[], dest?: string) => {
-        const fs = await import("fs")
-        const GifEncoder = await import("gif-encoder")
-        const getPixels = await import("get-pixels")
-        const {imageSize} = await import("image-size")
+        const GifEncoder = require("gif-encoder")
+        const getPixels = require("get-pixels")
         return new Promise<string>((resolve) => {
             const dimensions = imageSize(files[0])
             const gif = new GifEncoder(dimensions.width, dimensions.height)
@@ -356,8 +368,6 @@ export class Util {
      * Encodes a webp from an array of file paths.
      */
     public encodeAnimatedWebp = async (files: string[], delays: number[], dest?: string, webpPath?: string) => {
-        const path = await import("path")
-        const child_process = await import("child_process")
         const pathIndex = files[0].search(/\d{5,}/)
         const pathDir = files[0].slice(0, pathIndex)
         if (!dest) dest = `${pathDir}${files[0].match(/\d{5,}/)[0]}.webp`
@@ -379,9 +389,7 @@ export class Util {
     /**
      * Gives permission to webp binaries.
      */
-    public chmod777 = async (webpPath?: string) => {
-        const fs = await import("fs")
-        const path = await import("path")
+    public chmod777 = (webpPath?: string) => {
         if (process.platform === "win32") return
         const webp = webpPath ? path.normalize(webpPath).replace(/\\/g, "/") : path.join(__dirname, "../../webp")
         fs.chmodSync(webp, "777")
@@ -391,12 +399,6 @@ export class Util {
      * Downloads and extracts all of the individual images in a ugoira.
      */
     public downloadZip = async (url: string, dest: string) => {
-        const fs = await import("fs")
-        const path = await import("path")
-        const stream = await import("stream")
-        const unzip = await import("unzipper")
-        const {promisify} = await import("util")
-        const streamPipeline = promisify(stream.pipeline)
         if (!url.startsWith("https://i.pximg.net/")) {
             url = await this.ugoira.get(url).then((u) => u.ugoira_metadata.zip_urls.medium)
         }
@@ -419,8 +421,6 @@ export class Util {
      */
     public downloadUgoira = async (illustResolvable: string | PixivIllust, dest: string, 
         options?: {speed?: number, reverse?: boolean, webp?: boolean, webpPath?: string}) => {
-        const path = await import("path")
-        const fs = await import("fs")
         if (!options) options = {speed: 1, reverse: false, webp: false, webpPath: null}
         let url: string
         if (illustResolvable.hasOwnProperty("id")) {
@@ -455,7 +455,7 @@ export class Util {
             destination = await this.encodeGif(fileArray, delayArray, dest)
         }
         try {
-            this.removeLocalDirectory(fs, path, zipDest)
+            this.removeLocalDirectory(zipDest)
         } catch {}
         return destination
     }
@@ -464,9 +464,6 @@ export class Util {
      * Downloads the ugoira as zip with animation.json file.
      */
     public downloadUgoiraZip = async (illustResolvable: string | PixivIllust, dest: string) => {
-        const fs = await import("fs")
-        const path = await import("path")
-        const archiver = await import("archiver")
         let url: string
         if (illustResolvable.hasOwnProperty("id")) {
             url = String((illustResolvable as PixivIllust).id)
@@ -487,7 +484,7 @@ export class Util {
         archive.directory(destPath, false)
         await archive.finalize()
 
-        this.removeLocalDirectory(fs, path, destPath)
+        this.removeLocalDirectory(destPath)
         return outputZipPath
     }
 
@@ -515,12 +512,12 @@ export class Util {
         }
     }
 
-    private removeLocalDirectory = (fs: any, path: any, dir: string) => {
+    private removeLocalDirectory = (dir: string) => {
         if (!fs.existsSync(dir)) return
-        fs.readdirSync(dir).forEach((file: string) => {
+        fs.readdirSync(dir).forEach((file) => {
             const current = path.join(dir, file)
             if (fs.lstatSync(current).isDirectory()) {
-                this.removeLocalDirectory(fs, path, current)
+                this.removeLocalDirectory(current)
             } else {
                 fs.unlinkSync(current)
             }
